@@ -1,4 +1,4 @@
-*, *::before, *::after {
+*, *:not(i)::before, *::after {
 	box-sizing: border-box;
 	font-family: 'Quicksand', sans-serif;
 	outline: none;

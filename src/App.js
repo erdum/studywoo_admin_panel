@@ -1,11 +1,24 @@
 import { BrowserRouter } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
-import Header from './components/Header';
+import { useEffect } from 'react';
+
+const hideLoader = () => {
+	const loader = document.getElementById('loader');
+
+	if (loader) {
+		loader.style.setProperty('opacity', '0');
+		setTimeout(() => loader.remove(), 2000);
+	}
+};
 
 const App = () => {
+
+	useEffect(() => {
+		setTimeout(() => hideLoader(), 3000);
+	}, []);
+
 	return (
 		<>
-			<Header brandName={'Studywoo'}/>
 			<ChakraProvider>
 				<BrowserRouter>
 				</BrowserRouter>
