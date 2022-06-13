@@ -1,13 +1,15 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import { Sidebar } from './components';
+import { BrowserRouter } from 'react-router-dom';
+import { ChakraProvider } from '@chakra-ui/react';
+import Header from './components/Header';
 
 const App = () => {
 	return (
 		<>
-			<Sidebar />
-			<BrowserRouter>
-			</BrowserRouter>
+			<Header brandName={'Studywoo'}/>
+			<ChakraProvider>
+				<BrowserRouter>
+				</BrowserRouter>
+			</ChakraProvider>
 		</>
 	);
 };
