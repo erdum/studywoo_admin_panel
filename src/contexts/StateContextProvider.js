@@ -3,8 +3,17 @@ import { createContext, useContext, useState } from 'react';
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
+	const [isMenuOpen, setMenu] = useState(false);
 
-	const value = {};
+	const openMenu = () => setMenu(true);
+
+	const closeMenu = () => setMenu(false);
+
+	const value = {
+		isMenuOpen,
+		openMenu,
+		closeMenu
+	};
 
 	return (
 		<StateContext.Provider value={value}>
