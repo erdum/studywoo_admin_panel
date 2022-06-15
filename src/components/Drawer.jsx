@@ -3,7 +3,6 @@ import {
 	DrawerBody,
 	DrawerFooter,
 	DrawerHeader,
-	DrawerOverlay,
 	DrawerContent,
 	DrawerCloseButton,
 	Button,
@@ -11,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import useStateContext from "../contexts/StateContextProvider";
 
-const Sidebar = () => {
+const MyDrawer = () => {
 	const { isDrawerOpen, closeDrawer } = useStateContext();
 
 	return (
@@ -21,8 +20,9 @@ const Sidebar = () => {
 			onClose={closeDrawer}
 			closeOnEsc
 			closeOnOverlayClick
+			blockScrollOnMount
+			returnFocusOnClose
 		>
-			<DrawerOverlay />
 			<DrawerContent>
 				<DrawerCloseButton />
 				<DrawerHeader>Create your account</DrawerHeader>
@@ -42,4 +42,4 @@ const Sidebar = () => {
 	);
 };
 
-export default Sidebar;
+export default MyDrawer;

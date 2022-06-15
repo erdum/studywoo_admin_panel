@@ -2,7 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { useEffect } from "react";
 import getScreenDim from "./helpers/getScreenDim";
-import Sidebar from "./components/Sidebar";
+// import useStateContext from "./contexts/StateContextProvider";
 
 const hideLoader = () => {
 	const loader = document.getElementById("loader");
@@ -16,15 +16,14 @@ const hideLoader = () => {
 const App = () => {
 	useEffect(() => {
 		setTimeout(() => hideLoader(), 3000);
-		console.log(getScreenDim());
+		const { width } = getScreenDim();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
 		<>
 			<ChakraProvider>
-				<BrowserRouter>
-					<Sidebar />
-				</BrowserRouter>
+				<BrowserRouter></BrowserRouter>
 			</ChakraProvider>
 		</>
 	);

@@ -3,16 +3,16 @@ import { createContext, useContext, useState } from "react";
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
-	const [isMenuOpen, setMenu] = useState(false);
+	const [isDrawerOpen, setDrawer] = useState(false);
 
-	const openMenu = () => setMenu(true);
+	const openDrawer = () => setDrawer(true);
 
-	const closeMenu = () => setMenu(false);
+	const closeDrawer = () => setDrawer(false);
 
 	const value = {
-		isMenuOpen,
-		openMenu,
-		closeMenu,
+		isDrawerOpen,
+		openDrawer,
+		closeDrawer,
 	};
 
 	return (
