@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from "react";
 
 const StateContext = createContext();
 
@@ -12,13 +12,11 @@ export const StateContextProvider = ({ children }) => {
 	const value = {
 		isMenuOpen,
 		openMenu,
-		closeMenu
+		closeMenu,
 	};
 
 	return (
-		<StateContext.Provider value={value}>
-			{children}
-		</StateContext.Provider>
+		<StateContext.Provider value={value}>{children}</StateContext.Provider>
 	);
 };
 
