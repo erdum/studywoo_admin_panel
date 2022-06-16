@@ -1,24 +1,19 @@
+import { useRef } from "react";
 import { NavLink } from "react-router-dom";
 
-// UI Components
-import { Box, Flex, Avatar, Text, Slide, VStack, Icon, useTheme } from "@chakra-ui/react";
+import useStateContext from "../contexts/StateContextProvider";
 
-import { FaCoffee } from "react-icons/fa";
-const navLinks = [
-	{
-		path: "/test",
-		label: "Test",
-		icon:  FaCoffee,
-	},
-	{
-		path: "/work",
-		label: "Work",
-		icon: "",
-	},
-];
+// UI Components and Hooks
+import { Box, Flex, Avatar, Text, Slide, VStack, Icon, useTheme, useOutsideClick } from "@chakra-ui/react";
 
-const Sidebar = ({ isOpen }) => {
+const Sidebar = ({ isOpen, links = [] }) => {
+	const ref = useRef();
+	const { closeMenu } = useStateContext();
 	const theme = useTheme();
+	useOutsideClick({
+		ref,
+		handler: () => closeMenu()
+	});
 
 	const activeStyle = {
 		color: "white",
@@ -28,11 +23,12 @@ const Sidebar = ({ isOpen }) => {
 	return (
 		<Slide direction="left" in={isOpen}>
 			<Box
+				ref={ref}
 				position="fixed"
 				left="0"
 				top={{ base: "0", lg: "4rem" }}
 				bg="white"
-				w={{ base: "80%", md: "60%", lg: "16rem" }}
+				w={{ base: "70%", md: "60%", lg: "16rem" }}
 				h="100vh"
 				overflow="hidden"
 				boxShadow={{
@@ -62,7 +58,7 @@ const Sidebar = ({ isOpen }) => {
 					</Text>
 				</Flex>
 				<VStack align="stretch" pt="10" spacing="2" color="gray.600" fontWeight="medium" fontSize="lg">
-				{navLinks.map(item =>
+				{links.map(item =>
 					<NavLink key={item.path} to={item.path} style={({ isActive }) => isActive ? activeStyle : null}>
 						<Flex className={"transition-colors"} align="center" px="8" py="2" _hover={{ color: "white", bg: "custom.primary" }}>
 							<Icon boxSize="1.2rem" as={item.icon} />

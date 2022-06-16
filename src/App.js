@@ -13,6 +13,9 @@ import Sidebar from "./components/Sidebar";
 // App State Context
 import useStateContext from "./contexts/StateContextProvider";
 
+// Menu Items
+import MenuLinks from "./Menu-Items.js";
+
 const theme = extendTheme({
 	colors: {
 		custom: {
@@ -36,11 +39,18 @@ const App = () => {
 
 	useEffect(() => {
 		setTimeout(() => {
+			const btn = document.querySelector("#header_action > i");
 			const { width } = getScreenDim();
 			hideLoader();
 
 			if (width >= 992) {
-				openMenu(true);
+				openMenu();
+			} else {
+				if (btn) btn.addEventListener("click", () => openMenu());
+			}
+
+			return () => {
+				if (btn) btn.removeEventListener("click", () => openMenu());
 			}
 		}, 1000);
 
@@ -51,7 +61,7 @@ const App = () => {
 		<>
 			<ChakraProvider theme={theme}>
 				<BrowserRouter>
-					<Sidebar isOpen={isMenuOpen} />
+					<Sidebar isOpen={isMenuOpen} links={MenuLinks} />
 				</BrowserRouter>
 			</ChakraProvider>
 		</>
