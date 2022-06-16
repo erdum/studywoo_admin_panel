@@ -16,11 +16,8 @@ import useStateContext from "./contexts/StateContextProvider";
 const theme = extendTheme({
 	colors: {
 		custom: {
-			primary: "#2a9d8f",
-			secondary: "#264653",
-			contrast: "#f4a261",
-			contrastDark: "#e76f51",
-			contrastLight: "#e9c46a",
+			primary: "#ff9f1c",
+			contrast: "#2a9d8f",
 		},
 	},
 });
