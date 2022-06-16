@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
+import { QueryClientProvider, QueryClient } from "react-query";
 
 // UI Components
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
@@ -34,6 +35,8 @@ const hideLoader = () => {
 	}
 };
 
+const queryClient = new QueryClient();
+
 const App = () => {
 	const { isMenuOpen, openMenu } = useStateContext();
 
@@ -58,13 +61,13 @@ const App = () => {
 	}, []);
 
 	return (
-		<>
+		<QueryClientProvider client={queryClient}>
 			<ChakraProvider theme={theme}>
 				<BrowserRouter>
 					<Sidebar isOpen={isMenuOpen} links={MenuLinks} />
 				</BrowserRouter>
 			</ChakraProvider>
-		</>
+		</QueryClientProvider>
 	);
 };
 
