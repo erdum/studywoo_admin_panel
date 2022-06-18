@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes } from "react-router-dom";
 
 // UI Components
 // import {  } from "@chakra-ui/react";
@@ -22,7 +22,7 @@ const hideLoader = () => {
 
 	if (loader) {
 		loader.style.setProperty("opacity", "0");
-		setTimeout(() => loader.remove(), 2000);
+		setTimeout(() => loader.remove(), 200);
 	}
 };
 
@@ -47,15 +47,21 @@ const App = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	// return null;
+
 	return (
 		<BrowserRouter>
 			<Sidebar
 				isOpen={isMenuOpen}
 				links={MenuLinks}
-				outsideClickHandler={() => (width >= 992 ? null : setMenu(false))}
+				outsideClickHandler={() =>
+					width >= 992 ? null : setMenu(false)
+				}
 			/>
 			<AuthProvider>
-				<h1>Dashboard</h1>
+				<Routes>
+					<h1>Dashboard</h1>
+				</Routes>
 			</AuthProvider>
 		</BrowserRouter>
 	);

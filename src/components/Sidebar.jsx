@@ -28,7 +28,7 @@ const Sidebar = ({ isOpen, links, outsideClickHandler }) => {
 	};
 
 	return (
-		<Slide direction="left" in={isOpen}>
+		<Slide direction="left" in={isOpen} style={{ zIndex: -10 }}>
 			<Box
 				ref={ref}
 				position="fixed"
