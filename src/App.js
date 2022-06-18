@@ -9,6 +9,7 @@ import getScreenDim from "./helpers/getScreenDim";
 
 // Custom Components
 import Sidebar from "./components/Sidebar";
+import AuthProvider from "./components/AuthProvider";
 
 // App State Context
 // import useStateContext from "./contexts/StateContextProvider";
@@ -53,6 +54,9 @@ const App = () => {
 				links={MenuLinks}
 				outsideClickHandler={() => (width >= 992 ? null : setMenu(false))}
 			/>
+			<AuthProvider>
+				<h1>Dashboard</h1>
+			</AuthProvider>
 		</BrowserRouter>
 	);
 };
