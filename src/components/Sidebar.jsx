@@ -1,23 +1,30 @@
 import { useRef } from "react";
 import { NavLink } from "react-router-dom";
 
-import useStateContext from "../contexts/StateContextProvider";
-
 // UI Components and Hooks
-import { Box, Flex, Avatar, Text, Slide, VStack, Icon, useTheme, useOutsideClick } from "@chakra-ui/react";
+import {
+	Box,
+	Flex,
+	Avatar,
+	Text,
+	Slide,
+	VStack,
+	Icon,
+	useTheme,
+	useOutsideClick,
+} from "@chakra-ui/react";
 
-const Sidebar = ({ isOpen, links = [] }) => {
+const Sidebar = ({ isOpen, links, outsideClickHandler }) => {
 	const ref = useRef();
-	const { closeMenu } = useStateContext();
 	const theme = useTheme();
 	useOutsideClick({
 		ref,
-		handler: () => closeMenu()
+		handler: outsideClickHandler,
 	});
 
 	const activeStyle = {
 		color: "white",
-		backgroundColor: theme.colors.custom.primary
+		backgroundColor: theme.colors.custom.primary,
 	};
 
 	return (
@@ -57,15 +64,37 @@ const Sidebar = ({ isOpen, links = [] }) => {
 						Erdum
 					</Text>
 				</Flex>
-				<VStack align="stretch" pt="10" spacing="2" color="gray.600" fontWeight="medium" fontSize="lg">
-				{links.map(item =>
-					<NavLink key={item.path} to={item.path} style={({ isActive }) => isActive ? activeStyle : null}>
-						<Flex className={"transition-colors"} align="center" px="8" py="2" _hover={{ color: "white", bg: "custom.primary" }}>
-							<Icon boxSize="1.2rem" as={item.icon} />
-							<Text pl="4">{item.label}</Text>
-						</Flex>
-					</NavLink>
-				)}
+				<VStack
+					align="stretch"
+					pt="10"
+					spacing="2"
+					color="gray.600"
+					fontWeight="medium"
+					fontSize="lg"
+				>
+					{links.map((item) => (
+						<NavLink
+							key={item.path}
+							to={item.path}
+							style={({ isActive }) =>
+								isActive ? activeStyle : null
+							}
+						>
+							<Flex
+								className={"transition-colors"}
+								align="center"
+								px="8"
+								py="2"
+								_hover={{
+									color: "white",
+									bg: "custom.primary",
+								}}
+							>
+								<Icon boxSize="1.2rem" as={item.icon} />
+								<Text pl="4">{item.label}</Text>
+							</Flex>
+						</NavLink>
+					))}
 				</VStack>
 			</Box>
 		</Slide>

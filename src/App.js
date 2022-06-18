@@ -1,9 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
-import { QueryClientProvider, QueryClient } from "react-query";
 
 // UI Components
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+// import {  } from "@chakra-ui/react";
 
 // Helper Functions
 import getScreenDim from "./helpers/getScreenDim";
@@ -12,19 +11,10 @@ import getScreenDim from "./helpers/getScreenDim";
 import Sidebar from "./components/Sidebar";
 
 // App State Context
-import useStateContext from "./contexts/StateContextProvider";
+// import useStateContext from "./contexts/StateContextProvider";
 
 // Menu Items
 import MenuLinks from "./Menu-Items.js";
-
-const theme = extendTheme({
-	colors: {
-		custom: {
-			primary: "#ff9f1c",
-			contrast: "#2a9d8f",
-		},
-	},
-});
 
 const hideLoader = () => {
 	const loader = document.getElementById("loader");
@@ -35,39 +25,35 @@ const hideLoader = () => {
 	}
 };
 
-const queryClient = new QueryClient();
-
 const App = () => {
-	const { isMenuOpen, openMenu } = useStateContext();
+	const [isMenuOpen, setMenu] = useState(false);
+	const { width } = getScreenDim();
 
 	useEffect(() => {
-		setTimeout(() => {
-			const btn = document.querySelector("#header_action > i");
-			const { width } = getScreenDim();
-			hideLoader();
+		const btn = document.querySelector("#header_action > i");
+		setTimeout(hideLoader, 1000);
 
-			if (width >= 992) {
-				openMenu();
-			} else {
-				if (btn) btn.addEventListener("click", () => openMenu());
-			}
+		if (width >= 992) {
+			setMenu(true);
+		} else {
+			btn?.addEventListener("click", () => setMenu(true));
+		}
 
-			return () => {
-				if (btn) btn.removeEventListener("click", () => openMenu());
-			}
-		}, 1000);
+		return () => {
+			btn?.removeEventListener("click", () => setMenu(false));
+		};
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
-		<QueryClientProvider client={queryClient}>
-			<ChakraProvider theme={theme}>
-				<BrowserRouter>
-					<Sidebar isOpen={isMenuOpen} links={MenuLinks} />
-				</BrowserRouter>
-			</ChakraProvider>
-		</QueryClientProvider>
+		<BrowserRouter>
+			<Sidebar
+				isOpen={isMenuOpen}
+				links={MenuLinks}
+				outsideClickHandler={() => (width >= 992 ? null : setMenu(false))}
+			/>
+		</BrowserRouter>
 	);
 };
 
