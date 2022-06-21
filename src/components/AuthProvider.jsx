@@ -5,11 +5,7 @@ import Login from "./Login";
 const AuthProvider = ({ children }) => {
 	const [isAuthenticated, setAuth] = useState(getToken());
 
-	const submitAuth = (username, password) => {
-		
-	};
-
-	if (!isAuthenticated) return <Login submit={submitAuth} />;
+	if (!isAuthenticated) return <Login />;
 
 	return {children};
 };

@@ -28,16 +28,18 @@ const Sidebar = ({ isOpen, links, outsideClickHandler }) => {
 	};
 
 	return (
-		<Slide direction="left" in={isOpen} style={{ zIndex: -10 }}>
+		<Slide
+			direction="left"
+			in={isOpen}
+			style={{ width: "auto" }}
+			unmountOnExit
+		>
 			<Box
 				ref={ref}
-				position="fixed"
-				left="0"
-				top={{ base: "0", lg: "4rem" }}
+				w="16rem"
+				h="100%"
+				mt={{ base: "0", lg: "4rem"}}
 				bg="white"
-				w={{ base: "70%", md: "60%", lg: "16rem" }}
-				h="100vh"
-				overflow="hidden"
 				boxShadow={{
 					base: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
 					lg: "base",
@@ -79,16 +81,12 @@ const Sidebar = ({ isOpen, links, outsideClickHandler }) => {
 							style={({ isActive }) =>
 								isActive ? activeStyle : null
 							}
+							className={`hover:bg-[${theme.colors.custom.primary}] hover:text-white transition-colors`}
 						>
 							<Flex
-								className={"transition-colors"}
 								align="center"
 								px="8"
 								py="2"
-								_hover={{
-									color: "white",
-									bg: "custom.primary",
-								}}
 							>
 								<Icon boxSize="1.2rem" as={item.icon} />
 								<Text pl="4">{item.label}</Text>
