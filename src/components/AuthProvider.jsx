@@ -5,9 +5,22 @@ import Login from "./Login";
 const AuthProvider = ({ children }) => {
 	const [isAuthenticated, setAuth] = useState(getToken());
 
-	if (!isAuthenticated) return <Login />;
+	const authenticateUser =  async (userName, userPass, error, startLoading, stopLoading) => {
+		if (userName === "Erdum") {
+			if (userPass === "1234") {
+				startLoading();
+				setAuth(true);
+			} else {
+				error({ pass: true });
+			}
+		} else {
+			error({ pass: true, username: true });
+		}
+	};
 
-	return {children};
+	if (!isAuthenticated) return <Login authenticateUser={authenticateUser} />;
+
+	return <>{children}</>;
 };
 
 export default AuthProvider;

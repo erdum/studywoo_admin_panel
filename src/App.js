@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 // UI Components
 // import {  } from "@chakra-ui/react";
@@ -51,17 +51,15 @@ const App = () => {
 
 	return (
 		<BrowserRouter>
-			<Sidebar
-				isOpen={isMenuOpen}
-				links={MenuLinks}
-				outsideClickHandler={() =>
-					width >= 992 ? null : setMenu(false)
-				}
-			/>
 			<AuthProvider>
-				<Routes>
-					<h1>Dashboard</h1>
-				</Routes>
+				<Sidebar
+					isOpen={isMenuOpen}
+					links={MenuLinks}
+					outsideClickHandler={() =>
+						width >= 992 ? null : setMenu(false)
+					}
+				/>
+				<h1>user logged in</h1>
 			</AuthProvider>
 		</BrowserRouter>
 	);
