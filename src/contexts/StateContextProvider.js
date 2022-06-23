@@ -10,7 +10,7 @@ export const StateContextProvider = ({ children }) => {
 
 	const closeDrawer = () => setDrawer(false);
 
-	const setUser = ({name, email, password}) => setUserData({name, email, password});
+	const setUser = ({name, email, password, avatar}) => setUserData({name, email, password, avatar});
 
 	const value = {
 		isDrawerOpen,

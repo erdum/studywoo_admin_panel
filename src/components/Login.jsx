@@ -17,12 +17,14 @@ import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { useToast } from "@chakra-ui/react";
 import { toastSettings } from "../setting";
+import useStateContext from "../contexts/StateContextProvider";
 
 const Login = () => {
 	const [isPassInvalid, setPassInvalid] = useState(false);
 	const [credentials, setCredentials] = useState(null);
 	const [showPassword, setShowPassword] = useState(false);
 	const toast = useToast();
+	const { setUser } = useStateContext();
 
 	const authenticateUser = async () => {
 		if (!credentials) return;
@@ -39,7 +41,7 @@ const Login = () => {
 		return req.json();
 	};
 
-	const { error, refetch, isLoading, isSuccess } = useQuery(
+	const { data, error, refetch, isLoading, isSuccess } = useQuery(
 		"userData",
 		authenticateUser,
 		{
@@ -48,6 +50,16 @@ const Login = () => {
 			retry: 0,
 		}
 	);
+
+	useEffect(() => {
+		if (!data) return;
+		setUser({
+			name: data?.user_data?.name,
+			avatar: data?.user_data?.avatar,
+			...credentials,
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data]);
 
 	useEffect(() => {
 		if (!error) return;
