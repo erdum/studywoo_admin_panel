@@ -4,15 +4,20 @@ const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
 	const [isDrawerOpen, setDrawer] = useState(false);
+	const [userData, setUserData] = useState(null);
 
 	const openDrawer = () => setDrawer(true);
 
 	const closeDrawer = () => setDrawer(false);
 
+	const setUser = ({name, email, password}) => setUserData({name, email, password});
+
 	const value = {
 		isDrawerOpen,
 		openDrawer,
 		closeDrawer,
+		userData,
+		setUser
 	};
 
 	return (

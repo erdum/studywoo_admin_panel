@@ -32,7 +32,7 @@ const App = () => {
 
 	useEffect(() => {
 		const btn = document.querySelector("#header_action > i");
-		setTimeout(hideLoader, 1000);
+		hideLoader();
 
 		if (width >= 992) {
 			setMenu(true);

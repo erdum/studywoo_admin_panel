@@ -9,44 +9,86 @@ import {
 	Box,
 	Button,
 	Icon,
-	Heading
+	Heading,
 } from "@chakra-ui/react";
 import { FaIdBadge, FaLock } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
+import { useToast } from "@chakra-ui/react";
+import { toastSettings } from "../setting";
 
-const Login = ({ authenticateUser }) => {
-	const [isUsernameInvalid, setUsernameInvalid] = useState(false);
+const authenticateUser = async ({ queryKey: [_, credentials] }) => {
+	const req = await fetch(`${process.env.REACT_APP_API_URL}login`, {
+		method: "post",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(credentials),
+	});
+
+	if (req.status === 401) throw new Error("Unauthorized", { cause: 401 });
+	if (req.status !== 200) throw new Error("Request failed");
+	return req.json();
+};
+
+const Login = () => {
 	const [isPassInvalid, setPassInvalid] = useState(false);
-	const [isLoading, setLoading] = useState(false);
-
-	const startLoading = () => setLoading(true);
-
-	const stopLoading = () => setLoading(false);
-
-	const handleError = (errorObj) => {
-		if (errorObj.username) {
-			setUsernameInvalid(true);
-		} else {
-			setUsernameInvalid(false);
+	const [credentials, setCredentials] = useState(null);
+	const toast = useToast();
+	const { data, error, refetch, isLoading, isSuccess } = useQuery(
+		["userData", credentials],
+		authenticateUser,
+		{
+			enabled: false,
+			refetchOnWindowFocus: false,
+			retry: 0,
 		}
+	);
 
-		if (errorObj.pass) {
+	useEffect(() => {
+		if (!error) return;
+
+		if (error.cause === 401) {
 			setPassInvalid(true);
 		} else {
-			setPassInvalid(false);
+			const id = "login-error";
+			toast({
+				...toastSettings,
+				id,
+				title: "Login Failed",
+				description: "Request failed from the server !",
+				status: "error",
+			});
 		}
-	};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [error]);
+
+	useEffect(() => {
+		const id = "login-success";
+		if (isSuccess && !toast.isActive(id))
+			toast({
+				...toastSettings,
+				id,
+				title: "Logged in",
+				description: "You are successfuly logged in",
+				status: "success",
+			});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isSuccess]);
+
+	useEffect(() => {
+		if (data) console.log(data);
+	}, [data]);
+
+	useEffect(() => {
+		if (credentials) refetch();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [credentials]);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const [{ value: username }, { value: pass }] = event.target.elements;
-		authenticateUser(
-			username,
-			pass,
-			handleError,
-			startLoading,
-			stopLoading
-		);
+		setCredentials({ email: username, password: pass });
 	};
 
 	return (
@@ -59,15 +101,24 @@ const Login = ({ authenticateUser }) => {
 				borderRadius="8"
 				boxShadow="lg"
 			>
-				<Heading textAlign="center" color="gray.500" as="h2" fontSize={{ base: "xl", lg: "2xl" }} lineHeight="base" fontWeight="semibold">Welcome to Studywoo Content managment system</Heading>
+				<Heading
+					textAlign="center"
+					color="gray.500"
+					as="h2"
+					fontSize={{ base: "xl", lg: "2xl" }}
+					lineHeight="base"
+					fontWeight="semibold"
+				>
+					Welcome to Studywoo Content managment system
+				</Heading>
 				<form onSubmit={handleSubmit}>
-					<FormControl mt="8" isRequired isInvalid={isUsernameInvalid}>
+					<FormControl mt="8" isRequired>
 						<FormLabel
 							fontSize="sm"
 							color="blackAlpha.700"
 							htmlFor="username"
 						>
-							User name
+							Email
 						</FormLabel>
 						<InputGroup>
 							<InputLeftElement
@@ -80,11 +131,10 @@ const Login = ({ authenticateUser }) => {
 								id="username"
 								type="text"
 								focusBorderColor="custom.primary"
-								onChange={() => setUsernameInvalid(false)}
 							/>
 						</InputGroup>
 						<FormErrorMessage>
-							Username does not match!
+							Email does not match!
 						</FormErrorMessage>
 					</FormControl>
 					<FormControl mt="4" isRequired isInvalid={isPassInvalid}>

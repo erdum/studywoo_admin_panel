@@ -1,5 +1,5 @@
 const toastSettings = {
-	duration: 5000,
+	duration: 2500,
 	variant: "left-accent",
 	position: "bottom-right",
 	isClosable: true,
