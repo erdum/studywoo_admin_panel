@@ -15,7 +15,8 @@ import {
 	Button,
 	Icon,
 	Heading,
-	useToast
+	Text,
+	useToast,
 } from "@chakra-ui/react";
 
 // Icons
@@ -110,7 +111,7 @@ const Login = () => {
 	};
 
 	return (
-		<Center w="100%" h="100%">
+		<Center w="100%" h="100%" position="relative">
 			<Box
 				bg="white"
 				w={{ base: "100%", lg: "50%" }}
@@ -213,6 +214,20 @@ const Login = () => {
 					</Button>
 				</form>
 			</Box>
+			<Text
+				w={{ base: "100%", lg: "auto" }}
+				textAlign="center"
+				position="absolute"
+				bottom="0"
+				left={{ base: "50%", lg: "0" }}
+				transform={{ base: "translateX(-50%)", lg: "translateX(0)" }}
+				fontStyle="italic"
+				fontSize="sm"
+				color="gray.500"
+				fontWeight="medium"
+			>
+				Adnan & Son IT group Pakistan
+			</Text>
 		</Center>
 	);
 };
