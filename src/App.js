@@ -33,13 +33,20 @@ const App = () => {
 	const navigate = useNavigate();
 
 	const handleHeaderAction = () => {
-		navigate("/account-settings", { replace: true });
+		navigate("/account-settings");
+	};
+
+	const handleHomeAction = () => {
+		navigate("/");
 	};
 
 	useEffect(() => {
 		// Adding event listeners to static App Shell
 		const btn = document.querySelector("#header_action > i");
 		const headerAction = document.querySelector("#header_action");
+		const homeLink = document.querySelector("header > h1");
+
+		homeLink.addEventListener("click", handleHomeAction);
 		hideLoader();
 
 		if (width >= 992) {
@@ -52,6 +59,7 @@ const App = () => {
 		return () => {
 			btn?.removeEventListener("click", () => setMenu(false));
 			headerAction?.removeEventListener("click", handleHeaderAction);
+			homeLink.removeEventListener("click", handleHomeAction);
 		};
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
