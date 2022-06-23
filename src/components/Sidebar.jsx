@@ -113,7 +113,8 @@ const SidebarWrapper = ({ isOpen, links, outsideClickHandler }) => {
 		<Slide
 			direction="left"
 			in={isOpen}
-			style={{ width: "auto", top: "4rem" }}
+			style={{ width: "auto" }}
+			top={{ base: "0", lg: "4rem" }}
 			unmountOnExit
 		>
 			<Sidebar links={links} />
