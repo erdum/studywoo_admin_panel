@@ -13,9 +13,13 @@ import {
 	Slide,
 	VStack,
 	Icon,
+	Button,
 	useTheme,
 	useOutsideClick,
 } from "@chakra-ui/react";
+
+// Icons
+import { FaSignOutAlt } from "react-icons/fa";
 
 // App State Context
 import useStateContext from "../contexts/StateContextProvider";
@@ -63,7 +67,7 @@ const Sidebar = ({ links }) => {
 				borderColor="gray.200"
 			>
 				<Avatar
-					src={`${process.env.REACT_APP_IMG_URL}${avatar}.webp`}
+					src={`${import.meta.env.VITE_APP_IMG_URL}${avatar}.webp`}
 				/>
 				<Text
 					noOfLines={2}
@@ -76,12 +80,13 @@ const Sidebar = ({ links }) => {
 				</Text>
 			</Flex>
 			<VStack
+				h="100%"
 				align="stretch"
 				pt="10"
 				spacing="2"
-				color="gray.600"
 				fontWeight="medium"
 				fontSize="lg"
+				className={"text-gray-500 font-semibold"}
 			>
 				{links.map((item) => (
 					<NavLink
@@ -90,7 +95,9 @@ const Sidebar = ({ links }) => {
 						style={({ isActive }) =>
 							isActive ? activeStyle : null
 						}
-						className={"hover:bg-gray-100 transition-colors text-gray-500 font-semibold"}
+						className={
+							"hover:bg-gray-100 transition-colors font-semibold"
+						}
 					>
 						<Flex align="center" px="8" py="2">
 							<Icon boxSize="1.2rem" as={item.icon} />
@@ -98,6 +105,16 @@ const Sidebar = ({ links }) => {
 						</Flex>
 					</NavLink>
 				))}
+				<Button
+					mt="auto"
+					variant="ghost"
+					px="8"
+					display="flex"
+					justifyContent="space-between"
+					rightIcon={<Icon as={FaSignOutAlt} />}
+				>
+					Logout
+				</Button>
 			</VStack>
 		</Box>
 	);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Routes } from "react-router-dom";
 
 // UI Components and hooks
 import { useTheme } from "@chakra-ui/react";
@@ -73,7 +73,7 @@ const App = () => {
 
 		userAvatar.setAttribute(
 			"src",
-			`${process.env.REACT_APP_IMG_URL}${userData.avatar}.webp`
+			`${import.meta.env.VITE_APP_IMG_URL}${userData.avatar}.webp`
 		);
 		userName.textContent = userData.name;
 	}, [userData]);
@@ -87,7 +87,8 @@ const App = () => {
 					width >= theme.breakpoints.lg ? null : setMenu(false)
 				}
 			/>
-			<h1>user logged in</h1>
+			<Routes>
+			</Routes>
 		</AuthProvider>
 	);
 };

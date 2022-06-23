@@ -35,7 +35,7 @@ const Login = () => {
 
 	const authenticateUser = async () => {
 		if (!credentials) return;
-		const req = await fetch(`${process.env.REACT_APP_API_URL}login`, {
+		const req = await fetch(`${import.meta.env.VITE_APP_API_URL}login`, {
 			method: "post",
 			headers: {
 				"Content-Type": "application/json",
