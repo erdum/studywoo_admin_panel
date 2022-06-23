@@ -1,5 +1,7 @@
 import { useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+
+// Helper functions
 import getScreenDim from "../helpers/getScreenDim";
 
 // UI Components and Hooks

@@ -1,3 +1,7 @@
+import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
+
+// UI Components
 import {
 	Input,
 	InputGroup,
@@ -11,12 +15,14 @@ import {
 	Button,
 	Icon,
 	Heading,
+	useToast
 } from "@chakra-ui/react";
+
+// Icons
 import { FaIdBadge, FaLock } from "react-icons/fa";
-import { useState, useEffect } from "react";
-import { useQuery } from "react-query";
-import { useToast } from "@chakra-ui/react";
 import { toastSettings } from "../setting";
+
+// App State Context
 import useStateContext from "../contexts/StateContextProvider";
 
 const Login = () => {

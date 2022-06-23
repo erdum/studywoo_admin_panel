@@ -1,3 +1,4 @@
+// UI Components
 import {
 	Drawer,
 	DrawerBody,
@@ -8,6 +9,8 @@ import {
 	Button,
 	Input,
 } from "@chakra-ui/react";
+
+// App State Context
 import useStateContext from "../contexts/StateContextProvider";
 
 const MyDrawer = () => {
