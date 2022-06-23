@@ -33,7 +33,7 @@ const Sidebar = ({ links }) => {
 
 	useEffect(() => {
 		const main = document.querySelector("main");
-		if (width >= 992) main.classList.add("ml-64");
+		if (width >= theme.breakpoints.lg) main.classList.add("ml-64");
 
 		return () => {
 			main.classList.remove("ml-64");
@@ -104,6 +104,7 @@ const Sidebar = ({ links }) => {
 
 const SidebarWrapper = ({ isOpen, links, outsideClickHandler }) => {
 	const { width } = getScreenDim();
+	const theme = useTheme();
 	const ref = useRef();
 	useOutsideClick({
 		ref,
@@ -114,7 +115,10 @@ const SidebarWrapper = ({ isOpen, links, outsideClickHandler }) => {
 		<Slide
 			direction="left"
 			in={isOpen}
-			style={{ width: "auto", top: width >= 992 ? "4rem" : "0" }}
+			style={{
+				width: "auto",
+				top: width >= theme.breakpoints.lg ? "4rem" : "0",
+			}}
 			unmountOnExit
 		>
 			<Sidebar links={links} />

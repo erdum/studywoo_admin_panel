@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// UI Components
-// import {  } from "@chakra-ui/react";
+// UI Components and hooks
+import { useTheme } from "@chakra-ui/react";
 
 // Helper Functions
 import getScreenDim from "./helpers/getScreenDim";
@@ -29,6 +29,7 @@ const hideLoader = () => {
 const App = () => {
 	const [isMenuOpen, setMenu] = useState(false);
 	const { width } = getScreenDim();
+	const theme = useTheme();
 	const { userData } = useStateContext();
 	const navigate = useNavigate();
 
@@ -49,7 +50,7 @@ const App = () => {
 		homeLink.addEventListener("click", handleHomeAction);
 		hideLoader();
 
-		if (width >= 992) {
+		if (width >= theme.breakpoints.lg) {
 			headerAction?.addEventListener("click", handleHeaderAction);
 			setMenu(true);
 		} else {
@@ -83,7 +84,7 @@ const App = () => {
 				isOpen={isMenuOpen}
 				links={MenuLinks}
 				outsideClickHandler={() =>
-					width >= 992 ? null : setMenu(false)
+					width >= theme.breakpoints.lg ? null : setMenu(false)
 				}
 			/>
 			<h1>user logged in</h1>
