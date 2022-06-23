@@ -35,7 +35,7 @@ const Login = () => {
 	const [isPassInvalid, setPassInvalid] = useState(false);
 	const [credentials, setCredentials] = useState(null);
 	const toast = useToast();
-	const { data, error, refetch, isLoading, isSuccess } = useQuery(
+	const { error, refetch, isLoading, isSuccess } = useQuery(
 		["userData", credentials],
 		authenticateUser,
 		{
