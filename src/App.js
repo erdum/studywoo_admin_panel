@@ -31,11 +31,16 @@ const App = () => {
 	const { width } = getScreenDim();
 	const { userData } = useStateContext();
 
+	const handleHeaderAction = () => {};
+
 	useEffect(() => {
+		// Adding event listeners to static App Shell
 		const btn = document.querySelector("#header_action > i");
+		const headerAction = document.querySelector("#header_action");
 		hideLoader();
 
 		if (width >= 992) {
+			headerAction.addEventListener("click", handleHeaderAction);
 			setMenu(true);
 		} else {
 			btn?.addEventListener("click", () => setMenu(true));
@@ -43,13 +48,22 @@ const App = () => {
 
 		return () => {
 			btn?.removeEventListener("click", () => setMenu(false));
+			headerAction?.removeEventListener("click", handleHeaderAction);
 		};
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
-		if (userData) console.log(userData);
+		if (!userData) return;
+		const userAvatar = document.querySelector("#header_action img");
+		const userName = document.querySelector("#header_action p");
+
+		userAvatar.setAttribute(
+			"src",
+			`${process.env.REACT_APP_IMG_URL}${userData.avatar}.webp`
+		);
+		userName.textContent = userData.name;
 	}, [userData]);
 
 	// return null;
