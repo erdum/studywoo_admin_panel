@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // UI Components
 // import {  } from "@chakra-ui/react";
@@ -30,8 +30,11 @@ const App = () => {
 	const [isMenuOpen, setMenu] = useState(false);
 	const { width } = getScreenDim();
 	const { userData } = useStateContext();
+	const navigate = useNavigate();
 
-	const handleHeaderAction = () => {};
+	const handleHeaderAction = () => {
+		navigate("/account-settings", { replace: true });
+	};
 
 	useEffect(() => {
 		// Adding event listeners to static App Shell
@@ -67,18 +70,16 @@ const App = () => {
 	}, [userData]);
 
 	return (
-		<BrowserRouter>
-			<AuthProvider>
-				<Sidebar
-					isOpen={isMenuOpen}
-					links={MenuLinks}
-					outsideClickHandler={() =>
-						width >= 992 ? null : setMenu(false)
-					}
-				/>
-				<h1>user logged in</h1>
-			</AuthProvider>
-		</BrowserRouter>
+		<AuthProvider>
+			<Sidebar
+				isOpen={isMenuOpen}
+				links={MenuLinks}
+				outsideClickHandler={() =>
+					width >= 992 ? null : setMenu(false)
+				}
+			/>
+			<h1>user logged in</h1>
+		</AuthProvider>
 	);
 };
 

@@ -2,6 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { BrowserRouter } from "react-router-dom";
 
 import "./index.css";
 
@@ -27,7 +28,9 @@ root.render(
 		<QueryClientProvider client={queryClient}>
 			<StateContextProvider>
 				<ChakraProvider theme={theme}>
-					<App />
+					<BrowserRouter>
+						<App />
+					</BrowserRouter>
 				</ChakraProvider>
 			</StateContextProvider>
 		</QueryClientProvider>

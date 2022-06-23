@@ -62,8 +62,16 @@ const Sidebar = ({ links }) => {
 				borderBottom="1px"
 				borderColor="gray.200"
 			>
-				<Avatar src={`${process.env.REACT_APP_IMG_URL}${avatar}.webp`} />
-				<Text noOfLines={2} px="4" fontSize="lg" color="gray.500" fontWeight="semibold">
+				<Avatar
+					src={`${process.env.REACT_APP_IMG_URL}${avatar}.webp`}
+				/>
+				<Text
+					noOfLines={2}
+					px="4"
+					fontSize="lg"
+					color="gray.500"
+					fontWeight="semibold"
+				>
 					{name}
 				</Text>
 			</Flex>
@@ -82,9 +90,9 @@ const Sidebar = ({ links }) => {
 						style={({ isActive }) =>
 							isActive ? activeStyle : null
 						}
-						className={`hover:bg-[${theme.colors.custom.primary}] hover:text-white transition-colors`}
+						className={`hover:bg-[${theme.colors.custom.primary}] hover:text-white transition-colors text-gray-500 font-semibold`}
 					>
-						<Flex align="center" px="8" py="2" className={"text-gray-500 font-medium"}>
+						<Flex align="center" px="8" py="2">
 							<Icon boxSize="1.2rem" as={item.icon} />
 							<Text pl="4">{item.label}</Text>
 						</Flex>

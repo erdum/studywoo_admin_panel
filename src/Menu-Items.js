@@ -2,8 +2,8 @@ import { FaBitcoin } from "react-icons/fa";
 
 const MenuLinks = [
 	{
-		path: "/test",
-		label: "Test",
+		path: "/account-settings",
+		label: "Account Settings",
 		icon: FaBitcoin,
 	},
 ];
