@@ -44,7 +44,6 @@ const Sidebar = ({ links }) => {
 		<Box
 			w="16rem"
 			h="100%"
-			mt={{ base: "0", lg: "4rem" }}
 			bg="white"
 			boxShadow={{
 				base: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
@@ -114,7 +113,7 @@ const SidebarWrapper = ({ isOpen, links, outsideClickHandler }) => {
 		<Slide
 			direction="left"
 			in={isOpen}
-			style={{ width: "auto" }}
+			style={{ width: "auto", top: "4rem" }}
 			unmountOnExit
 		>
 			<Sidebar links={links} />
