@@ -40,7 +40,7 @@ const App = () => {
 		hideLoader();
 
 		if (width >= 992) {
-			headerAction.addEventListener("click", handleHeaderAction);
+			headerAction?.addEventListener("click", handleHeaderAction);
 			setMenu(true);
 		} else {
 			btn?.addEventListener("click", () => setMenu(true));
@@ -65,8 +65,6 @@ const App = () => {
 		);
 		userName.textContent = userData.name;
 	}, [userData]);
-
-	// return null;
 
 	return (
 		<BrowserRouter>
