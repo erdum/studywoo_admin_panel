@@ -26,6 +26,7 @@ const Sidebar = ({ links }) => {
 	const {
 		userData: { avatar, name },
 	} = useStateContext();
+
 	const activeStyle = {
 		color: "white",
 		backgroundColor: theme.colors.custom.primary,
@@ -89,7 +90,7 @@ const Sidebar = ({ links }) => {
 						style={({ isActive }) =>
 							isActive ? activeStyle : null
 						}
-						className={`hover:bg-[${theme.colors.custom.primary}] hover:text-white transition-colors text-gray-500 font-semibold`}
+						className={"hover:bg-gray-100 transition-colors text-gray-500 font-semibold"}
 					>
 						<Flex align="center" px="8" py="2">
 							<Icon boxSize="1.2rem" as={item.icon} />

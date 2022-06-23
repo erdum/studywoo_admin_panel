@@ -1,10 +1,10 @@
-import { FaBitcoin } from "react-icons/fa";
+import { FaUserCog } from "react-icons/fa";
 
 const MenuLinks = [
 	{
 		path: "/account-settings",
 		label: "Account Settings",
-		icon: FaBitcoin,
+		icon: FaUserCog,
 	},
 ];
 
