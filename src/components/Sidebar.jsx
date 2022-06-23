@@ -103,6 +103,7 @@ const Sidebar = ({ links }) => {
 };
 
 const SidebarWrapper = ({ isOpen, links, outsideClickHandler }) => {
+	const { width } = getScreenDim();
 	const ref = useRef();
 	useOutsideClick({
 		ref,
@@ -113,8 +114,7 @@ const SidebarWrapper = ({ isOpen, links, outsideClickHandler }) => {
 		<Slide
 			direction="left"
 			in={isOpen}
-			style={{ width: "auto" }}
-			top={{ base: "0", lg: "4rem" }}
+			style={{ width: "auto", top: width >= 992 ? "4rem" : "0" }}
 			unmountOnExit
 		>
 			<Sidebar links={links} />
