@@ -17,9 +17,15 @@ import {
 	useOutsideClick,
 } from "@chakra-ui/react";
 
+// App State Context
+import useStateContext from "../contexts/StateContextProvider";
+
 const Sidebar = ({ links }) => {
 	const { width } = getScreenDim();
 	const theme = useTheme();
+	const {
+		userData: { avatar, name },
+	} = useStateContext();
 	const activeStyle = {
 		color: "white",
 		backgroundColor: theme.colors.custom.primary,
@@ -56,9 +62,9 @@ const Sidebar = ({ links }) => {
 				borderBottom="1px"
 				borderColor="gray.200"
 			>
-				<Avatar src="" />
-				<Text px="4" fontSize="xl" color="gray.500" fontWeight="medium">
-					Erdum
+				<Avatar src={`${process.env.REACT_APP_IMG_URL}${avatar}.webp`} />
+				<Text px="4" fontSize="lg" color="gray.500" fontWeight="semibold">
+					{name}
 				</Text>
 			</Flex>
 			<VStack
