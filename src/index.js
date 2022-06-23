@@ -21,6 +21,9 @@ const theme = extendTheme({
 			contrast: "#2a9d8f",
 		},
 	},
+	breakpoints: {
+		lg: "992"
+	}
 });
 
 root.render(
