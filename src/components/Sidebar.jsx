@@ -63,7 +63,7 @@ const Sidebar = ({ links }) => {
 				borderColor="gray.200"
 			>
 				<Avatar src={`${process.env.REACT_APP_IMG_URL}${avatar}.webp`} />
-				<Text px="4" fontSize="lg" color="gray.500" fontWeight="semibold">
+				<Text noOfLines={2} px="4" fontSize="lg" color="gray.500" fontWeight="semibold">
 					{name}
 				</Text>
 			</Flex>
