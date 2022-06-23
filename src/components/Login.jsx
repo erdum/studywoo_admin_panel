@@ -18,27 +18,29 @@ import { useQuery } from "react-query";
 import { useToast } from "@chakra-ui/react";
 import { toastSettings } from "../setting";
 
-const authenticateUser = async ({ queryKey: [_, credentials] }) => {
-	const req = await fetch(`${process.env.REACT_APP_API_URL}login`, {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(credentials),
-	});
-
-	if (req.status === 401) throw new Error("Unauthorized", { cause: 401 });
-	if (req.status !== 200) throw new Error("Request failed");
-	return req.json();
-};
-
 const Login = () => {
 	const [isPassInvalid, setPassInvalid] = useState(false);
 	const [credentials, setCredentials] = useState(null);
 	const [showPassword, setShowPassword] = useState(false);
 	const toast = useToast();
+
+	const authenticateUser = async () => {
+		if (!credentials) return;
+		const req = await fetch(`${process.env.REACT_APP_API_URL}login`, {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(credentials),
+		});
+
+		if (req.status === 401) throw new Error("Unauthorized", { cause: 401 });
+		if (req.status !== 200) throw new Error("Request failed");
+		return req.json();
+	};
+
 	const { error, refetch, isLoading, isSuccess } = useQuery(
-		["userData", credentials],
+		"userData",
 		authenticateUser,
 		{
 			enabled: false,
