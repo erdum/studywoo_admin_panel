@@ -84,7 +84,7 @@ const Sidebar = ({ links }) => {
 						}
 						className={`hover:bg-[${theme.colors.custom.primary}] hover:text-white transition-colors`}
 					>
-						<Flex align="center" px="8" py="2">
+						<Flex align="center" px="8" py="2" className={"text-gray-500 font-medium"}>
 							<Icon boxSize="1.2rem" as={item.icon} />
 							<Text pl="4">{item.label}</Text>
 						</Flex>
