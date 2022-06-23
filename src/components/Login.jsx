@@ -2,6 +2,7 @@ import {
 	Input,
 	InputGroup,
 	InputLeftElement,
+	InputRightElement,
 	FormControl,
 	FormLabel,
 	FormErrorMessage,
@@ -34,6 +35,7 @@ const authenticateUser = async ({ queryKey: [_, credentials] }) => {
 const Login = () => {
 	const [isPassInvalid, setPassInvalid] = useState(false);
 	const [credentials, setCredentials] = useState(null);
+	const [showPassword, setShowPassword] = useState(false);
 	const toast = useToast();
 	const { error, refetch, isLoading, isSuccess } = useQuery(
 		["userData", credentials],
@@ -148,10 +150,25 @@ const Login = () => {
 							/>
 							<Input
 								id="password"
-								type="password"
+								type={showPassword ? "text" : "password"}
 								focusBorderColor="custom.primary"
 								onChange={() => setPassInvalid(false)}
+								pr="24"
 							/>
+							<InputRightElement w="20">
+								<Button
+									h="6"
+									mx="2"
+									size="sm"
+									onClick={() =>
+										setShowPassword(
+											(showPassword) => !showPassword
+										)
+									}
+								>
+									{showPassword ? "hide" : "show"}
+								</Button>
+							</InputRightElement>
 						</InputGroup>
 						<FormErrorMessage>Wrong password !</FormErrorMessage>
 					</FormControl>
