@@ -77,10 +77,6 @@ const Login = () => {
 	}, [isSuccess]);
 
 	useEffect(() => {
-		if (data) console.log(data);
-	}, [data]);
-
-	useEffect(() => {
 		if (credentials) refetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [credentials]);
