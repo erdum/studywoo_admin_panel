@@ -72,7 +72,7 @@ const Login = () => {
 		if (!error) return;
 
 		if (error.cause === 401) {
-			setPassInvalid(true);
+			setPassInvalid("Wrong password !");
 		} else {
 			const id = "login-error";
 			toast({
@@ -107,7 +107,13 @@ const Login = () => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const [{ value: username }, { value: pass }] = event.target.elements;
-		setCredentials({ email: username, password: pass });
+
+		if (pass.length >= 6) {
+			setCredentials({ email: username, password: pass });
+		} else {
+			setPassInvalid("Password should be 6 characters long");
+		}
+
 	};
 
 	return (
@@ -191,7 +197,7 @@ const Login = () => {
 								</Button>
 							</InputRightElement>
 						</InputGroup>
-						<FormErrorMessage>Wrong password !</FormErrorMessage>
+						<FormErrorMessage>{isPassInvalid}</FormErrorMessage>
 					</FormControl>
 					<Button
 						type="submit"
