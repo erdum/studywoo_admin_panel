@@ -1,21 +1,25 @@
 import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
+import { Fade } from "@chakra-ui/react";
 
-const MountPortalComp = ({node, children}) => {
+const MountPortalComp = ({ node, children }) => {
 	const [isRootClear, setRootClear] = useState(false);
 
 	useEffect(() => {
-		if (isRootClear) return;
-		if (node.children.length > 0) {
-			node.innerHTML = "";
-		} else {
-			setRootClear(true);
+		if (!isRootClear) node.style.opacity = "0";
+
+		if (!isRootClear && node.children.length > 0) {
+			setTimeout(() => node.innerHTML = "", 310);
+			setTimeout(() => setRootClear(true), 320);
+			setTimeout(() => node.style.opacity = "1", 330);
 		}
 	}, [isRootClear]);
 
-	if (!isRootClear) return null;
+	return (
+		<>
+			{isRootClear && createPortal(children, node)}
+		</>
+	);
+};
 
-	return createPortal(children, node);
-}
-
-export default MountPortalComp
+export default MountPortalComp;
