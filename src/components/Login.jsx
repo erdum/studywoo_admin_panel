@@ -26,6 +26,9 @@ import { toastSettings } from "../setting";
 // App State Context
 import useStateContext from "../contexts/StateContextProvider";
 
+// Helper functions
+import storage from "../helpers/storage";
+
 const Login = () => {
 	const [isPassInvalid, setPassInvalid] = useState(false);
 	const [credentials, setCredentials] = useState(null);
@@ -61,11 +64,13 @@ const Login = () => {
 
 	useEffect(() => {
 		if (!data) return;
-		setUser({
+		const payload = {
 			name: data?.user_data?.name,
 			avatar: data?.user_data?.avatar,
 			...credentials,
-		});
+		};
+		setUser(payload);
+		storage.setItem("userData", payload);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
 

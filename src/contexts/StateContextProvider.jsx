@@ -1,23 +1,25 @@
 import { createContext, useContext, useState } from "react";
+import storage from "../helpers/storage";
 
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
 	const [isDrawerOpen, setDrawer] = useState(false);
-	const [userData, setUserData] = useState(null);
+	const [userData, setUserData] = useState(storage.getItem("userData"));
 
 	const openDrawer = () => setDrawer(true);
 
 	const closeDrawer = () => setDrawer(false);
 
-	const setUser = ({name, email, password, avatar}) => setUserData({name, email, password, avatar});
+	const setUser = ({ name, email, password, avatar }) =>
+		setUserData({ name, email, password, avatar });
 
 	const value = {
 		isDrawerOpen,
 		openDrawer,
 		closeDrawer,
 		userData,
-		setUser
+		setUser,
 	};
 
 	return (
