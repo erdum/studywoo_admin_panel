@@ -48,7 +48,7 @@ const App = () => {
 
 	useEffect(() => {
 		hideLoader();
-		if (width >= 992) setMenu(true);
+		if (width >= theme.breakpoints.lg) setMenu(true);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
