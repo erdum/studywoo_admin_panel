@@ -47,7 +47,7 @@ const App = () => {
 	};
 
 	useEffect(() => {
-		hideLoader();
+		// hideLoader();
 
 		if (width >= 992) setMenu(true);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,7 +55,7 @@ const App = () => {
 
 	return (
 		<AuthProvider>
-			{width >= 992 ? (
+			{width >= theme.breakpoints.lg ? (
 				<MountPortalComp
 					node={document.getElementById("header_action_wrapper")}
 				>
