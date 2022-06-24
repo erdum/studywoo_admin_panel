@@ -26,8 +26,8 @@ const hideLoader = () => {
 	const loader = document.getElementById("loader");
 
 	if (loader) {
-		loader.style.setProperty("opacity", "0");
-		setTimeout(() => loader.remove(), 200);
+		setTimeout(() => loader.style.setProperty("opacity", "0"), 500)
+		setTimeout(() => loader.remove(), 1000);
 	}
 };
 
@@ -47,8 +47,7 @@ const App = () => {
 	};
 
 	useEffect(() => {
-		// hideLoader();
-
+		hideLoader();
 		if (width >= 992) setMenu(true);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
