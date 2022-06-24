@@ -112,8 +112,12 @@ const Sidebar = ({ links }) => {
 					px="8"
 					display="flex"
 					justifyContent="space-between"
+					borderRadius="none"
 					rightIcon={<Icon as={FaSignOutAlt} />}
 					onClick={() => logout()}
+					_hover={{
+						bg: "gray.100"
+					}}
 				>
 					Logout
 				</Button>
