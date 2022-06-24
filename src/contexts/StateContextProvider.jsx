@@ -14,12 +14,18 @@ export const StateContextProvider = ({ children }) => {
 	const setUser = ({ name, email, password, avatar }) =>
 		setUserData({ name, email, password, avatar });
 
+	const logout = () => {
+		storage.clear("userData", "accessToken");
+		location.reload();
+	}
+
 	const value = {
 		isDrawerOpen,
 		openDrawer,
 		closeDrawer,
 		userData,
 		setUser,
+		logout
 	};
 
 	return (

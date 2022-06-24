@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate, Routes } from "react-router-dom";
 
 // UI Components and hooks
@@ -10,6 +11,10 @@ import getScreenDim from "./helpers/getScreenDim";
 // Custom Components
 import Sidebar from "./components/Sidebar";
 import AuthProvider from "./components/AuthProvider";
+import HeaderAction from "./components/HeaderAction";
+import HomeLink from "./components/HomeLink";
+import MobileMenuBtn from "./components/MobileMenuBtn";
+import MountPortalComp from "./components/MountPortalComp";
 
 // App State Context
 import useStateContext from "./contexts/StateContextProvider";
@@ -37,49 +42,39 @@ const App = () => {
 		navigate("/account-settings");
 	};
 
-	const handleHomeAction = () => {
-		navigate("/");
+	const handleMobileMenuBtn = () => {
+		setMenu(true);
 	};
 
 	useEffect(() => {
-		// Adding event listeners to static App Shell
-		const btn = document.querySelector("#header_action > i");
-		const headerAction = document.querySelector("#header_action");
-		const homeLink = document.querySelector("header > h1");
-
-		homeLink.addEventListener("click", handleHomeAction);
 		hideLoader();
 
-		if (width >= theme.breakpoints.lg) {
-			headerAction?.addEventListener("click", handleHeaderAction);
-			setMenu(true);
-		} else {
-			btn?.addEventListener("click", () => setMenu(true));
-		}
-
-		return () => {
-			btn?.removeEventListener("click", () => setMenu(false));
-			headerAction?.removeEventListener("click", handleHeaderAction);
-			homeLink.removeEventListener("click", handleHomeAction);
-		};
-
+		if (width >= 992) setMenu(true);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	useEffect(() => {
-		if (!userData) return;
-		const userAvatar = document.querySelector("#header_action img");
-		const userName = document.querySelector("#header_action p");
-
-		userAvatar.setAttribute(
-			"src",
-			`${import.meta.env.VITE_APP_IMG_URL}${userData.avatar}.webp`
-		);
-		userName.textContent = userData.name;
-	}, [userData]);
-
 	return (
 		<AuthProvider>
+			{width >= 992 ? (
+				<MountPortalComp
+					node={document.getElementById("header_action_wrapper")}
+				>
+					<HeaderAction onClick={handleHeaderAction} />
+				</MountPortalComp>
+			) : (
+				<MountPortalComp
+					node={document.querySelector(
+						"#header_action_wrapper > div"
+					)}
+				>
+					<MobileMenuBtn onClick={handleMobileMenuBtn} />
+				</MountPortalComp>
+			)}
+			<MountPortalComp
+				node={document.getElementById("home_link_wrapper")}
+			>
+				<HomeLink to="/">Studywoo</HomeLink>
+			</MountPortalComp>
 			<Sidebar
 				isOpen={isMenuOpen}
 				links={MenuLinks}
@@ -87,8 +82,7 @@ const App = () => {
 					width >= theme.breakpoints.lg ? null : setMenu(false)
 				}
 			/>
-			<Routes>
-			</Routes>
+			<Routes></Routes>
 		</AuthProvider>
 	);
 };

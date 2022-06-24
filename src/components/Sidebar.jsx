@@ -29,6 +29,7 @@ const Sidebar = ({ links }) => {
 	const theme = useTheme();
 	const {
 		userData: { avatar, name },
+		logout
 	} = useStateContext();
 
 	const activeStyle = {
@@ -112,6 +113,7 @@ const Sidebar = ({ links }) => {
 					display="flex"
 					justifyContent="space-between"
 					rightIcon={<Icon as={FaSignOutAlt} />}
+					onClick={() => logout()}
 				>
 					Logout
 				</Button>

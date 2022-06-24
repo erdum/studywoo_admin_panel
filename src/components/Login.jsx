@@ -71,6 +71,7 @@ const Login = () => {
 		};
 		setUser(payload);
 		storage.setItem("userData", payload);
+		storage.setItem("accessToken", data.access_token);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
 

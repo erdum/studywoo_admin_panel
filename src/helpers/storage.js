@@ -9,7 +9,9 @@ const storage = (() => {
 		localStorage.setItem(key, JSON.stringify(data));
 	};
 
-	const clear = () => localStorage.clear();
+	const clear = (...keys) => {
+		keys.forEach((key) => localStorage.removeItem(key));
+	};
 
 	return {
 		getItem,

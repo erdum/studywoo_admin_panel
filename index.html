@@ -1,38 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#000000" />
+		<meta
+			name="description"
+			content="Content managment admin panel for Studywoo"
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+			integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+		<link rel="stylesheet" type="text/css" href="output.css" />
+		<title>Studywoo Admin Panel</title>
+	</head>
 
-<head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Content managment admin panel for Studywoo" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" type="text/css" href="output.css">
-    <title>Studywoo Admin Panel</title>
-</head>
-
-<body class="bg-gray-100">
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <header class="w-full h-16 bg-white text-primary shadow flex items-center justify-between lg:px-4">
-    	<h1 class="font-bold px-4 lg:py-1 rounded-md text-2xl md:text-3xl cursor-pointer hover:bg-gray-100">Studywoo</h1>
-    	<div id="header_action" class="flex items-center gap-2 text-gray-500 font-semibold cursor-pointer rounded-md z-10 px-4 py-1 hover:bg-gray-100">
-	    	<i class="fa-solid fa-bars text-2xl lg:hidden"></i>
-    		<img src="./avatar_placeholder.jpg" class="hidden w-10 aspect-square rounded-full object-cover lg:block">
-    		<p class="hidden lg:block">Not logged in</p>
-    	</div>
-    </header>
-	
-	<div id="loader" class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex items-center justify-center transition-opacity">
-		<div class="w-20 aspect-square border-8 border-primary border-t-white border-r-white rounded-full animate-spin"></div>
-	</div>
-    
-    <main id="root" class="h-[calc(100vh-4rem)] p-4 md:p-6 overflow-x-hidden overflow-y-auto">
-    </main>
-    <script type="module" src="./src/index.jsx"></script>
-</body>
-
+	<body class="bg-gray-100">
+		<noscript>You need to enable JavaScript to run this app.</noscript>
+		<header
+			class="
+				w-full
+				h-16
+				bg-white
+				text-primary
+				shadow
+				flex
+				items-center
+				justify-between
+				lg:px-4
+			"
+		>
+			<div id="home_link_wrapper">
+				<h1
+					href="/"
+					class="
+						font-bold
+						px-4
+						lg:py-1
+						rounded-md
+						text-2xl
+						md:text-3xl
+						cursor-pointer
+						hover:bg-gray-100
+					"
+				>
+					Studywoo
+				</h1>
+			</div>
+			<div id="header_action_wrapper">
+				<div
+					id="header_action"
+					class="
+						flex
+						items-center
+						gap-2
+						text-gray-500
+						font-semibold
+						cursor-pointer
+						rounded-md
+						z-10
+						px-4
+						py-1
+						hover:bg-gray-100
+					"
+				>
+					<i class="fa-solid fa-bars text-2xl lg:hidden"></i>
+					<img
+						src="./avatar_placeholder.jpg"
+						class="
+							hidden
+							w-10
+							aspect-square
+							rounded-full
+							object-cover
+							lg:block
+						"
+					/>
+					<p class="hidden lg:block">Not logged in</p>
+				</div>
+			</div>
+		</header>
+		<div
+			id="loader"
+			class="
+				fixed
+				top-1/2
+				left-1/2
+				-translate-y-1/2 -translate-x-1/2
+				flex
+				items-center
+				justify-center
+				transition-opacity
+			"
+		>
+			<div
+				class="
+					w-20
+					aspect-square
+					border-8 border-primary border-t-white border-r-white
+					rounded-full
+					animate-spin
+				"
+			></div>
+		</div>
+		<main
+			id="root"
+			class="
+				h-[calc(100vh-4rem)]
+				p-4
+				md:p-6
+				overflow-x-hidden overflow-y-auto
+			"
+		></main>
+		<script type="module" src="./src/index.jsx"></script>
+	</body>
 </html>
