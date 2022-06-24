@@ -6,12 +6,14 @@ const MountPortalComp = ({ node, children }) => {
 	const [isRootClear, setRootClear] = useState(false);
 
 	useEffect(() => {
-		if (!isRootClear) node.style.opacity = "0";
+		if (!isRootClear) {
+			setTimeout(() => node.style.opacity = "0", 20);
+		}
 
 		if (!isRootClear && node.children.length > 0) {
-			setTimeout(() => node.innerHTML = "", 310);
-			setTimeout(() => setRootClear(true), 320);
-			setTimeout(() => node.style.opacity = "1", 330);
+			setTimeout(() => node.innerHTML = "", 340);
+			setTimeout(() => setRootClear(true), 350);
+			setTimeout(() => node.style.opacity = "1", 360);
 		}
 	}, [isRootClear]);
 
