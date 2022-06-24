@@ -22,6 +22,15 @@ import useStateContext from "./contexts/StateContextProvider";
 // Menu Items
 import MenuLinks from "./Menu-Items.js";
 
+const hideLoader = () => {
+	const loader = document.getElementById("loader");
+
+	if (loader) {
+		loader.style.setProperty("opacity", "0");
+		setTimeout(() => loader.remove(), 200);
+	}
+};
+
 const App = () => {
 	const [isMenuOpen, setMenu] = useState(false);
 	const { width } = getScreenDim();
@@ -38,13 +47,14 @@ const App = () => {
 	};
 
 	useEffect(() => {
+		// hideLoader();
+
 		if (width >= 992) setMenu(true);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
 		<AuthProvider>
-			{/* Hydrating Static App Shell after application load*/}
 			{width >= theme.breakpoints.lg ? (
 				<MountPortalComp
 					node={document.getElementById("header_action_wrapper")}
@@ -65,7 +75,6 @@ const App = () => {
 			>
 				<HomeLink to="/">Studywoo</HomeLink>
 			</MountPortalComp>
-
 			<Sidebar
 				isOpen={isMenuOpen}
 				links={MenuLinks}
