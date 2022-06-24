@@ -26,7 +26,7 @@ const hideLoader = () => {
 	const loader = document.getElementById("loader");
 
 	if (loader) {
-		setTimeout(() => loader.style.setProperty("opacity", "0"), 500)
+		setTimeout(() => loader.style.setProperty("opacity", "0"), 400)
 		setTimeout(() => loader.remove(), 1000);
 	}
 };
