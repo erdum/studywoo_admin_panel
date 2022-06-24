@@ -12,7 +12,6 @@ const HeaderAction = ({ onClick }) => {
 				"flex items-center gap-2 text-gray-500 font-semibold cursor-pointer rounded-md z-10 px-4 py-1 hover:bg-gray-100"
 			}
 		>
-			<i className={"fa-solid fa-bars text-2xl lg:hidden"}></i>
 			<img
 				src={
 					`${import.meta.env.VITE_APP_IMG_URL}${avatar}.webp` ??
