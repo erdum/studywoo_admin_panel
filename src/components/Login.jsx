@@ -43,8 +43,9 @@ const Login = () => {
 			body: JSON.stringify(credentials),
 		});
 
-		if (req.status === 401) throw new Error("Unauthorized", { cause: 401 });
-		if (req.status !== 200) throw new Error("Request failed");
+		if (req.status !== 200) {
+			throw new Error("Request failed", { cause: req.status });
+		}
 		return req.json();
 	};
 
@@ -79,7 +80,10 @@ const Login = () => {
 				...toastSettings,
 				id,
 				title: "Login Failed",
-				description: "Request failed from the server !",
+				description:
+					error.cause === undefined
+						? "Network error! check your Internet connection"
+						: "Request failed from the server !",
 				status: "error",
 			});
 		}
@@ -113,7 +117,6 @@ const Login = () => {
 		} else {
 			setPassInvalid("Password should be 6 characters long");
 		}
-
 	};
 
 	return (
