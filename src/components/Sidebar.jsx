@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 // Helper functions
@@ -15,16 +15,20 @@ import {
 	Icon,
 	Button,
 	useTheme,
-	useOutsideClick,
+	useOutsideClick
 } from "@chakra-ui/react";
 
 // Icons
 import { FaSignOutAlt } from "react-icons/fa";
 
+// Custom UI Component
+import Alert from "./Alert";
+
 // App State Context
 import useStateContext from "../contexts/StateContextProvider";
 
 const Sidebar = ({ links }) => {
+	const [isAlertOpen, setAlert] = useState(false);
 	const { width } = getScreenDim();
 	const theme = useTheme();
 	const {
@@ -115,7 +119,7 @@ const Sidebar = ({ links }) => {
 					justifyContent="space-between"
 					borderRadius="none"
 					rightIcon={<Icon as={FaSignOutAlt} />}
-					onClick={() => logout()}
+					onClick={() => setAlert(true)}
 					_hover={{
 						bg: "gray.100"
 					}}
@@ -124,6 +128,7 @@ const Sidebar = ({ links }) => {
 					Logout
 				</Button>
 			</VStack>
+			<Alert isOpen={isAlertOpen} onClose={() => setAlert(false)} onYes={() => logout()} heading="Logout" body="Are you sure you want to logout?" />
 		</Box>
 	);
 };
