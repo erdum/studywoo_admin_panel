@@ -84,6 +84,7 @@ const Sidebar = ({ links }) => {
 				h="100%"
 				align="stretch"
 				pt="10"
+				pb="4"
 				spacing="2"
 				fontWeight="medium"
 				fontSize="lg"
@@ -118,6 +119,7 @@ const Sidebar = ({ links }) => {
 					_hover={{
 						bg: "gray.100"
 					}}
+					mt="auto !important"
 				>
 					Logout
 				</Button>
