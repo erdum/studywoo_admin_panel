@@ -29,65 +29,30 @@
 	<body class="bg-gray-100">
 		<noscript>You need to enable JavaScript to run this app.</noscript>
 		<header
-			class="
-				w-full
-				h-16
-				bg-white
-				text-primary
-				shadow
-				flex
-				items-center
-				justify-between
-				lg:px-4
-			"
+			class="w-full h-16 bg-white text-primary shadow flex items-center justify-between lg:px-4"
 		>
-			<div id="home_link_wrapper" class="transition-opacity duration-300 opacity-100">
+			<div
+				id="home_link_wrapper"
+				class="transition-opacity duration-300 opacity-100"
+			>
 				<h1
-					class="
-						font-bold
-						px-4
-						lg:py-1
-						rounded-md
-						text-2xl
-						md:text-3xl
-						cursor-pointer
-						hover:bg-gray-100
-					"
+					class="font-bold px-4 lg:py-1 rounded-md text-2xl md:text-3xl cursor-pointer hover:bg-gray-100"
 				>
 					Studywoo
 				</h1>
 			</div>
-			<div id="header_action_wrapper" class="transition-opacity duration-300 opacity-100">
+			<div
+				id="header_action_wrapper"
+				class="transition-opacity duration-300 opacity-100"
+			>
 				<div
 					id="header_action"
-					class="
-						flex
-						items-center
-						gap-2
-						text-gray-500
-						font-semibold
-						cursor-pointer
-						rounded-md
-						z-10
-						px-4
-						py-1
-						hover:bg-gray-100
-						transition-opacity
-						duration-300
-						opacity-100
-					"
+					class="flex items-center gap-2 text-gray-500 font-semibold cursor-pointer rounded-md z-10 px-4 py-1 hover:bg-gray-100 transition-opacity duration-300 opacity-100"
 				>
 					<i class="fa-solid fa-bars text-2xl lg:hidden"></i>
 					<img
 						src="./avatar_placeholder.jpg"
-						class="
-							hidden
-							w-10
-							aspect-square
-							rounded-full
-							object-cover
-							lg:block
-						"
+						class="hidden w-10 aspect-square rounded-full object-cover lg:block"
 					/>
 					<p class="hidden lg:block">Not logged in</p>
 				</div>
@@ -95,36 +60,15 @@
 		</header>
 		<div
 			id="loader"
-			class="
-				fixed
-				top-1/2
-				left-1/2
-				-translate-y-1/2 -translate-x-1/2
-				flex
-				items-center
-				justify-center
-				transition-opacity
-				opacity-100
-			"
+			class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex items-center justify-center transition-opacity opacity-100"
 		>
 			<div
-				class="
-					w-20
-					aspect-square
-					border-8 border-primary border-t-white border-r-white
-					rounded-full
-					animate-spin
-				"
+				class="w-20 aspect-square border-8 border-primary border-t-white border-r-white rounded-full animate-spin"
 			></div>
 		</div>
 		<main
 			id="root"
-			class="
-				h-[calc(100vh-4rem)]
-				p-4
-				md:p-6
-				overflow-x-hidden overflow-y-auto
-			"
+			class="h-[calc(100vh-4rem)] p-2 md:p-6 overflow-x-hidden overflow-y-auto"
 		></main>
 		<script type="module" src="./src/index.jsx"></script>
 	</body>

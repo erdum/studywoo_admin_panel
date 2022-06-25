@@ -15,6 +15,7 @@ import HeaderAction from "./components/HeaderAction";
 import HomeLink from "./components/HomeLink";
 import MobileMenuBtn from "./components/MobileMenuBtn";
 import MountPortalComp from "./components/MountPortalComp";
+import PageWrapper from "./components/PageWrapper";
 
 // App State Context
 import useStateContext from "./contexts/StateContextProvider";
@@ -29,12 +30,13 @@ const hideLoader = () => {
 	const loader = document.getElementById("loader");
 
 	if (loader) {
-		setTimeout(() => loader.style.setProperty("opacity", "0"), 400);
-		setTimeout(() => loader.remove(), 1000);
+		setTimeout(() => loader.style.setProperty("opacity", "0"), 200);
+		setTimeout(() => loader.remove(), 500);
 	}
 };
 
 const App = () => {
+	const [isAppMounted, setAppMounted] = useState(false);
 	const [isMenuOpen, setMenu] = useState(false);
 	const { width } = getScreenDim();
 	const theme = useTheme();
@@ -52,6 +54,7 @@ const App = () => {
 
 	useEffect(() => {
 		hideLoader();
+		setAppMounted(true);
 		if (width >= theme.breakpoints.lg) setMenu(true);
 	}, []);
 
@@ -84,9 +87,7 @@ const App = () => {
 					width >= theme.breakpoints.lg ? null : setMenu(false)
 				}
 			/>
-			<Box w="100%" h="100%" bg="white" borderRadius="2xl">
-				{Routes}
-			</Box>
+			<PageWrapper mount={isAppMounted}>{Routes}</PageWrapper>
 		</AuthProvider>
 	);
 };
