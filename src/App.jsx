@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { useNavigate, useRoutes } from "react-router-dom";
 
 // UI Components and hooks
-import { useTheme } from "@chakra-ui/react";
+import { useTheme, Box } from "@chakra-ui/react";
 
 // Helper Functions
 import getScreenDim from "./helpers/getScreenDim";
@@ -84,7 +84,9 @@ const App = () => {
 					width >= theme.breakpoints.lg ? null : setMenu(false)
 				}
 			/>
-			{Routes}
+			<Box w="100%" h="100%" bg="white" borderRadius="2xl">
+				{Routes}
+			</Box>
 		</AuthProvider>
 	);
 };
