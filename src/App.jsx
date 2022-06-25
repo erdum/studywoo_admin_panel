@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useNavigate, Routes } from "react-router-dom";
+import { useNavigate, useRoutes } from "react-router-dom";
 
 // UI Components and hooks
 import { useTheme } from "@chakra-ui/react";
@@ -22,6 +22,9 @@ import useStateContext from "./contexts/StateContextProvider";
 // Menu Items
 import MenuLinks from "./Menu-Items.js";
 
+// Application Routes
+import routes from "./routes";
+
 const hideLoader = () => {
 	const loader = document.getElementById("loader");
 
@@ -37,6 +40,7 @@ const App = () => {
 	const theme = useTheme();
 	const { userData } = useStateContext();
 	const navigate = useNavigate();
+	const Routes = useRoutes(routes);
 
 	const handleHeaderAction = () => {
 		navigate("/account-settings");
@@ -80,7 +84,7 @@ const App = () => {
 					width >= theme.breakpoints.lg ? null : setMenu(false)
 				}
 			/>
-			<Routes></Routes>
+			{Routes}
 		</AuthProvider>
 	);
 };

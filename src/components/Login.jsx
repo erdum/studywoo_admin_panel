@@ -165,6 +165,7 @@ const Login = () => {
 								id="username"
 								type="text"
 								focusBorderColor="custom.primary"
+								autoComplete="on"
 							/>
 						</InputGroup>
 						<FormErrorMessage>
@@ -190,6 +191,7 @@ const Login = () => {
 								focusBorderColor="custom.primary"
 								onChange={() => setPassInvalid(false)}
 								pr="24"
+								autoComplete="on"
 							/>
 							<InputRightElement w="20">
 								<Button
