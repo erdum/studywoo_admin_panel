@@ -2,7 +2,15 @@ import { Flex, Spacer, Text, Button } from "@chakra-ui/react";
 
 import SearchBar from "./SearchBar";
 
-const PageHeader = ({ title, description, btnText }) => {
+const PageHeader = ({
+	title,
+	description,
+	btnText,
+	enableSearch,
+	disableBtn,
+	isBtnLoading,
+	onChange,
+}) => {
 	return (
 		<Flex
 			w="100%"
@@ -46,10 +54,16 @@ const PageHeader = ({ title, description, btnText }) => {
 					borderWidth: "2px",
 					borderColor: "custom.primary",
 				}}
+				isDisabled={disableBtn}
+				isLoading={isBtnLoading}
 			>
 				{btnText}
 			</Button>
-			<SearchBar />
+			{enableSearch && (
+				<SearchBar
+					onChange={(value) => (onChange ? onChange() : () => {})}
+				/>
+			)}
 		</Flex>
 	);
 };

@@ -2,11 +2,16 @@
 import PageHeader from "../components/PageHeader";
 
 const AccountSettings = () => {
+	// const []
+
 	return (
 		<PageHeader
 			title="Account Settings"
 			description="Edit personal and public information"
 			btnText="Save"
+			enableSearch
+			disableBtn
+			isBtnLoading={false}
 		/>
 	);
 };
