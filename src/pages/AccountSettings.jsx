@@ -9,7 +9,7 @@ const AccountSettings = () => {
 			title="Account Settings"
 			description="Edit personal and public information"
 			btnText="Save"
-			enableSearch
+			enableSearch={false}
 			disableBtn
 			isBtnLoading={false}
 		/>

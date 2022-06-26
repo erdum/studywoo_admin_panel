@@ -17,7 +17,7 @@ export const StateContextProvider = ({ children }) => {
 	const logout = () => {
 		storage.clear("userData", "accessToken");
 		location.reload();
-	}
+	};
 
 	const value = {
 		isDrawerOpen,
@@ -25,7 +25,7 @@ export const StateContextProvider = ({ children }) => {
 		closeDrawer,
 		userData,
 		setUser,
-		logout
+		logout,
 	};
 
 	return (
