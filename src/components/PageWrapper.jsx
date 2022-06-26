@@ -9,6 +9,8 @@ const PageWrapper = ({ children, mount }) => {
 				bg="white"
 				borderRadius="lg"
 				boxShadow="base"
+				px={{ base: "4", md: "6" }}
+				py={{ base: "1", md: "4" }}
 			>
 				{children}
 			</Box>

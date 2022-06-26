@@ -15,7 +15,7 @@ import {
 	Icon,
 	Button,
 	useTheme,
-	useOutsideClick
+	useOutsideClick,
 } from "@chakra-ui/react";
 
 // Icons
@@ -33,7 +33,7 @@ const Sidebar = ({ links }) => {
 	const theme = useTheme();
 	const {
 		userData: { avatar, name },
-		logout
+		logout,
 	} = useStateContext();
 
 	const activeStyle = {
@@ -112,7 +112,6 @@ const Sidebar = ({ links }) => {
 					</NavLink>
 				))}
 				<Button
-					mt="auto"
 					variant="ghost"
 					px="8"
 					display="flex"
@@ -121,14 +120,20 @@ const Sidebar = ({ links }) => {
 					rightIcon={<Icon as={FaSignOutAlt} />}
 					onClick={() => setAlert(true)}
 					_hover={{
-						bg: "gray.100"
+						bg: "gray.100",
 					}}
 					mt="auto !important"
 				>
 					Logout
 				</Button>
 			</VStack>
-			<Alert isOpen={isAlertOpen} onClose={() => setAlert(false)} onYes={() => logout()} heading="Logout" body="Are you sure you want to logout?" />
+			<Alert
+				isOpen={isAlertOpen}
+				onClose={() => setAlert(false)}
+				onYes={() => logout()}
+				heading="Logout"
+				body="Are you sure you want to logout?"
+			/>
 		</Box>
 	);
 };
