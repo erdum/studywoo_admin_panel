@@ -149,6 +149,7 @@ const SidebarWrapper = ({ isOpen, links, outsideClickHandler }) => {
 
 	return (
 		<Slide
+			ref={ref}
 			direction="left"
 			in={isOpen}
 			style={{
