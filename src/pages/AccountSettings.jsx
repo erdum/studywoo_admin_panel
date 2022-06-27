@@ -8,7 +8,7 @@ import request from "../helpers/request";
 
 // Custom Components
 import PageHeader from "../components/PageHeader";
-import { PageFieldSkeleton } from "../components/PageSkeleton";
+import { PageFieldSkeleton, PageTableSkeleton } from "../components/PageSkeleton";
 
 const AccountSettings = () => {
 	const [isLoading, setLoading] = useState(true);
@@ -32,7 +32,7 @@ const AccountSettings = () => {
 				isBtnLoading={false}
 			/>
 			<Box overflowY="auto" w="100%" h="100%">
-				{isLoading && <PageFieldSkeleton />}
+				{isLoading && <PageTableSkeleton />}
 			</Box>
 		</>
 	);
