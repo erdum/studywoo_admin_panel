@@ -85,7 +85,7 @@ const Sidebar = ({ links }) => {
 				</Text>
 			</Flex>
 			<VStack
-				h="100%"
+				h={{ base: "calc(100% - 4rem)", lg: "100%" }}
 				align="stretch"
 				pt="10"
 				pb="4"
@@ -154,7 +154,7 @@ const SidebarWrapper = ({ isOpen, links, outsideClickHandler }) => {
 			style={{
 				width: "auto",
 				top: width >= theme.breakpoints.lg ? "4rem" : "0",
-				zIndex: "10"
+				zIndex: "10",
 			}}
 			unmountOnExit
 		>
