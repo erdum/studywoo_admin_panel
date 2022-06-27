@@ -20,6 +20,7 @@ const PageHeader = ({
 			justify="space-between"
 			wrap={{ base: "wrap", lg: "nowrap" }}
 			gap={{ base: "4" }}
+			mb={{ base: "6", md: "8", lg: "10" }}
 		>
 			<Flex direction="column" align="start">
 				<Text

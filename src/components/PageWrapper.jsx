@@ -11,6 +11,8 @@ const PageWrapper = ({ children, mount }) => {
 				boxShadow="base"
 				px={{ base: "4", md: "6" }}
 				py={{ base: "1", md: "4" }}
+				overflowY="hidden"
+				overflowX="hidden"
 			>
 				{children}
 			</Box>

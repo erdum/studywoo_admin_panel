@@ -16,7 +16,7 @@ const storage = (() => {
 	return {
 		getItem,
 		setItem,
-		clear
+		clear,
 	};
 })();
 
