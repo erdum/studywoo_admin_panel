@@ -12,7 +12,7 @@ import {
 	useDisclosure,
 } from "@chakra-ui/react";
 
-const Alert = ({ isOpen, onClose, onYes, heading, body }) => {
+const Alert = ({ isOpen, onClose, onYes, heading, body, size }) => {
 	const cancelRef = useRef();
 
 	return (
@@ -22,6 +22,7 @@ const Alert = ({ isOpen, onClose, onYes, heading, body }) => {
 			isCentered
 			motionPreset="slideInBottom"
 			leastDestructiveRef={cancelRef}
+			size={size}
 		>
 			<AlertDialogOverlay />
 			<AlertDialogContent>

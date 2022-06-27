@@ -133,6 +133,7 @@ const Sidebar = ({ links }) => {
 				onYes={() => logout()}
 				heading="Logout"
 				body="Are you sure you want to logout?"
+				size={{ base: "xs", md: "md" }}
 			/>
 		</Box>
 	);
