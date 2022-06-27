@@ -154,6 +154,7 @@ const SidebarWrapper = ({ isOpen, links, outsideClickHandler }) => {
 			style={{
 				width: "auto",
 				top: width >= theme.breakpoints.lg ? "4rem" : "0",
+				zIndex: "10"
 			}}
 			unmountOnExit
 		>
