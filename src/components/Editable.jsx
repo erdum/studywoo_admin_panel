@@ -112,6 +112,20 @@ const EditableEditor = ({ name, label }) => {
 	const ref = useRef(null);
 	const editorRef = useRef(null);
 
+	useEffect(() => {
+		const handler = (e) => {
+			if (
+				e.target.closest(
+					".tox-tinymce-aux, .moxman-window, .tam-assetmanager-root"
+				) !== null
+			) {
+				e.stopImmediatePropagation();
+			}
+		};
+		document.addEventListener("focusin", handler);
+		return () => document.removeEventListener("focusin", handler);
+	}, []);
+
 	return (
 		<>
 			<FormControl w={{ base: "100%", md: "45%", lg: "64" }}>
@@ -153,11 +167,11 @@ const EditableEditor = ({ name, label }) => {
 							onInit={(evt, editor) => {
 								editorRef.current = editor;
 								editor.on("keydown", ({ key }) => {
-									key === "Escape" && setModal(false)
+									key === "Escape" && setModal(false);
 								});
 								document
 									.querySelector(".tox-tinymce-aux")
-									.style.setProperty("z-index", "10000");
+									.style.setProperty("z-index", "100000");
 								document
 									.querySelector(".tox-tinymce")
 									.style.setProperty("flex-grow", "1");
