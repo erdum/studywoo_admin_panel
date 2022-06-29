@@ -23,7 +23,7 @@ const Editable = ({ name, value, onChange, label, type = "text" }) => {
 	}, [isEditable]);
 
 	return (
-		<FormControl w={{ md: "45%", lg: "64" }}>
+		<FormControl w={{ base: "100%", md: "45%", lg: "64" }}>
 			<FormLabel
 				fontSize={{ base: "sm", md: "md" }}
 				color="gray.500"
@@ -60,7 +60,7 @@ const Editable = ({ name, value, onChange, label, type = "text" }) => {
 
 const EditableSelect = ({ name, label, options, value, onChange }) => {
 	return (
-		<FormControl w={{ md: "45%", lg: "64" }}>
+		<FormControl w={{ base: "100%", md: "45%", lg: "64" }}>
 			<FormLabel
 				fontSize={{ base: "sm", md: "ms" }}
 				color="gray.500"
@@ -95,5 +95,7 @@ const EditableSelect = ({ name, label, options, value, onChange }) => {
 		</FormControl>
 	);
 };
+
+const EditableEditor = () => {};
 
 export { Editable, EditableSelect };

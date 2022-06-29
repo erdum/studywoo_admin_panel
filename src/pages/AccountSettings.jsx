@@ -18,6 +18,10 @@ const AccountSettings = () => {
 		password: "",
 		gender: "",
 		date_of_birth: "2004-10-29",
+		facebooke: "",
+		instagram: "",
+		twitter: "",
+		linkedin: "",
 	});
 	const [isLoading, setLoading] = useState(true);
 
@@ -51,11 +55,10 @@ const AccountSettings = () => {
 				disableBtn
 				isBtnLoading={false}
 			/>
-			<Box overflowY="auto" w="100%" h="100%">
+			<Box overflowY="auto" w="100%" h="100%" p="1">
 				{isLoading && <PageFieldSkeleton />}
 				{!isLoading && (
 					<Flex
-						p="1"
 						wrap="wrap"
 						gap={{ base: "8", md: "12", lg: "16" }}
 					>
@@ -95,7 +98,30 @@ const AccountSettings = () => {
 							value={fields.date_of_birth}
 							onChange={handleChange}
 						/>
-						;
+						<Editable
+							name="facebook"
+							label="Facebook"
+							value={fields.facebook}
+							onChange={handleChange}
+						/>
+						<Editable
+							name="instagram"
+							label="Instagram"
+							value={fields.instagram}
+							onChange={handleChange}
+						/>
+						<Editable
+							name="twitter"
+							label="Twitter"
+							value={fields.twitter}
+							onChange={handleChange}
+						/>
+						<Editable
+							name="linkedin"
+							label="Linkedin"
+							value={fields.linkedin}
+							onChange={handleChange}
+						/>
 					</Flex>
 				)}
 			</Box>
