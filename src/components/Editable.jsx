@@ -17,6 +17,8 @@ import {
 	Button,
 } from "@chakra-ui/react";
 
+import { Editor } from "@tinymce/tinymce-react";
+
 import { FaPen } from "react-icons/fa";
 
 const Editable = ({ name, value, onChange, label, type = "text" }) => {
@@ -108,6 +110,7 @@ const EditableSelect = ({ name, label, options, value, onChange }) => {
 const EditableEditor = ({ name, label }) => {
 	const [isModalOpen, setModal] = useState(false);
 	const ref = useRef(null);
+	const editorRef = useRef(null);
 
 	return (
 		<>
@@ -136,11 +139,73 @@ const EditableEditor = ({ name, label }) => {
 					/>
 				</InputGroup>
 			</FormControl>
-			<Modal isOpen={isModalOpen} onClose={() => setModal(false)} size="full" finalFocusRef={ref}>
+			<Modal
+				isOpen={isModalOpen}
+				onClose={() => setModal(false)}
+				size="full"
+				finalFocusRef={ref}
+			>
 				<ModalContent>
 					<ModalHeader>{label}</ModalHeader>
 					<ModalCloseButton />
-					<ModalBody>testst</ModalBody>
+					<ModalBody display="flex" flexDirection="column">
+						<Editor
+							onInit={(evt, editor) => {
+								editorRef.current = editor;
+								editor.on("keydown", ({ key }) => {
+									key === "Escape" && setModal(false)
+								});
+								document
+									.querySelector(".tox-tinymce-aux")
+									.style.setProperty("z-index", "10000");
+								document
+									.querySelector(".tox-tinymce")
+									.style.setProperty("flex-grow", "1");
+							}}
+							init={{
+								height: "100%",
+								menu: {
+									favs: {
+										title: "My Favorites",
+										items: "code visualaid | searchreplace | emoticons",
+									},
+								},
+								menubar:
+									"file edit view insert format tools table help",
+								toolbar:
+									"undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | " +
+									"bullist numlist outdent indent | link image | print preview media fullscreen | " +
+									"forecolor backcolor emoticons | help",
+								plugins: [
+									"advlist",
+									"autolink",
+									"link",
+									"image",
+									"lists",
+									"charmap",
+									"preview",
+									"anchor",
+									"pagebreak",
+									"searchreplace",
+									"wordcount",
+									"visualblocks",
+									"visualchars",
+									"code",
+									"fullscreen",
+									"insertdatetime",
+									"media",
+									"table",
+									"emoticons",
+									"template",
+									"help",
+								],
+							}}
+							apiKey={`${
+								import.meta.env.VITE_APP_TINYMCE_API_KEY
+							}`}
+							scriptLoading={{ defer: true }}
+						/>
+					</ModalBody>
 				</ModalContent>
 			</Modal>
 		</>
