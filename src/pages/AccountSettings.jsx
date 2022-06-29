@@ -1,25 +1,27 @@
 import { useEffect, useState } from "react";
 
 // UI Components
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 
 // Helper functions
 import request from "../helpers/request";
 
 // Custom Components
 import PageHeader from "../components/PageHeader";
-import { PageFieldSkeleton, PageTableSkeleton } from "../components/PageSkeleton";
+import { PageFieldSkeleton } from "../components/PageSkeleton";
+import Editable from "../components/Editable";
 
 const AccountSettings = () => {
 	const [isLoading, setLoading] = useState(true);
 
-	// useEffect(() => {
-	// 	(async () => {
-	// 		const req = await request('managment/user-profile', {});
-	// 		const data = await req.json();
-	// 		console.log(data);
-	// 	})();
-	// }, []);
+	useEffect(() => {
+		(async () => {
+			const req = await request("managment/user-profile", {});
+			const data = await req.json();
+			console.log(data);
+			setLoading(false);
+		})();
+	}, []);
 
 	return (
 		<>
@@ -32,7 +34,12 @@ const AccountSettings = () => {
 				isBtnLoading={false}
 			/>
 			<Box overflowY="auto" w="100%" h="100%">
-				{isLoading && <PageTableSkeleton />}
+				{isLoading && <PageFieldSkeleton />}
+				{!isLoading && (
+					<Flex p="1">
+						<Editable placeholder="name" />
+					</Flex>
+				)}
 			</Box>
 		</>
 	);
