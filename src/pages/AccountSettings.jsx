@@ -9,7 +9,11 @@ import request from "../helpers/request";
 // Custom Components
 import PageHeader from "../components/PageHeader";
 import { PageFieldSkeleton } from "../components/PageSkeleton";
-import { Editable, EditableSelect } from "../components/Editable";
+import {
+	Editable,
+	EditableSelect,
+	EditableEditor,
+} from "../components/Editable";
 
 const AccountSettings = () => {
 	const [fields, setFields] = useState({
@@ -58,10 +62,7 @@ const AccountSettings = () => {
 			<Box overflowY="auto" w="100%" h="100%" p="1">
 				{isLoading && <PageFieldSkeleton />}
 				{!isLoading && (
-					<Flex
-						wrap="wrap"
-						gap={{ base: "8", md: "12", lg: "16" }}
-					>
+					<Flex wrap="wrap" gap={{ base: "8", md: "12", lg: "16" }}>
 						<Editable
 							name="name"
 							label="Name"
@@ -98,6 +99,7 @@ const AccountSettings = () => {
 							value={fields.date_of_birth}
 							onChange={handleChange}
 						/>
+						<EditableEditor name="about" label="About" />
 						<Editable
 							name="facebook"
 							label="Facebook"

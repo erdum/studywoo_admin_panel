@@ -8,6 +8,13 @@ import {
 	FormControl,
 	Icon,
 	Select,
+	Modal,
+	ModalContent,
+	ModalHeader,
+	ModalCloseButton,
+	ModalBody,
+	ModalFooter,
+	Button,
 } from "@chakra-ui/react";
 
 import { FaPen } from "react-icons/fa";
@@ -28,6 +35,7 @@ const Editable = ({ name, value, onChange, label, type = "text" }) => {
 				fontSize={{ base: "sm", md: "md" }}
 				color="gray.500"
 				htmlFor={name}
+				fontWeight="semibold"
 			>
 				{label}
 			</FormLabel>
@@ -62,9 +70,10 @@ const EditableSelect = ({ name, label, options, value, onChange }) => {
 	return (
 		<FormControl w={{ base: "100%", md: "45%", lg: "64" }}>
 			<FormLabel
-				fontSize={{ base: "sm", md: "ms" }}
+				fontSize={{ base: "sm", md: "md" }}
 				color="gray.500"
 				htmlFor={name}
+				fontWeight="semibold"
 			>
 				{label}
 			</FormLabel>
@@ -96,6 +105,46 @@ const EditableSelect = ({ name, label, options, value, onChange }) => {
 	);
 };
 
-const EditableEditor = () => {};
+const EditableEditor = ({ name, label }) => {
+	const [isModalOpen, setModal] = useState(false);
+	const ref = useRef(null);
 
-export { Editable, EditableSelect };
+	return (
+		<>
+			<FormControl w={{ base: "100%", md: "45%", lg: "64" }}>
+				<FormLabel
+					fontSize={{ base: "sm", md: "md" }}
+					color="gray.500"
+					htmlFor={name}
+					fontWeight="semibold"
+				>
+					{label}
+				</FormLabel>
+				<InputGroup cursor="pointer">
+					<Input
+						defaultValue="Edit"
+						id={name}
+						type="text"
+						isDisabled
+						fontWeight="medium"
+						_disabled={{ color: "gray.500" }}
+					/>
+					<InputRightElement
+						children={<Icon color="gray.500" as={FaPen} />}
+						onClick={() => setModal(true)}
+						ref={ref}
+					/>
+				</InputGroup>
+			</FormControl>
+			<Modal isOpen={isModalOpen} onClose={() => setModal(false)} size="full" finalFocusRef={ref}>
+				<ModalContent>
+					<ModalHeader>{label}</ModalHeader>
+					<ModalCloseButton />
+					<ModalBody>testst</ModalBody>
+				</ModalContent>
+			</Modal>
+		</>
+	);
+};
+
+export { Editable, EditableSelect, EditableEditor };
