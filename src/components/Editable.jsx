@@ -15,6 +15,7 @@ import {
 	ModalBody,
 	ModalFooter,
 	Button,
+	Skeleton,
 } from "@chakra-ui/react";
 
 import { Editor } from "@tinymce/tinymce-react";
@@ -109,6 +110,7 @@ const EditableSelect = ({ name, label, options, value, onChange }) => {
 
 const EditableEditor = ({ name, label }) => {
 	const [isModalOpen, setModal] = useState(false);
+	const [isEditorLoading, setEditorLoading] = useState(true);
 	const ref = useRef(null);
 	const editorRef = useRef(null);
 
@@ -162,9 +164,18 @@ const EditableEditor = ({ name, label }) => {
 				<ModalContent>
 					<ModalHeader>{label}</ModalHeader>
 					<ModalCloseButton />
-					<ModalBody display="flex" flexDirection="column">
+					<ModalBody
+						display="flex"
+						flexDirection="column"
+					>
+						{isEditorLoading && (
+							<Skeleton
+								flexGrow="1"
+							/>
+						)}
 						<Editor
 							onInit={(evt, editor) => {
+								setEditorLoading(false);
 								editorRef.current = editor;
 								editor.on("keydown", ({ key }) => {
 									key === "Escape" && setModal(false);
