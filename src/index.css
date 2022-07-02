@@ -5,7 +5,7 @@
 }
 
 .tox-tinymce-aux {
-	z-index: 100000;
+	z-index: 10000 !important;
 }
 
 .tox-tinymce {
