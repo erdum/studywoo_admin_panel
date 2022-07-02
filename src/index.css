@@ -4,6 +4,14 @@
 	outline: none;
 }
 
+.tox-tinymce-aux {
+	z-index: 100000;
+}
+
+.tox-tinymce {
+	flex-grow: 1;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

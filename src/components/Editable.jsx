@@ -164,72 +164,66 @@ const EditableEditor = ({ name, label }) => {
 				<ModalContent>
 					<ModalHeader>{label}</ModalHeader>
 					<ModalCloseButton />
-					<ModalBody
-						display="flex"
-						flexDirection="column"
-					>
-						{isEditorLoading && (
-							<Skeleton
-								flexGrow="1"
-							/>
-						)}
-						<Editor
-							onInit={(evt, editor) => {
-								setEditorLoading(false);
-								editorRef.current = editor;
-								editor.on("keydown", ({ key }) => {
-									key === "Escape" && setModal(false);
-								});
-								document
-									.querySelector(".tox-tinymce-aux")
-									.style.setProperty("z-index", "100000");
-								document
-									.querySelector(".tox-tinymce")
-									.style.setProperty("flex-grow", "1");
-							}}
-							init={{
-								height: "100%",
-								menu: {
-									favs: {
-										title: "My Favorites",
-										items: "code visualaid | searchreplace | emoticons",
+					<ModalBody display="flex" flexDirection="column">
+						<Skeleton
+							flexGrow="1"
+							display="flex"
+							flexDirection="column"
+							isLoaded={!isEditorLoading}
+							fadeDuration={1}
+						>
+							<Editor
+								onInit={(evt, editor) => {
+									setEditorLoading(false);
+									editorRef.current = editor;
+									editor.on("keydown", ({ key }) => {
+										key === "Escape" && setModal(false);
+									});
+								}}
+								init={{
+									height: "100%",
+									menu: {
+										favs: {
+											title: "My Favorites",
+											items: "code visualaid | searchreplace | emoticons",
+										},
 									},
-								},
-								menubar:
-									"file edit view insert format tools table help",
-								toolbar:
-									"undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | " +
-									"bullist numlist outdent indent | link image | print preview media fullscreen | " +
-									"forecolor backcolor emoticons | help",
-								plugins: [
-									"advlist",
-									"autolink",
-									"link",
-									"image",
-									"lists",
-									"charmap",
-									"preview",
-									"anchor",
-									"pagebreak",
-									"searchreplace",
-									"wordcount",
-									"visualblocks",
-									"visualchars",
-									"code",
-									"fullscreen",
-									"insertdatetime",
-									"media",
-									"table",
-									"emoticons",
-									"template",
-									"help",
-								],
-							}}
-							apiKey={`${
-								import.meta.env.VITE_APP_TINYMCE_API_KEY
-							}`}
-							scriptLoading={{ defer: true }}
-						/>
+									menubar:
+										"file edit view insert format tools table help",
+									toolbar:
+										"undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | " +
+										"bullist numlist outdent indent | link image | print preview media fullscreen | " +
+										"forecolor backcolor emoticons | help",
+									plugins: [
+										"advlist",
+										"autolink",
+										"link",
+										"image",
+										"lists",
+										"charmap",
+										"preview",
+										"anchor",
+										"pagebreak",
+										"searchreplace",
+										"wordcount",
+										"visualblocks",
+										"visualchars",
+										"code",
+										"fullscreen",
+										"insertdatetime",
+										"media",
+										"table",
+										"emoticons",
+										"template",
+										"help",
+									],
+								}}
+								apiKey={`${
+									import.meta.env.VITE_APP_TINYMCE_API_KEY
+								}`}
+								scriptLoading={{ defer: true }}
+							/>
+						</Skeleton>
 					</ModalBody>
 				</ModalContent>
 			</Modal>
