@@ -21,6 +21,7 @@ const AccountSettings = () => {
 		name: "Erdum",
 		email: "",
 		password: "",
+		avatar: "erdumadnan@gmail.com",
 		gender: "",
 		date_of_birth: "2004-10-29",
 		facebooke: "",
@@ -59,7 +60,12 @@ const AccountSettings = () => {
 			<Box p="1" h="calc(100% - 6rem)" overflowY="auto">
 				{isLoading && <PageFieldSkeleton />}
 				{!isLoading && (
-					<Flex p="1" wrap="wrap" overflowY="auto" gap={{ base: "8", md: "12", lg: "16" }}>
+					<Flex
+						p="1"
+						wrap="wrap"
+						overflowY="auto"
+						gap={{ base: "8", md: "12", lg: "16" }}
+					>
 						<Editable
 							name="name"
 							label="Name"
@@ -78,7 +84,17 @@ const AccountSettings = () => {
 							value={fields.password}
 							onChange={handleChange}
 						/>
-						<EditableAvatar label="Profile picture" name="avatar" />
+						<EditableAvatar
+							label="Profile picture"
+							name="avatar"
+							src={fields.avatar}
+							onChange={(files) =>
+								setFields((prevFields) => ({
+									...prevFields,
+									avatar: files[0],
+								}))
+							}
+						/>
 						<EditableSelect
 							name="gender"
 							label="Gender"
