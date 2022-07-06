@@ -7,7 +7,7 @@ const routes = [
 		element: <Home />,
 	},
 	{
-		path: "/account-settings",
+		path: "/profile-settings",
 		element: <AccountSettings />,
 	},
 ];

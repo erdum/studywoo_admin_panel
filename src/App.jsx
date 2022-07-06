@@ -45,7 +45,7 @@ const App = () => {
 	const Routes = useRoutes(routes);
 
 	const handleHeaderAction = () => {
-		navigate("/account-settings");
+		navigate("/profile-settings");
 	};
 
 	const handleMobileMenuBtn = () => {

@@ -2,8 +2,8 @@ import { FaUserCog } from "react-icons/fa";
 
 const MenuLinks = [
 	{
-		path: "/account-settings",
-		label: "Account Settings",
+		path: "/profile-settings",
+		label: "Profile Settings",
 		icon: FaUserCog,
 	},
 ];

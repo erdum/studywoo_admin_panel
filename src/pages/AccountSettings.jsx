@@ -38,10 +38,6 @@ const AccountSettings = () => {
 		})();
 	}, []);
 
-	// useEffect(() => {
-	// 	console.log(fields);
-	// }, [fields]);
-
 	const handleChange = ({ target: { name, value } }) => {
 		setFields((prevState) => ({
 			...prevState,
@@ -52,7 +48,7 @@ const AccountSettings = () => {
 	return (
 		<>
 			<PageHeader
-				title="Admin Profile"
+				title="Profile Settings"
 				description="Edit personal and public information"
 				btnText="Save"
 				enableSearch={false}

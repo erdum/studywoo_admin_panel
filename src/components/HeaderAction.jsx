@@ -8,7 +8,7 @@ const HeaderAction = ({ onClick }) => {
 	} = useStateContext();
 
 	return (
-		<Tooltip hasArrow label="account settings">
+		<Tooltip hasArrow label="profile settings">
 			<div
 				onClick={onClick}
 				className={
