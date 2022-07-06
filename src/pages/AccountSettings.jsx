@@ -14,6 +14,7 @@ import {
 	EditableSelect,
 	EditableEditor,
 } from "../components/Editable";
+import EditableAvatar from "../components/EditableAvatar";
 
 const AccountSettings = () => {
 	const [fields, setFields] = useState({
@@ -77,6 +78,7 @@ const AccountSettings = () => {
 							value={fields.password}
 							onChange={handleChange}
 						/>
+						<EditableAvatar label="Profile picture" name="avatar" />
 						<EditableSelect
 							name="gender"
 							label="Gender"
