@@ -56,7 +56,7 @@ const AccountSettings = () => {
 				disableBtn
 				isBtnLoading={false}
 			/>
-			<Box p="1" h={{ base: "calc(100% - 6rem)", lg: "500px" }} overflowY="auto">
+			<Box p="1" h="calc(100% - 6rem)" overflowY="auto">
 				{isLoading && <PageFieldSkeleton />}
 				{!isLoading && (
 					<Flex p="1" wrap="wrap" overflowY="auto" gap={{ base: "8", md: "12", lg: "16" }}>
