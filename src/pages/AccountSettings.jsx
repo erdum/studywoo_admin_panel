@@ -28,6 +28,7 @@ const AccountSettings = () => {
 		instagram: "",
 		twitter: "",
 		linkedin: "",
+		changed: false,
 	});
 	const [isLoading, setLoading] = useState(true);
 
@@ -43,6 +44,7 @@ const AccountSettings = () => {
 	const handleChange = ({ target: { name, value } }) => {
 		setFields((prevState) => ({
 			...prevState,
+			changed: true,
 			[name]: value,
 		}));
 	};
@@ -54,7 +56,7 @@ const AccountSettings = () => {
 				description="Edit personal and public information"
 				btnText="Save"
 				enableSearch={false}
-				disableBtn
+				disableBtn={!fields.changed}
 				isBtnLoading={false}
 			/>
 			<Box p="1" h="calc(100% - 6rem)" overflowY="auto">
@@ -91,6 +93,7 @@ const AccountSettings = () => {
 							onChange={(files) =>
 								setFields((prevFields) => ({
 									...prevFields,
+									changed: true,
 									avatar: files[0],
 								}))
 							}
