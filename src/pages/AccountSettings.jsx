@@ -34,8 +34,7 @@ const AccountSettings = () => {
 
 	useEffect(() => {
 		(async () => {
-			const req = await request("managment/user-profile", {});
-			const data = await req.json();
+			const data = await request("managment/user-profile", {});
 			console.log(data);
 			setLoading(false);
 		})();
