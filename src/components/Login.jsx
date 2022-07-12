@@ -21,6 +21,7 @@ import {
 
 // Icons
 import { FaIdBadge, FaLock } from "react-icons/fa";
+
 import { toastSettings } from "../setting";
 
 // App State Context
@@ -72,7 +73,6 @@ const Login = () => {
 		setUser(payload);
 		storage.setItem("userData", payload);
 		storage.setItem("accessToken", data.access_token);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
 
 	useEffect(() => {
@@ -82,18 +82,19 @@ const Login = () => {
 			setPassInvalid("Wrong password !");
 		} else {
 			const id = "login-error";
-			toast({
-				...toastSettings,
-				id,
-				title: "Login Failed",
-				description:
-					error.cause === undefined
-						? "Network error! check your Internet connection"
-						: "Request failed from the server !",
-				status: "error",
-			});
+			if (!toast.isActive(id)) {
+				toast({
+					...toastSettings,
+					id,
+					title: "Login Failed",
+					description:
+						error.cause === undefined
+							? "Network error! check your Internet connection"
+							: "Request failed from the server !",
+					status: "error",
+				});
+			}
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [error]);
 
 	useEffect(() => {
@@ -106,12 +107,10 @@ const Login = () => {
 				description: "You are successfuly logged in",
 				status: "success",
 			});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isSuccess]);
 
 	useEffect(() => {
 		if (credentials) refetch();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [credentials]);
 
 	const handleSubmit = (event) => {
