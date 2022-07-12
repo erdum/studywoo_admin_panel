@@ -14,10 +14,12 @@ import { FaPen } from "react-icons/fa";
 
 const EditableAvatar = ({ label, name, onChange, src }) => {
 	const avatarRef = useRef(null);
-	const [data, setData] = useState();
+	const [data, setData] = useState(null);
 
 	useEffect(() => {
-		if (typeof src === "object") {
+		if (src === "" || src == undefined) {
+			setData(null);
+		} else if (typeof src === "object") {
 			setData(URL.createObjectURL(src));
 		} else {
 			setData(`${import.meta.env.VITE_APP_IMG_URL}${src}.webp`);
@@ -44,16 +46,14 @@ const EditableAvatar = ({ label, name, onChange, src }) => {
 				{label}
 			</FormLabel>
 			<InputGroup cursor="pointer">
-				<InputLeftElement
-					children={
-						<Avatar
-							src={data}
-							size={{ base: "md", lg: "lg" }}
-							ml={{ base: "2", lg: "6" }}
-							mt={{ base: "4", lg: "8" }}
-						/>
-					}
-				/>
+				<InputLeftElement>
+					<Avatar
+						src={data}
+						size={{ base: "md", lg: "lg" }}
+						ml={{ base: "2", lg: "6" }}
+						mt={{ base: "4", lg: "8" }}
+					/>
+				</InputLeftElement>
 				<Input
 					ref={avatarRef}
 					display="none"
@@ -62,16 +62,13 @@ const EditableAvatar = ({ label, name, onChange, src }) => {
 					type="file"
 					onChange={(event) => onChange(event.target.files)}
 				/>
-				<InputRightElement
-					onClick={handleFileSelect}
-					children={
-						<Icon
-							color="gray.500"
-							as={FaPen}
-							mt={{ base: "4", lg: "8" }}
-						/>
-					}
-				/>
+				<InputRightElement onClick={handleFileSelect}>
+					<Icon
+						color="gray.500"
+						as={FaPen}
+						mt={{ base: "4", lg: "8" }}
+					/>
+				</InputRightElement>
 			</InputGroup>
 		</FormControl>
 	);
