@@ -9,7 +9,7 @@ const request = async (url, options) => {
 		...options,
 	});
 
-	if (req.status !== 200 && req.status !== 201 && req.status !== 302) {
+	if (req.status !== 200) {
 		throw new Error("Request failed", { cause: req.status });
 	}
 	return req.json();
