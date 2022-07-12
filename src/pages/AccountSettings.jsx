@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 
 // UI Components
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, useToast } from "@chakra-ui/react";
 
 // Helper functions
 import request from "../helpers/request";
@@ -16,29 +17,67 @@ import {
 } from "../components/Editable";
 import EditableAvatar from "../components/EditableAvatar";
 
+import { toastSettings } from "../setting";
+
 const AccountSettings = () => {
+	const toast = useToast();
 	const [fields, setFields] = useState({
-		name: "Erdum",
+		name: "",
 		email: "",
 		password: "",
-		avatar: "erdumadnan@gmail.com",
+		avatar: "",
 		gender: "",
-		date_of_birth: "2004-10-29",
-		facebooke: "",
+		date_of_birth: "",
+		facebook: "",
 		instagram: "",
 		twitter: "",
 		linkedin: "",
 		changed: false,
 	});
-	const [isLoading, setLoading] = useState(true);
+	const { data, error, isLoading } = useQuery(
+		"managment/user-profile",
+		({ queryKey }) => request(queryKey),
+		{
+			refetchOnWindowFocus: false,
+			retry: 0,
+		}
+	);
 
 	useEffect(() => {
-		(async () => {
-			const data = await request("managment/user-profile", {});
-			console.log(data);
-			setLoading(false);
-		})();
-	}, []);
+		if (!data) return;
+
+		const [userData] = data;
+		setFields({
+			name: userData.name ?? "",
+			email: userData.email ?? "",
+			password: userData.password ?? "",
+			avatar: userData.avatar ?? "",
+			gender: userData.gender ?? "",
+			date_of_birth: userData.date_of_birth ?? "",
+			facebook: userData.facebook ?? "",
+			instagram: userData.instagram ?? "",
+			twitter: userData.twitter ?? "",
+			linkedin: userData.linkedin ?? "",
+		});
+	}, [data]);
+
+	useEffect(() => {
+		if (!error) return;
+		const id = "request-error";
+		
+		if (!toast.isActive(id)) {
+			toast({
+				...toastSettings,
+				id,
+				title: "Request failed",
+				description:
+					error.cause === undefined
+						? "Network error! check your Internet connection"
+						: "Request failed from the server !",
+				status: "error",
+			});
+		}
+	}, [error]);
 
 	const handleChange = ({ target: { name, value } }) => {
 		setFields((prevState) => ({
