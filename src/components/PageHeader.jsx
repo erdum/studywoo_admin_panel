@@ -1,4 +1,4 @@
-import { Flex, Spacer, Text, Button } from "@chakra-ui/react";
+import { Flex, Text, Button } from "@chakra-ui/react";
 
 import SearchBar from "./SearchBar";
 
@@ -6,6 +6,7 @@ const PageHeader = ({
 	title,
 	description,
 	btnText,
+	onBtnClick,
 	enableSearch,
 	disableBtn,
 	isBtnLoading,
@@ -57,12 +58,13 @@ const PageHeader = ({
 				}}
 				isDisabled={disableBtn}
 				isLoading={isBtnLoading}
+				onClick={onBtnClick}
 			>
 				{btnText}
 			</Button>
 			{enableSearch && (
 				<SearchBar
-					onChange={(value) => (onChange ? onChange() : () => {})}
+					onChange={() => (onChange ? onChange() : () => {})}
 				/>
 			)}
 		</Flex>
