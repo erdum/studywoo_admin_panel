@@ -1,6 +1,6 @@
 import storage from "./storage";
 
-const request = async (url, contentType = "application/json", options) => {
+const request = async (url, options, contentType = "application/json",) => {
 	const req = await fetch(`${import.meta.env.VITE_APP_API_URL}${url}`, {
 		headers: {
 			"Content-Type": contentType,
