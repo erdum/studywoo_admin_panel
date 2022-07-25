@@ -1,9 +1,8 @@
 import storage from "./storage";
 
-const request = async (url, options, contentType = "application/json",) => {
+const request = async (url, options) => {
 	const req = await fetch(`${import.meta.env.VITE_APP_API_URL}${url}`, {
 		headers: {
-			"Content-Type": contentType,
 			Authorization: `Bearer ${storage.getItem("accessToken")}`,
 		},
 		...options,
