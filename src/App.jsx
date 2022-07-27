@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 import { useNavigate, useRoutes } from "react-router-dom";
 
 // UI Components and hooks
-import { useTheme, Box } from "@chakra-ui/react";
+import { useTheme } from "@chakra-ui/react";
 
 // Helper Functions
 import getScreenDim from "./helpers/getScreenDim";
@@ -16,9 +15,6 @@ import HomeLink from "./components/HomeLink";
 import MobileMenuBtn from "./components/MobileMenuBtn";
 import MountPortalComp from "./components/MountPortalComp";
 import PageWrapper from "./components/PageWrapper";
-
-// App State Context
-import useStateContext from "./contexts/StateContextProvider";
 
 // Menu Items
 import MenuLinks from "./Menu-Items.js";
@@ -40,7 +36,6 @@ const App = () => {
 	const [isMenuOpen, setMenu] = useState(false);
 	const { width } = getScreenDim();
 	const theme = useTheme();
-	const { userData } = useStateContext();
 	const navigate = useNavigate();
 	const Routes = useRoutes(routes);
 
