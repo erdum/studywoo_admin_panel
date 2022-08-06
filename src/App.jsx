@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useRoutes } from "react-router-dom";
 
 // UI Components and hooks
-import { useTheme } from "@chakra-ui/react";
+import { useTheme, useToast } from "@chakra-ui/react";
 
 // Helper Functions
 import getScreenDim from "./helpers/getScreenDim";
@@ -31,6 +31,12 @@ const hideLoader = () => {
 	}
 };
 
+// App State Context
+import useStateContext from "./contexts/StateContextProvider";
+
+// Toast settings
+import { toastSettings } from "./setting";
+
 const App = () => {
 	const [isAppMounted, setAppMounted] = useState(false);
 	const [isMenuOpen, setMenu] = useState(false);
@@ -38,6 +44,8 @@ const App = () => {
 	const theme = useTheme();
 	const navigate = useNavigate();
 	const Routes = useRoutes(routes);
+	const toast = useToast();
+	const { appError } = useStateContext();
 
 	const handleHeaderAction = () => {
 		navigate("/profile-settings");
@@ -52,6 +60,21 @@ const App = () => {
 		setAppMounted(true);
 		if (width >= theme.breakpoints.lg) setMenu(true);
 	}, []);
+
+	useEffect(() => {
+		if (!appError) return;
+		const id = "error";
+
+		if (!toast.isActive(id)) {
+			toast({
+				...toastSettings,
+				id,
+				title: "Error",
+				status: "error",
+				description: appError,
+			});
+		}
+	}, [appError]);
 
 	return (
 		<AuthProvider>
