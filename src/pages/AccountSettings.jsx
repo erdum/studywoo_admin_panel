@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
 
 // UI Components
-import { Box, Flex, useToast } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 
 // Helper functions
 import request from "../helpers/request";
@@ -17,10 +17,10 @@ import {
 } from "../components/Editable";
 import EditableAvatar from "../components/EditableAvatar";
 
-import { toastSettings } from "../setting";
+// App State Context
+import useStateContext from "../contexts/StateContextProvider";
 
 const AccountSettings = () => {
-	const toast = useToast();
 	const [fields, setFields] = useState({
 		name: "",
 		email: "",
@@ -34,14 +34,30 @@ const AccountSettings = () => {
 		linkedin: "",
 		changed: false,
 	});
-	const { data, error, isLoading } = useQuery(
+	const [avatarImg, setAvatarImg] = useState(null);
+	const { showAppError } = useStateContext();
+
+	const { data, isLoading } = useQuery(
 		"managment/user-profile",
-		({ queryKey }) => request(queryKey),
+		({ queryKey }) => request(queryKey, showAppError),
 		{
 			refetchOnWindowFocus: false,
 			retry: 0,
 		}
 	);
+	const updateProfile = useMutation((data) =>
+		request("managment/user-profile", showAppError, {
+			method: "PUT",
+			body: JSON.stringify(data),
+		})
+	);
+
+	const uploadAvatar = useMutation((avatar) => {
+		request("pilot_upload", showAppError, {
+			method: "POST",
+			body: avatar,
+		});
+	});
 
 	useEffect(() => {
 		if (!data) return;
@@ -61,30 +77,22 @@ const AccountSettings = () => {
 		});
 	}, [data]);
 
-	useEffect(() => {
-		if (!error) return;
-		const id = "request-error";
-		
-		if (!toast.isActive(id)) {
-			toast({
-				...toastSettings,
-				id,
-				title: "Request failed",
-				description:
-					error.cause === undefined
-						? "Network error! check your Internet connection"
-						: "Request failed from the server !",
-				status: "error",
-			});
-		}
-	}, [error]);
-
 	const handleChange = ({ target: { name, value } }) => {
 		setFields((prevState) => ({
 			...prevState,
 			changed: true,
 			[name]: value,
 		}));
+	};
+
+	const handleSave = () => {
+		if (avatarImg) {
+			const avatar = new FormData();
+			const extension = avatarImg.name.split(".").at(-1);
+			avatar.append("images", avatarImg, `${fields.email}.${extension}`);
+			uploadAvatar.mutate(avatar);
+		}
+		updateProfile.mutate(fields);
 	};
 
 	return (
@@ -95,7 +103,8 @@ const AccountSettings = () => {
 				btnText="Save"
 				enableSearch={false}
 				disableBtn={!fields.changed}
-				isBtnLoading={false}
+				isBtnLoading={uploadAvatar.isLoading || updateProfile.isLoading}
+				onBtnClick={handleSave}
 			/>
 			<Box p="1" h="calc(100% - 6rem)" overflowY="auto">
 				{isLoading && <PageFieldSkeleton />}
@@ -124,17 +133,20 @@ const AccountSettings = () => {
 							value={fields.password}
 							onChange={handleChange}
 						/>
+
+						{/*Api can handle multiple files upload in a single request for that reason we are sending avatar string as an array*/}
 						<EditableAvatar
 							label="Profile picture"
 							name="avatar"
-							src={fields.avatar}
-							onChange={(files) =>
+							src={avatarImg ?? fields.avatar}
+							onChange={(files) => {
 								setFields((prevFields) => ({
 									...prevFields,
+									avatar: [prevFields.email],
 									changed: true,
-									avatar: files[0],
-								}))
-							}
+								}));
+								setAvatarImg(files[0]);
+							}}
 						/>
 						<EditableSelect
 							name="gender"
