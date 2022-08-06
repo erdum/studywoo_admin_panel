@@ -6,6 +6,7 @@ const StateContext = createContext();
 export const StateContextProvider = ({ children }) => {
 	const [isDrawerOpen, setDrawer] = useState(false);
 	const [userData, setUserData] = useState(storage.getItem("userData"));
+	const [appError, setAppError] = useState(null);
 
 	const openDrawer = () => setDrawer(true);
 
@@ -19,6 +20,7 @@ export const StateContextProvider = ({ children }) => {
 		location.reload();
 	};
 
+	const showAppError = error => error ? setAppError(error) : null;
 
 	const value = {
 		isDrawerOpen,
@@ -27,6 +29,8 @@ export const StateContextProvider = ({ children }) => {
 		userData,
 		setUser,
 		logout,
+		appError,
+		showAppError,
 	};
 
 	return (
