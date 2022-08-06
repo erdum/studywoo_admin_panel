@@ -6,7 +6,7 @@ const StateContext = createContext();
 export const StateContextProvider = ({ children }) => {
 	const [isDrawerOpen, setDrawer] = useState(false);
 	const [userData, setUserData] = useState(storage.getItem("userData"));
-	const [appError, setAppError] = useState(null);
+	const [appError, setAppError] = useState(false);
 
 	const openDrawer = () => setDrawer(true);
 
