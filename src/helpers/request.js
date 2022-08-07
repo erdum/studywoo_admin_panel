@@ -16,12 +16,17 @@ const request = async (url, showError, options) => {
 		const data = await req.json();
 		return data ?? null;
 	} catch (error) {
-
 		// detecting client side network error
 		if (error.cause === undefined) {
-			showError("Network error! check your Internet connection");
+			showError({
+				title: "No Network",
+				description: "Network error! check your Internet connection",
+			});
 		} else {
-			showError("Request failed from the server !");
+			showError({
+				title: "Request Failed",
+				description: "Request failed from the server !",
+			});
 		}
 	}
 };
