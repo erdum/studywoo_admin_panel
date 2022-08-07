@@ -69,9 +69,8 @@ const App = () => {
 			toast({
 				...toastSettings,
 				id,
-				title: "Error",
 				status: "error",
-				description: appError,
+				...appError
 			});
 		}
 	}, [appError]);
