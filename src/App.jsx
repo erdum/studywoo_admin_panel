@@ -45,7 +45,7 @@ const App = () => {
 	const navigate = useNavigate();
 	const Routes = useRoutes(routes);
 	const toast = useToast();
-	const { appError } = useStateContext();
+	const { appToast } = useStateContext();
 
 	const handleHeaderAction = () => {
 		navigate("/profile-settings");
@@ -62,18 +62,18 @@ const App = () => {
 	}, []);
 
 	useEffect(() => {
-		if (!appError) return;
+		if (!appToast) return;
 		const id = "error";
 
 		if (!toast.isActive(id)) {
 			toast({
 				...toastSettings,
 				id,
-				status: "error",
-				...appError
+				status: appToast?.status ?? "error",
+				...appToast
 			});
 		}
-	}, [appError]);
+	}, [appToast]);
 
 	return (
 		<AuthProvider>
