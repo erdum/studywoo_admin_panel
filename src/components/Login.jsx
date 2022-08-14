@@ -242,7 +242,7 @@ const Login = () => {
 				color="gray.500"
 				fontWeight="medium"
 			>
-				Adnan & Son IT group Pakistan
+				ASIT group Pakistan
 			</Text>
 		</Center>
 	);
