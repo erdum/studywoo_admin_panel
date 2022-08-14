@@ -63,7 +63,6 @@ const AccountSettings = () => {
 		if (!data) return;
 
 		const [userData] = data;
-		console.log(userData);
 		setFields({
 			name: userData.name ?? "",
 			email: userData.email ?? "",
