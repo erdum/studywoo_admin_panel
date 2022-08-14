@@ -62,18 +62,17 @@ const AccountSettings = () => {
 	useEffect(() => {
 		if (!data) return;
 
-		const [userData] = data;
 		setFields({
-			name: userData.name ?? "",
-			email: userData.email ?? "",
-			password: userData.password ?? "",
-			avatar: userData.avatar ?? "",
-			gender: userData.gender ?? "",
-			date_of_birth: userData.date_of_birth ?? "",
-			facebook: userData.facebook ?? "",
-			instagram: userData.instagram ?? "",
-			twitter: userData.twitter ?? "",
-			linkedin: userData.linkedin ?? "",
+			name: data.name ?? "",
+			email: data.email ?? "",
+			password: data.password ?? "",
+			avatar: data.avatar ?? "",
+			gender: data.gender ?? "",
+			date_of_birth: data.date_of_birth ?? "",
+			facebook: data.facebook ?? "",
+			instagram: data.instagram ?? "",
+			twitter: data.twitter ?? "",
+			linkedin: data.linkedin ?? "",
 		});
 	}, [data]);
 
