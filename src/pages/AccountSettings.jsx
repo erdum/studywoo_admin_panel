@@ -35,25 +35,25 @@ const AccountSettings = () => {
 		changed: false,
 	});
 	const [avatarImg, setAvatarImg] = useState(null);
-	const { showAppError } = useStateContext();
+	const { showAppToast } = useStateContext();
 
 	const { data, isLoading } = useQuery(
 		"managment/user-profile",
-		({ queryKey }) => request(queryKey, showAppError),
+		({ queryKey }) => request(queryKey, showAppToast),
 		{
 			refetchOnWindowFocus: false,
 			retry: 0,
 		}
 	);
-	const updateProfile = useMutation((data) =>
-		request("managment/user-profile", showAppError, {
+	const updateProfile = useMutation(() =>
+		request("managment/user-profile", showAppToast, {
 			method: "PUT",
-			body: JSON.stringify(data),
+			body: fields,
 		})
 	);
 
 	const uploadAvatar = useMutation((avatar) => {
-		request("pilot_upload", showAppError, {
+		request("pilot_upload", showAppToast, {
 			method: "POST",
 			body: avatar,
 		});
@@ -63,6 +63,7 @@ const AccountSettings = () => {
 		if (!data) return;
 
 		const [userData] = data;
+		console.log(userData);
 		setFields({
 			name: userData.name ?? "",
 			email: userData.email ?? "",
@@ -92,7 +93,7 @@ const AccountSettings = () => {
 			avatar.append("images", avatarImg, `${fields.email}.${extension}`);
 			uploadAvatar.mutate(avatar);
 		}
-		updateProfile.mutate(fields);
+		updateProfile.mutate();
 	};
 
 	return (
@@ -133,8 +134,6 @@ const AccountSettings = () => {
 							value={fields.password}
 							onChange={handleChange}
 						/>
-
-						{/*Api can handle multiple files upload in a single request for that reason we are sending avatar string as an array*/}
 						<EditableAvatar
 							label="Profile picture"
 							name="avatar"
@@ -142,7 +141,7 @@ const AccountSettings = () => {
 							onChange={(files) => {
 								setFields((prevFields) => ({
 									...prevFields,
-									avatar: [prevFields.email],
+									avatar: prevFields.email,
 									changed: true,
 								}));
 								setAvatarImg(files[0]);
