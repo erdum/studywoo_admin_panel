@@ -17,15 +17,11 @@ const EditableAvatar = ({ label, name, onChange, src }) => {
 	const [data, setData] = useState(null);
 
 	useEffect(() => {
-		if (src === "" || src == undefined) {
-			setData(null);
-		} else if (typeof src === "object") {
+		if (src && typeof src === "object") {
 			setData(URL.createObjectURL(src));
-		} else {
-			setData(`${import.meta.env.VITE_APP_IMG_URL}${src}.webp`);
+			return () => URL.revokeObjectURL(data);
 		}
 
-		return () => URL.revokeObjectURL(data);
 	}, [src]);
 
 	const handleFileSelect = () => {
@@ -48,7 +44,7 @@ const EditableAvatar = ({ label, name, onChange, src }) => {
 			<InputGroup cursor="pointer">
 				<InputLeftElement>
 					<Avatar
-						src={data}
+						src={data ?? `${import.meta.env.VITE_APP_IMG_URL}${src}.webp`}
 						size={{ base: "md", lg: "lg" }}
 						ml={{ base: "2", lg: "6" }}
 						mt={{ base: "4", lg: "8" }}
