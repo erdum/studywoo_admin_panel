@@ -7,7 +7,7 @@ const request = async (url, showToast, options) => {
 			"Authorization": `Bearer ${storage.getItem("accessToken")}`,
 		};
 
-		if (options && typeof options?.body === "object") {
+		if (options && typeof options?.body.constructor === Object) {
 			headers["Content-Type"] = "application/json";
 			options.body = JSON.stringify(options.body);
 		}
