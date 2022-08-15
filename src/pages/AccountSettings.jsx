@@ -21,35 +21,47 @@ import EditableAvatar from "../components/EditableAvatar";
 import useStateContext from "../contexts/StateContextProvider";
 
 const AccountSettings = () => {
-	const [fields, setFields] = useState({
-		name: "",
-		email: "",
-		password: "",
-		avatar: "",
-		gender: "",
-		date_of_birth: "",
-		facebook: "",
-		instagram: "",
-		twitter: "",
-		linkedin: "",
-		changed: false,
-	});
-	const [avatarImg, setAvatarImg] = useState(null);
-	const { showAppToast } = useStateContext();
-
-	const { data, isLoading } = useQuery(
+	const { data, isFetching } = useQuery(
 		"managment/user-profile",
 		({ queryKey }) => request(queryKey, showAppToast),
 		{
-			refetchOnWindowFocus: false,
 			retry: 0,
+			refetchOnWindowFocus: false,
+			initialData: {
+				name: "",
+				email: "",
+				password: "",
+				avatar: "",
+				gender: "",
+				date_of_birth: "",
+				facebook: "",
+				instagram: "",
+				twitter: "",
+				linkedin: "",
+			},
 		}
 	);
-	const updateProfile = useMutation(() =>
-		request("managment/user-profile", showAppToast, {
-			method: "PUT",
-			body: fields,
-		})
+
+	const [fields, setFields] = useState({ ...data, changed: false });
+
+	useEffect(() => {
+		if (!data) return;
+
+		setFields({ ...data, changed: false });
+	}, [data]);
+
+	const { showAppToast } = useStateContext();
+
+	const updateProfile = useMutation(
+		(payload) =>
+			request("managment/user-profile", showAppToast, {
+				method: "PUT",
+				body: payload,
+			}),
+		{
+			onSuccess: () =>
+				setFields((prevState) => ({ ...prevState, changed: false })),
+		}
 	);
 
 	const uploadAvatar = useMutation((avatar) => {
@@ -58,23 +70,6 @@ const AccountSettings = () => {
 			body: avatar,
 		});
 	});
-
-	useEffect(() => {
-		if (!data) return;
-
-		setFields({
-			name: data.name ?? "",
-			email: data.email ?? "",
-			password: data.password ?? "",
-			avatar: data.avatar ?? "",
-			gender: data.gender ?? "",
-			date_of_birth: data.date_of_birth ?? "",
-			facebook: data.facebook ?? "",
-			instagram: data.instagram ?? "",
-			twitter: data.twitter ?? "",
-			linkedin: data.linkedin ?? "",
-		});
-	}, [data]);
 
 	const handleChange = ({ target: { name, value } }) => {
 		setFields((prevState) => ({
@@ -85,13 +80,13 @@ const AccountSettings = () => {
 	};
 
 	const handleSave = () => {
-		if (avatarImg) {
+		if (fields.avatar && typeof fields.avatar === "object") {
 			const avatar = new FormData();
-			const extension = avatarImg.name.split(".").at(-1);
-			avatar.append("images", avatarImg, `${fields.email}.${extension}`);
+			const extension = fields.avatar.name.split(".").at(-1);
+			avatar.append("images", fields.avatar, `${fields.email}.${extension}`);
 			uploadAvatar.mutate(avatar);
 		}
-		updateProfile.mutate();
+		updateProfile.mutate({ ...fields, avatar: fields.email });
 	};
 
 	return (
@@ -106,8 +101,8 @@ const AccountSettings = () => {
 				onBtnClick={handleSave}
 			/>
 			<Box p="1" h="calc(100% - 6rem)" overflowY="auto">
-				{isLoading && <PageFieldSkeleton />}
-				{!isLoading && (
+				{isFetching && <PageFieldSkeleton />}
+				{!isFetching && (
 					<Flex
 						p="1"
 						wrap="wrap"
@@ -135,14 +130,13 @@ const AccountSettings = () => {
 						<EditableAvatar
 							label="Profile picture"
 							name="avatar"
-							src={avatarImg ?? fields.avatar}
+							src={fields.avatar}
 							onChange={(files) => {
 								setFields((prevFields) => ({
 									...prevFields,
-									avatar: prevFields.email,
+									avatar: files[0],
 									changed: true,
 								}));
-								setAvatarImg(files[0]);
 							}}
 						/>
 						<EditableSelect
