@@ -1,5 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import storage from "../helpers/storage";
+import fetchImage from "../helpers/fetchImage";
 
 const StateContext = createContext();
 
@@ -7,6 +8,21 @@ export const StateContextProvider = ({ children }) => {
 	const [isDrawerOpen, setDrawer] = useState(false);
 	const [userData, setUserData] = useState(storage.getItem("userData"));
 	const [appToast, setAppError] = useState(false);
+	const [userAvatar, setUserAvatar] = useState(null);
+
+	useEffect(() => console.log(userData), [userData]);
+
+	useEffect(() => {
+		(async () => {
+			const avatar = await fetchImage(userData?.avatar);
+			avatar ? setUserAvatar(avatar) : null;
+		})()
+	}, [userData?.avatar]);
+
+	const changeUserAvatar = (newAvatar) =>
+		newAvatar
+			? setUserData((prevState) => ({ ...prevState, avatar: newAvatar }))
+			: null;
 
 	const openDrawer = () => setDrawer(true);
 
@@ -20,7 +36,7 @@ export const StateContextProvider = ({ children }) => {
 		location.reload();
 	};
 
-	const showAppToast = error => error ? setAppError(error) : null;
+	const showAppToast = (error) => (error ? setAppError(error) : null);
 
 	const value = {
 		isDrawerOpen,
@@ -31,6 +47,8 @@ export const StateContextProvider = ({ children }) => {
 		logout,
 		appToast,
 		showAppToast,
+		userAvatar,
+		changeUserAvatar,
 	};
 
 	return (
