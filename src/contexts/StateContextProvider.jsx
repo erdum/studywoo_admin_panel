@@ -10,8 +10,6 @@ export const StateContextProvider = ({ children }) => {
 	const [appToast, setAppError] = useState(false);
 	const [userAvatar, setUserAvatar] = useState(null);
 
-	useEffect(() => console.log(userData), [userData]);
-
 	useEffect(() => {
 		(async () => {
 			const avatar = await fetchImage(userData?.avatar);
