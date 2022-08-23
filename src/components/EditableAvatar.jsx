@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 
 import {
 	FormControl,
@@ -14,10 +14,18 @@ import { FaPen } from "react-icons/fa";
 
 const EditableAvatar = ({ label, name, onChange, src }) => {
 	const avatarRef = useRef(null);
+	const [avatar, setAvatar] = useState(null);
 
 	const handleFileSelect = () => {
 		avatarRef.current.click();
 	};
+
+	useEffect(() => {
+		if (src instanceof File) {
+			setAvatar(URL.createObjectURL(src));
+			return () => URL.revokeObjectURL(avatar);
+		}
+	}, [src]);
 
 	return (
 		<FormControl w={{ base: "100%", md: "45%", lg: "64" }} pb={{ base: "12" }}>
@@ -32,7 +40,7 @@ const EditableAvatar = ({ label, name, onChange, src }) => {
 			<InputGroup cursor="pointer">
 				<InputLeftElement>
 					<Avatar
-						src={src}
+						src={avatar ?? src}
 						size={{ base: "md", lg: "lg" }}
 						ml={{ base: "2", lg: "6" }}
 						mt={{ base: "4", lg: "8" }}
