@@ -4,8 +4,7 @@ import useStateContext from "../contexts/StateContextProvider";
 
 const HeaderAction = ({ onClick }) => {
 	const {
-		userData: { name },
-		userAvatar,
+		userData: { name, avatar },
 	} = useStateContext();
 
 	return (
@@ -15,7 +14,7 @@ const HeaderAction = ({ onClick }) => {
 				className="flex items-center gap-2 text-gray-500 font-semibold cursor-pointer rounded-md z-10 px-4 py-1 hover:bg-gray-100"
 			>
 				<img
-					src={userAvatar ?? "./avatar_placeholder.jpg"}
+					src={avatar ?? "./avatar_placeholder.jpg"}
 					className={
 						"hidden w-10 aspect-square rounded-full object-cover lg:block"
 					}
