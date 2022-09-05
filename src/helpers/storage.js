@@ -9,6 +9,14 @@ const storage = (() => {
 		localStorage.setItem(key, JSON.stringify(data));
 	};
 
+	const updateItem = (key, callback) => {
+		if (!key) throw new Error("Key cannot be null");
+
+		const prevItem = JSON.parse(localStorage.getItem(key));
+		const newItem = callback(prevItem);
+		localStorage.setItem(key, JSON.stringify(newItem));
+	};
+
 	const clear = (...keys) => {
 		keys.forEach((key) => localStorage.removeItem(key));
 	};
@@ -16,6 +24,7 @@ const storage = (() => {
 	return {
 		getItem,
 		setItem,
+		updateItem,
 		clear,
 	};
 })();
