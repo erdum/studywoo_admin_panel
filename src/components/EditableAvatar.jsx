@@ -44,7 +44,9 @@ const EditableAvatar = ({ label, name, onChange, src }) => {
 					id={name}
 					name={name}
 					type="file"
-					onChange={(event) => onChange(event.target.files)}
+					onChange={(event) => {
+						onChange(event.target.files[0]);
+					}}
 				/>
 				<InputRightElement onClick={handleFileSelect}>
 					<Icon color="gray.500" as={FaPen} mt={{ base: "4", lg: "8" }} />
