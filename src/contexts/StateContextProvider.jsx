@@ -11,10 +11,9 @@ export const StateContextProvider = ({ children }) => {
 
 	const changeUserAvatar = async (newAvatar) => {
 		if (newAvatar) {
-			const fetchedAvatar = await fetchImage(newAvatar);
-			fetchedAvatar
-				? setUserData((prevState) => ({ ...prevState, avatar: fetchedAvatar }))
-				: null;
+			fetchImage(newAvatar, (cachedAvatar) =>
+				setUserData((prevState) => ({ ...prevState, avatar: cachedAvatar }))
+			);
 		}
 	};
 
@@ -23,9 +22,15 @@ export const StateContextProvider = ({ children }) => {
 	const closeDrawer = () => setDrawer(false);
 
 	const setUser = async ({ name, email, avatar }) => {
-		const fetchedAvatar = await fetchImage(avatar);
-		storage.setItem("userData", { name, email, avatar: fetchedAvatar });
-		setUserData({ name, email, avatar: fetchedAvatar });
+		if (avatar) {
+			fetchImage(avatar, (cachedAvatar) => {
+				storage.setItem("userData", { name, email, avatar: cachedAvatar });
+				setUserData({ name, email, avatar: cachedAvatar });
+			});
+		} else {
+			storage.setItem("userData", { name, email, avatar: null });
+			setUserData({ name, email, avatar: null });
+		}
 	};
 
 	const logout = () => {
