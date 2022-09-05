@@ -72,7 +72,7 @@ const Sidebar = ({ links }) => {
 				borderColor="gray.200"
 			>
 				<Avatar
-					src={`${import.meta.env.VITE_APP_IMG_URL}${avatar}.webp`}
+					src={avatar}
 				/>
 				<Text
 					noOfLines={2}
