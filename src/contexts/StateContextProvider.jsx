@@ -22,8 +22,11 @@ export const StateContextProvider = ({ children }) => {
 
 	const closeDrawer = () => setDrawer(false);
 
-	const setUser = ({ name, email, password, avatar }) =>
-		setUserData({ name, email, password, avatar });
+	const setUser = async ({ name, email, avatar }) => {
+		const fetchedAvatar = await fetchImage(avatar);
+		storage.setItem("userData", { name, email, avatar: fetchedAvatar });
+		setUserData({ name, email, avatar: fetchedAvatar });
+	};
 
 	const logout = () => {
 		storage.clear("userData", "accessToken");
