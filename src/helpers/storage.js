@@ -14,6 +14,8 @@ const storage = (() => {
 
 		const prevItem = JSON.parse(localStorage.getItem(key));
 		const newItem = callback(prevItem);
+
+		if (!newItem) throw new Error("Callback returned null");
 		localStorage.setItem(key, JSON.stringify(newItem));
 	};
 
