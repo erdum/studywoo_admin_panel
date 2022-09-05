@@ -130,10 +130,10 @@ const AccountSettings = () => {
 							label="Profile picture"
 							name="avatar"
 							src={typeof fields.avatar === "string" ? avatar : fields.avatar}
-							onChange={(files) => {
+							onChange={(file) => {
 								setFields((prevFields) => ({
 									...prevFields,
-									avatar: files[0],
+									avatar: file,
 									changed: true,
 								}));
 							}}
