@@ -11,9 +11,13 @@ export const StateContextProvider = ({ children }) => {
 
 	const changeUserAvatar = async (newAvatar) => {
 		if (newAvatar) {
-			fetchImage(newAvatar, (cachedAvatar) =>
-				setUserData((prevState) => ({ ...prevState, avatar: cachedAvatar }))
-			);
+			fetchImage(newAvatar, (cachedAvatar) => {
+				setUserData((prevState) => ({ ...prevState, avatar: cachedAvatar }));
+				storage.updateItem("userData", (prevItem) => ({
+					...prevItem,
+					avatar: cachedAvatar,
+				}));
+			});
 		}
 	};
 
