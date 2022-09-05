@@ -23,7 +23,7 @@ import useStateContext from "../contexts/StateContextProvider";
 const AccountSettings = () => {
 	const { data, isFetching } = useQuery(
 		"managment/user-profile",
-		({ queryKey }) => request(queryKey, showAppToast),
+		async ({ queryKey }) => request(queryKey, showAppToast),
 		{
 			retry: 0,
 			refetchOnWindowFocus: false,
@@ -31,7 +31,7 @@ const AccountSettings = () => {
 				name: "",
 				email: "",
 				password: "",
-				avatar: "",
+				avatar: null,
 				gender: "",
 				date_of_birth: "",
 				facebook: "",
@@ -45,12 +45,10 @@ const AccountSettings = () => {
 	const [fields, setFields] = useState({ ...data, changed: false });
 
 	useEffect(() => {
-		if (!data) return;
-
-		setFields({ ...data, changed: false });
+		data ? setFields({ ...data, changed: false }) : null;
 	}, [data]);
 
-	const { showAppToast } = useStateContext();
+	const { showAppToast, changeUserAvatar, userData: { avatar } } = useStateContext();
 
 	const updateProfile = useMutation(
 		(payload) =>
@@ -59,15 +57,16 @@ const AccountSettings = () => {
 				body: payload,
 			}),
 		{
-			onSuccess: () =>
-				setFields((prevState) => ({ ...prevState, changed: false })),
+			onSuccess: () => {
+				changeUserAvatar(fields.avatar);
+			},
 		}
 	);
 
-	const uploadAvatar = useMutation((avatar) => {
+	const uploadAvatar = useMutation((payload) => {
 		request("pilot_upload", showAppToast, {
 			method: "POST",
-			body: avatar,
+			body: payload,
 		});
 	});
 
@@ -79,14 +78,14 @@ const AccountSettings = () => {
 		}));
 	};
 
-	const handleSave = () => {
+	const handleSave = async () => {
 		if (fields.avatar && typeof fields.avatar === "object") {
 			const avatar = new FormData();
 			const extension = fields.avatar.name.split(".").at(-1);
 			avatar.append("images", fields.avatar, `${fields.email}.${extension}`);
-			uploadAvatar.mutate(avatar);
+			await uploadAvatar.mutate(avatar);
 		}
-		updateProfile.mutate({ ...fields, avatar: fields.email });
+		await updateProfile.mutate({ ...fields, avatar: fields.email });
 	};
 
 	return (
@@ -130,7 +129,7 @@ const AccountSettings = () => {
 						<EditableAvatar
 							label="Profile picture"
 							name="avatar"
-							src={fields.avatar}
+							src={typeof fields.avatar === "string" ? avatar : fields.avatar}
 							onChange={(files) => {
 								setFields((prevFields) => ({
 									...prevFields,
