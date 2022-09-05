@@ -50,32 +50,34 @@ const Login = () => {
 		if (req.status !== 200) {
 			throw new Error("Request failed", { cause: req.status });
 		}
-		return req.json();
+		const data = await req.json();
+		return data;
 	};
 
-	const { data, error, refetch, isLoading, isSuccess } = useQuery(
-		"userData",
-		authenticateUser,
-		{
-			enabled: false,
-			refetchOnWindowFocus: false,
-			retry: 0,
-		}
-	);
-
-	useEffect(() => {
+	const successHandler = (data) => {
 		if (!data) return;
+
+		const id = "login-success";
+		if (!toast.isActive(id)) {
+			toast({
+				...toastSettings,
+				id,
+				title: "Logged in",
+				description: "You are successfuly logged in",
+				status: "success",
+			});
+		}
+
 		const payload = {
 			name: data?.user_data?.name,
 			avatar: data?.user_data?.avatar,
-			...credentials,
+			email: data?.user_data?.email,
 		};
 		setUser(payload);
-		storage.setItem("userData", payload);
 		storage.setItem("accessToken", data.access_token);
-	}, [data]);
+	};
 
-	useEffect(() => {
+	const errorHandler = (error) => {
 		if (!error) return;
 
 		if (error.cause === 401) {
@@ -95,19 +97,15 @@ const Login = () => {
 				});
 			}
 		}
-	}, [error]);
+	};
 
-	useEffect(() => {
-		const id = "login-success";
-		if (isSuccess && !toast.isActive(id))
-			toast({
-				...toastSettings,
-				id,
-				title: "Logged in",
-				description: "You are successfuly logged in",
-				status: "success",
-			});
-	}, [isSuccess]);
+	const { refetch, isLoading } = useQuery("userData", authenticateUser, {
+		enabled: false,
+		refetchOnWindowFocus: false,
+		retry: 0,
+		onSuccess: successHandler,
+		onError: errorHandler,
+	});
 
 	useEffect(() => {
 		if (credentials) refetch();
@@ -146,19 +144,13 @@ const Login = () => {
 				</Heading>
 				<form onSubmit={handleSubmit}>
 					<FormControl mt="8" isRequired>
-						<FormLabel
-							fontSize="sm"
-							color="blackAlpha.700"
-							htmlFor="username"
-						>
+						<FormLabel fontSize="sm" color="blackAlpha.700" htmlFor="username">
 							Email
 						</FormLabel>
 						<InputGroup>
 							<InputLeftElement
 								pointerEvents="none"
-								children={
-									<Icon color="gray.500" as={FaIdBadge} />
-								}
+								children={<Icon color="gray.500" as={FaIdBadge} />}
 							/>
 							<Input
 								id="username"
@@ -167,16 +159,10 @@ const Login = () => {
 								autoComplete="on"
 							/>
 						</InputGroup>
-						<FormErrorMessage>
-							Email does not match!
-						</FormErrorMessage>
+						<FormErrorMessage>Email does not match!</FormErrorMessage>
 					</FormControl>
 					<FormControl mt="4" isRequired isInvalid={isPassInvalid}>
-						<FormLabel
-							fontSize="sm"
-							color="blackAlpha.700"
-							htmlFor="password"
-						>
+						<FormLabel fontSize="sm" color="blackAlpha.700" htmlFor="password">
 							Password
 						</FormLabel>
 						<InputGroup>
@@ -198,9 +184,7 @@ const Login = () => {
 									mx="2"
 									size="sm"
 									onClick={() =>
-										setShowPassword(
-											(showPassword) => !showPassword
-										)
+										setShowPassword((showPassword) => !showPassword)
 									}
 								>
 									{showPassword ? "hide" : "show"}
