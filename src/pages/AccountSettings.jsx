@@ -83,9 +83,9 @@ const AccountSettings = () => {
 			const avatar = new FormData();
 			const extension = fields.avatar.name.split(".").at(-1);
 			avatar.append("images", fields.avatar, `${fields.email}.${extension}`);
-			await uploadAvatar.mutate(avatar);
+			uploadAvatar.mutate(avatar);
 		}
-		await updateProfile.mutate({ ...fields, avatar: fields.email });
+		updateProfile.mutate({ ...fields, avatar: fields.email });
 	};
 
 	return (
