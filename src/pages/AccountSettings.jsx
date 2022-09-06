@@ -31,7 +31,7 @@ const AccountSettings = () => {
 				name: "",
 				email: "",
 				password: "",
-				avatar: null,
+				avatar: "",
 				gender: "",
 				date_of_birth: "",
 				facebook: "",
