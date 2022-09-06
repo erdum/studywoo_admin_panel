@@ -226,7 +226,7 @@ const Login = () => {
 				color="gray.500"
 				fontWeight="medium"
 			>
-				ASIT group Pakistan
+				Erdum IT group Pakistan
 			</Text>
 		</Center>
 	);
