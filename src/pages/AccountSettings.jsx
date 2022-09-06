@@ -129,7 +129,7 @@ const AccountSettings = () => {
 						<EditableAvatar
 							label="Profile picture"
 							name="avatar"
-							src={typeof fields.avatar === "string" ? avatar : fields.avatar}
+							src={typeof fields.avatar === "string" ? avatar : URL.createObjectURL(fields.avatar)}
 							onChange={(file) => {
 								setFields((prevFields) => ({
 									...prevFields,
