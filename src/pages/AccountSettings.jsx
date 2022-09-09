@@ -48,7 +48,11 @@ const AccountSettings = () => {
 		data ? setFields({ ...data, changed: false }) : null;
 	}, [data]);
 
-	const { showAppToast, changeUserAvatar, userData: { avatar } } = useStateContext();
+	const {
+		showAppToast,
+		changeUserAvatar,
+		userData: { avatar },
+	} = useStateContext();
 
 	const updateProfile = useMutation(
 		(payload) =>
@@ -59,6 +63,7 @@ const AccountSettings = () => {
 		{
 			onSuccess: () => {
 				changeUserAvatar(fields.avatar);
+				setFields((prevState) => ({ ...prevState, changed: false }));
 			},
 		}
 	);
@@ -129,7 +134,11 @@ const AccountSettings = () => {
 						<EditableAvatar
 							label="Profile picture"
 							name="avatar"
-							src={typeof fields.avatar === "string" ? avatar : URL.createObjectURL(fields.avatar)}
+							src={
+								typeof fields.avatar === "string"
+									? avatar
+									: URL.createObjectURL(fields.avatar)
+							}
 							onChange={(file) => {
 								setFields((prevFields) => ({
 									...prevFields,
