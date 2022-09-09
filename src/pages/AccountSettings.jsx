@@ -34,6 +34,7 @@ const AccountSettings = () => {
 				avatar: "",
 				gender: "",
 				date_of_birth: "",
+				about: "",
 				facebook: "",
 				instagram: "",
 				twitter: "",
@@ -91,6 +92,12 @@ const AccountSettings = () => {
 			uploadAvatar.mutate(avatar);
 		}
 		updateProfile.mutate({ ...fields, avatar: fields.email });
+	};
+
+	const handleRichText = (text) => {
+		if (text !== fields.about) {
+			setFields((prevState) => ({ ...prevState, changed:true, about: text }));
+		}
 	};
 
 	return (
@@ -168,7 +175,12 @@ const AccountSettings = () => {
 							value={fields.date_of_birth}
 							onChange={handleChange}
 						/>
-						<EditableEditor name="about" label="About" />
+						<EditableEditor
+							name="about"
+							label="About"
+							initialText={fields.about}
+							getTextOnClose={handleRichText}
+						/>
 						<Editable
 							name="facebook"
 							label="Facebook"
