@@ -104,7 +104,7 @@ const EditableSelect = ({ name, label, options, value, onChange }) => {
 	);
 };
 
-const EditableEditor = ({ name, label }) => {
+const EditableEditor = ({ name, label, initialText, getTextOnClose }) => {
 	const [isModalOpen, setModal] = useState(false);
 	const [isEditorLoading, setEditorLoading] = useState(true);
 	const ref = useRef(null);
@@ -170,9 +170,11 @@ const EditableEditor = ({ name, label }) => {
 							fadeDuration={1}
 						>
 							<Editor
+								initialValue={initialText}
 								onInit={(evt, editor) => {
 									setEditorLoading(false);
 									editorRef.current = editor;
+									editor.on("Remove", () => getTextOnClose(editor.getContent()));
 								}}
 								init={{
 									height: "100%",
