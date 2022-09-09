@@ -13,8 +13,6 @@ import {
 	ModalHeader,
 	ModalCloseButton,
 	ModalBody,
-	ModalFooter,
-	Button,
 	Skeleton,
 } from "@chakra-ui/react";
 
@@ -47,9 +45,7 @@ const Editable = ({ name, value, onChange, label, type = "text" }) => {
 					id={name}
 					name={name}
 					ref={ref}
-					onKeyDown={({ key }) =>
-						key === "Escape" && setEditable(true)
-					}
+					onKeyDown={({ key }) => key === "Escape" && setEditable(true)}
 					value={value}
 					onChange={onChange}
 					onBlur={() => setEditable(true)}
@@ -188,8 +184,7 @@ const EditableEditor = ({ name, label }) => {
 											items: "code visualaid | searchreplace | emoticons",
 										},
 									},
-									menubar:
-										"file edit view insert format tools table help",
+									menubar: "file edit view insert format tools table help",
 									toolbar:
 										"undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | " +
 										"bullist numlist outdent indent | link image | print preview media fullscreen | " +
@@ -218,9 +213,7 @@ const EditableEditor = ({ name, label }) => {
 										"help",
 									],
 								}}
-								apiKey={`${
-									import.meta.env.VITE_APP_TINYMCE_API_KEY
-								}`}
+								apiKey={`${import.meta.env.VITE_APP_TINYMCE_API_KEY}`}
 								scriptLoading={{ defer: true }}
 							/>
 						</Skeleton>
