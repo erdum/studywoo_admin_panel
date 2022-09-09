@@ -172,9 +172,6 @@ const EditableEditor = ({ name, label }) => {
 								onInit={(evt, editor) => {
 									setEditorLoading(false);
 									editorRef.current = editor;
-									editor.on("keydown", ({ key }) => {
-										key === "Escape" && setModal(false);
-									});
 								}}
 								init={{
 									height: "100%",
