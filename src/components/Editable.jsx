@@ -114,7 +114,7 @@ const EditableEditor = ({ name, label }) => {
 		const handler = (e) => {
 			if (
 				e.target.closest(
-					".tox-tinymce-aux, .moxman-window, .tam-assetmanager-root"
+					".tox-tinymce, .tox-tinymce-aux, .moxman-window, .tam-assetmanager-root"
 				) !== null
 			) {
 				e.stopImmediatePropagation();
@@ -156,6 +156,7 @@ const EditableEditor = ({ name, label }) => {
 				onClose={() => setModal(false)}
 				size="full"
 				finalFocusRef={ref}
+				trapFocus={false}
 			>
 				<ModalContent>
 					<ModalHeader>{label}</ModalHeader>
