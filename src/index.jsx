@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import "./index.css";
 
@@ -39,15 +40,19 @@ const theme = extendTheme({
 	},
 });
 
+const muiTheme = createTheme();
+
 root.render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
 			<StateContextProvider>
-				<ChakraProvider theme={theme}>
-					<BrowserRouter>
-						<App />
-					</BrowserRouter>
-				</ChakraProvider>
+				<ThemeProvider theme={muiTheme}>
+					<ChakraProvider theme={theme}>
+						<BrowserRouter>
+							<App />
+						</BrowserRouter>
+					</ChakraProvider>
+				</ThemeProvider>
 			</StateContextProvider>
 		</QueryClientProvider>
 	</React.StrictMode>
