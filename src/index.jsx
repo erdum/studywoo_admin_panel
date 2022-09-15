@@ -44,7 +44,7 @@ root.render(
 		<QueryClientProvider client={queryClient}>
 			<StateContextProvider>
 				<ChakraProvider theme={theme}>
-					<BrowserRouter>
+					<BrowserRouter basename="/admin2">
 						<App />
 					</BrowserRouter>
 				</ChakraProvider>
