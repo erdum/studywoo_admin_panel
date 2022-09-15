@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "vite build",
+    "build": "vite build --base=/admin2/",
     "serve": "vite preview"
   },
   "browserslist": {
