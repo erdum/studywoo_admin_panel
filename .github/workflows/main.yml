@@ -34,4 +34,5 @@ jobs:
           local-dir: ./dist/
           server-dir: college.studywoo.com/resources/views/
           exclude: |
+            /*
             !index.html
