@@ -40,7 +40,7 @@ jobs:
         shell: python
         run: |
           import ftplib
-          ftp = ftplib().FTP(college.studywoo.com)
+          ftp = ftplib.FTP(college.studywoo.com)
           ftp.login('a1659gai', '${{ secrets.ftp_password }}')
           ftp.rename('college.studywoo.com/resources/views/index.html', 'college.studywoo.com/resources/views/admin2_panel.blade.php')
           ftp.quit()
