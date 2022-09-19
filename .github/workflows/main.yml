@@ -31,5 +31,7 @@ jobs:
           server: college.studywoo.com
           username: a1659gai
           password: ${{ secrets.ftp_password }}
-          local-dir: ./dist/index.html
+          local-dir: ./dist/
           server-dir: college.studywoo.com/resources/views/
+          exclude: |
+            !index.html
