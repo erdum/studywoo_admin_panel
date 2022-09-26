@@ -22,8 +22,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "vite",
-    "build": "vite build --base=college.studywoo.com/admin2/",
+    "start": "vite && npx tailwindcss -i ./src/index.css -o ./public/output.css --watch",
+    "build": "vite build --base=college.studywoo.com/admin2/ && npx tailwindcss -i ./src/index.css -o ./public/output.css",
     "serve": "vite preview"
   },
   "browserslist": {
