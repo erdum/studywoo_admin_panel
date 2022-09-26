@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "vite build --base=/admin2/",
+    "build": "vite build --base=college.studywoo.com/admin2/",
     "serve": "vite preview"
   },
   "browserslist": {
