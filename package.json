@@ -2,7 +2,6 @@
   "name": "studywoo_admin_panel",
   "version": "2.0.0",
   "private": true,
-  "homepage": "college.studywoo.com/admin2",
   "dependencies": {
     "@chakra-ui/react": "^2.2.1",
     "@emotion/react": "^11.10.4",
