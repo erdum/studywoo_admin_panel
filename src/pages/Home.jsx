@@ -11,47 +11,47 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 // Helper functions
 import request from "../helpers/request";
 
-const Home = () => {
-	// Table Columns Defination
-	const columns = [
-		{
-			field: "id",
-			headerName: "Application ID",
-			width: 160,
-		},
-		{
-			field: "applicant_name",
-			headerName: "Applicant Name",
-			width: 400,
-		},
-		{
-			field: "applicant_phone",
-			headerName: "Applicant Phone",
-			width: 300,
-		},
-		{
-			field: "applicant_email",
-			headerName: "Applicant Email",
-			width: 400,
-		},
-		{
-			field: "applied_college",
-			headerName: "Applied College",
-			width: 500,
-		},
-		{
-			field: "applied_course",
-			headerName: "Applied Course",
-			width: 250,
-		},
-		{
-			field: "applied_date",
-			headerName: "Applied Date",
-			width: 250,
-			type: "date",
-		},
-	];
+// Table Columns Defination
+const columns = [
+	{
+		field: "id",
+		headerName: "Application ID",
+		width: 160,
+	},
+	{
+		field: "applicant_name",
+		headerName: "Applicant Name",
+		width: 400,
+	},
+	{
+		field: "applicant_phone",
+		headerName: "Applicant Phone",
+		width: 300,
+	},
+	{
+		field: "applicant_email",
+		headerName: "Applicant Email",
+		width: 400,
+	},
+	{
+		field: "applied_college",
+		headerName: "Applied College",
+		width: 500,
+	},
+	{
+		field: "applied_course",
+		headerName: "Applied Course",
+		width: 250,
+	},
+	{
+		field: "applied_date",
+		headerName: "Applied Date",
+		width: 250,
+		type: "date",
+	},
+];
 
+const Home = () => {
 	const dataGridTheme = createTheme();
 
 	return (
