@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "vite && npx tailwindcss -i ./src/index.css -o ./public/output.css --watch",
-    "build": "vite build --base=/admin2/ && npx tailwindcss -i ./src/index.css -o ./public/output.css",
+    "build": "vite build && npx tailwindcss -i ./src/index.css -o ./public/output.css",
     "serve": "vite preview"
   },
   "browserslist": {
