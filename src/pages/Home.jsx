@@ -24,32 +24,32 @@ const columns = [
 		width: 160,
 	},
 	{
-		field: "applicant_name",
+		field: "full_name",
 		headerName: "Applicant Name",
 		width: 400,
 	},
 	{
-		field: "applicant_phone",
+		field: "mobile_number",
 		headerName: "Applicant Phone",
 		width: 300,
 	},
 	{
-		field: "applicant_email",
+		field: "email",
 		headerName: "Applicant Email",
 		width: 400,
 	},
 	{
-		field: "applied_college",
+		field: "college_name",
 		headerName: "Applied College",
 		width: 500,
 	},
 	{
-		field: "applied_course",
+		field: "course_name",
 		headerName: "Applied Course",
 		width: 250,
 	},
 	{
-		field: "applied_date",
+		field: "created_at",
 		headerName: "Applied Date",
 		width: 250,
 		type: "date",
