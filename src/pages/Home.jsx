@@ -1,15 +1,20 @@
+import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 
 // UI Components
 import { Box } from "@chakra-ui/react";
-
-// Custom Components
-import PageHeader from "../components/PageHeader";
 import { DataGrid } from "@mui/x-data-grid";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+// Custom Components
+import PageHeader from "../components/PageHeader";
+import { PageTableSkeleton } from "../components/PageSkeleton";
+
 // Helper functions
 import request from "../helpers/request";
+
+// App State Context
+import useStateContext from "../contexts/StateContextProvider";
 
 // Table Columns Defination
 const columns = [
@@ -53,6 +58,22 @@ const columns = [
 
 const Home = () => {
 	const dataGridTheme = createTheme();
+	const { showAppToast } = useStateContext();
+	const { data, isFetching } = useQuery(
+		"managment/applications",
+		async ({ queryKey }) => request(queryKey, showAppToast),
+		{
+			retry: 0,
+			refetchOnWindowFocus: false,
+			initialData: [],
+		}
+	);
+
+	const [rows, setRows] = useState(data);
+
+	useEffect(() => {
+		data ? setRows({ data }) : null;
+	}, [data]);
 
 	return (
 		<>
@@ -64,9 +85,12 @@ const Home = () => {
 				disableBtn
 			/>
 			<Box p="1" h="calc(100% - 6rem)" overflowY="auto">
-				<ThemeProvider theme={dataGridTheme}>
-					<DataGrid columns={columns} rows={[]} />
-				</ThemeProvider>
+				{isFetching && <PageTableSkeleton />}
+				{!isFetching && (
+					<ThemeProvider theme={dataGridTheme}>
+						<DataGrid columns={columns} rows={[]} />
+					</ThemeProvider>
+				)}
 			</Box>
 		</>
 	);
