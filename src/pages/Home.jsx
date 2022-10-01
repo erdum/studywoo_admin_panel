@@ -72,7 +72,7 @@ const Home = () => {
 	const [rows, setRows] = useState(data);
 
 	useEffect(() => {
-		data ? setRows({ data }) : null;
+		data ? setRows(data) : null;
 	}, [data]);
 
 	return (
@@ -88,7 +88,7 @@ const Home = () => {
 				{isFetching && <PageTableSkeleton />}
 				{!isFetching && (
 					<ThemeProvider theme={dataGridTheme}>
-						<DataGrid columns={columns} rows={[]} />
+						<DataGrid columns={columns} rows={rows} />
 					</ThemeProvider>
 				)}
 			</Box>
