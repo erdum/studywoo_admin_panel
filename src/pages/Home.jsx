@@ -73,6 +73,7 @@ const Home = () => {
 
 	useEffect(() => {
 		data ? setRows(data) : null;
+		console.log(data);
 	}, [data]);
 
 	return (
