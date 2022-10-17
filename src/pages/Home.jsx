@@ -89,7 +89,7 @@ const Home = () => {
 				{isFetching && <PageTableSkeleton />}
 				{!isFetching && (
 					<ThemeProvider theme={dataGridTheme}>
-						<DataGrid columns={columns} rows={rows} />
+						<DataGrid checkboxSelection columns={columns} rows={rows} />
 					</ThemeProvider>
 				)}
 			</Box>
