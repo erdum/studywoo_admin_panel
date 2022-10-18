@@ -70,10 +70,11 @@ const Home = () => {
 	);
 
 	const [rows, setRows] = useState(data);
+	const [selectedRows, setSelectedRows] = useState([]);
+	const shouldShowMenu = selectedRows.length > 0;
 
 	useEffect(() => {
 		data ? setRows(data) : null;
-		console.log(data);
 	}, [data]);
 
 	return (
@@ -84,12 +85,19 @@ const Home = () => {
 				btnText="Save"
 				enableSearch
 				disableBtn
+				enableMenu={shouldShowMenu}
 			/>
 			<Box p={{ lg: "1" }} h="calc(100% - 6rem)" overflowY="auto">
 				{isFetching && <PageTableSkeleton />}
 				{!isFetching && (
 					<ThemeProvider theme={dataGridTheme}>
-						<DataGrid checkboxSelection columns={columns} rows={rows} />
+						<DataGrid
+							checkboxSelection
+							columns={columns}
+							rows={rows}
+							selectionModel={selectedRows}
+							onSelectionModelChange={(newSelectedRows) => setSelectedRows(newSelectedRows)}
+						/>
 					</ThemeProvider>
 				)}
 			</Box>
