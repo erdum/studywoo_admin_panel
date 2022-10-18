@@ -12,7 +12,7 @@ const PageHeader = ({
 	disableBtn,
 	isBtnLoading,
 	onChange,
-	enableMenu = true,
+	enableMenu,
 }) => {
 	return (
 		<Flex
