@@ -85,7 +85,7 @@ const Home = () => {
 				enableSearch
 				disableBtn
 			/>
-			<Box p="1" h="calc(100% - 6rem)" overflowY="auto">
+			<Box p={{ lg: "1" }} h="calc(100% - 6rem)" overflowY="auto">
 				{isFetching && <PageTableSkeleton />}
 				{!isFetching && (
 					<ThemeProvider theme={dataGridTheme}>
