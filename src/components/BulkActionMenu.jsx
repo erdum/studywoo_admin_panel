@@ -44,7 +44,7 @@ const BulkActionMenu = () => {
 					<MenuItem icon={<EditIcon w="4" h="4" color="gray.500" />}>
 						Edit
 					</MenuItem>
-					<MenuItem icon={<DeleteIcon w="4" h="4" color="gray.500" />}>
+					<MenuItem color="red.500" icon={<DeleteIcon w="4" h="4" color="red.500" />}>
 						Delete
 					</MenuItem>
 					<MenuDivider />
