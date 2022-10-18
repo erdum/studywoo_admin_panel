@@ -1,6 +1,7 @@
 import { Flex, Text, Button } from "@chakra-ui/react";
 
 import SearchBar from "./SearchBar";
+import BulkActionMenu from "./BulkActionMenu";
 
 const PageHeader = ({
 	title,
@@ -11,6 +12,7 @@ const PageHeader = ({
 	disableBtn,
 	isBtnLoading,
 	onChange,
+	enableMenu = true,
 }) => {
 	return (
 		<Flex
@@ -42,30 +44,32 @@ const PageHeader = ({
 					{description}
 				</Text>
 			</Flex>
-			<Button
-				size={{ base: "sm", md: "md" }}
-				w={{ md: "20" }}
-				color="white"
-				bg="custom.primary"
-				boxShadow="base"
-				ml={{ lg: "auto" }}
-				_hover={{
-					boxShadow: "none",
-					backgroundColor: "white",
-					color: "custom.primary",
-					borderWidth: "2px",
-					borderColor: "custom.primary",
-				}}
-				isDisabled={disableBtn}
-				isLoading={isBtnLoading}
-				onClick={onBtnClick}
-			>
-				{btnText}
-			</Button>
+			{enableMenu ? (
+				<BulkActionMenu />
+			) : (
+				<Button
+					size={{ base: "sm", md: "md" }}
+					w={{ md: "20" }}
+					color="white"
+					bg="custom.primary"
+					boxShadow="base"
+					ml={{ lg: "auto" }}
+					_hover={{
+						boxShadow: "none",
+						backgroundColor: "white",
+						color: "custom.primary",
+						borderWidth: "2px",
+						borderColor: "custom.primary",
+					}}
+					isDisabled={disableBtn}
+					isLoading={isBtnLoading}
+					onClick={onBtnClick}
+				>
+					{btnText}
+				</Button>
+			)}
 			{enableSearch && (
-				<SearchBar
-					onChange={() => (onChange ? onChange() : () => {})}
-				/>
+				<SearchBar onChange={() => (onChange ? onChange() : () => {})} />
 			)}
 		</Flex>
 	);
