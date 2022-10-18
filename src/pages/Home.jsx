@@ -70,7 +70,7 @@ const Home = () => {
 	);
 
 	const [selectedRows, setSelectedRows] = useState([]);
-	const shouldShowMenu = selectedRows.length > 0;
+	const shouldShowMenu = selectedRows?.length > 0;
 
 	return (
 		<>
