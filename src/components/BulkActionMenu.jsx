@@ -35,6 +35,9 @@ const BulkActionMenu = () => {
 						color: "custom.primary",
 						outline: "none",
 					}}
+					_focusVisible={{
+						outline: "none",
+					}}
 					as={Button}
 					rightIcon={<ChevronDownIcon />}
 				>
@@ -44,7 +47,10 @@ const BulkActionMenu = () => {
 					<MenuItem icon={<EditIcon w="4" h="4" color="gray.500" />}>
 						Edit
 					</MenuItem>
-					<MenuItem color="red.500" icon={<DeleteIcon w="4" h="4" color="red.500" />}>
+					<MenuItem
+						color="red.500"
+						icon={<DeleteIcon w="4" h="4" color="red.500" />}
+					>
 						Delete
 					</MenuItem>
 					<MenuDivider />
