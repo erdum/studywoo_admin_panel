@@ -69,13 +69,8 @@ const Home = () => {
 		}
 	);
 
-	const [rows, setRows] = useState(data);
 	const [selectedRows, setSelectedRows] = useState([]);
 	const shouldShowMenu = selectedRows.length > 0;
-
-	useEffect(() => {
-		data ? setRows(data) : null;
-	}, [data]);
 
 	return (
 		<>
@@ -94,7 +89,7 @@ const Home = () => {
 						<DataGrid
 							checkboxSelection
 							columns={columns}
-							rows={rows}
+							rows={data}
 							selectionModel={selectedRows}
 							onSelectionModelChange={(newSelectedRows) => setSelectedRows(newSelectedRows)}
 						/>
