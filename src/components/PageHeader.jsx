@@ -11,7 +11,7 @@ const PageHeader = ({
 	enableSearch,
 	disableBtn,
 	isBtnLoading,
-	onChange,
+	onSearch,
 	enableMenu,
 }) => {
 	return (
