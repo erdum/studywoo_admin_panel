@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useDeferredValue, useMemo } from "react";
 import { useQuery } from "react-query";
 
 // UI Components
@@ -12,6 +12,7 @@ import { PageTableSkeleton } from "../components/PageSkeleton";
 
 // Helper functions
 import request from "../helpers/request";
+import filterRows from "../helpers/filterRows";
 
 // App State Context
 import useStateContext from "../contexts/StateContextProvider";
@@ -69,6 +70,12 @@ const Home = () => {
 		}
 	);
 
+	const [searchValue, setSearchValue] = useState("");
+	const searchedText = useDeferredValue(searchValue);
+	const filteredData = useMemo(
+		() => filterRows(data, searchedText),
+		[searchedText]
+	);
 	const [selectedRows, setSelectedRows] = useState([]);
 	const shouldShowMenu = selectedRows?.length > 0;
 
@@ -81,6 +88,7 @@ const Home = () => {
 				enableSearch
 				disableBtn
 				enableMenu={shouldShowMenu}
+				onSearch={(value) => setSearchValue(value)}
 			/>
 			<Box p={{ lg: "1" }} h="calc(100% - 6rem)" overflowY="auto">
 				{isFetching && <PageTableSkeleton />}
@@ -89,9 +97,11 @@ const Home = () => {
 						<DataGrid
 							checkboxSelection
 							columns={columns}
-							rows={data ?? []}
+							rows={filteredData ?? data ?? []}
 							selectionModel={selectedRows}
-							onSelectionModelChange={(newSelectedRows) => setSelectedRows(newSelectedRows)}
+							onSelectionModelChange={(newSelectedRows) =>
+								setSelectedRows(newSelectedRows)
+							}
 						/>
 					</ThemeProvider>
 				)}
