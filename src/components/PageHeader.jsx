@@ -69,7 +69,7 @@ const PageHeader = ({
 				</Button>
 			)}
 			{enableSearch && (
-				<SearchBar onChange={() => (onChange ? onChange() : () => {})} />
+				<SearchBar onChange={() => (onSearch ? onSearch() : () => {})} />
 			)}
 		</Flex>
 	);
