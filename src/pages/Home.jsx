@@ -89,7 +89,7 @@ const Home = () => {
 						<DataGrid
 							checkboxSelection
 							columns={columns}
-							rows={data}
+							rows={data ?? []}
 							selectionModel={selectedRows}
 							onSelectionModelChange={(newSelectedRows) => setSelectedRows(newSelectedRows)}
 						/>
