@@ -97,7 +97,7 @@ const Home = () => {
 						<DataGrid
 							checkboxSelection
 							columns={columns}
-							rows={filteredData ?? data ?? []}
+							rows={filteredData?.length === 0 ? (data ?? []) : filteredData}
 							selectionModel={selectedRows}
 							onSelectionModelChange={(newSelectedRows) =>
 								setSelectedRows(newSelectedRows)
