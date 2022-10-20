@@ -7,8 +7,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 // Custom Components
-import PageHeader from "../components/PageHeader";
-import { PageTableSkeleton } from "../components/PageSkeleton";
+import PageHeader from "../components/page_comps/PageHeader";
+import { PageTableSkeleton } from "../components/page_comps/PageSkeleton";
 
 // Helper functions
 import request from "../helpers/request";

@@ -8,13 +8,13 @@ import { useTheme, useToast } from "@chakra-ui/react";
 import getScreenDim from "./helpers/getScreenDim";
 
 // Custom Components
-import Sidebar from "./components/Sidebar";
-import AuthProvider from "./components/AuthProvider";
-import HeaderAction from "./components/HeaderAction";
-import HomeLink from "./components/HomeLink";
-import MobileMenuBtn from "./components/MobileMenuBtn";
-import MountPortalComp from "./components/MountPortalComp";
-import PageWrapper from "./components/PageWrapper";
+import Sidebar from "./components/app_shell/Sidebar";
+import AuthProvider from "./components/hoc/AuthProvider";
+import HeaderAction from "./components/app_shell/HeaderAction";
+import HomeLink from "./components/app_shell/HomeLink";
+import MobileMenuBtn from "./components/app_shell/MobileMenuBtn";
+import MountPortalComp from "./components/hoc/MountPortalComp";
+import PageWrapper from "./components/page_comps/PageWrapper";
 
 // Menu Items
 import MenuLinks from "./Menu-Items.js";

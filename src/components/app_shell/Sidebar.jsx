@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 // Helper functions
-import getScreenDim from "../helpers/getScreenDim";
+import getScreenDim from "../../helpers/getScreenDim";
 
 // UI Components and Hooks
 import {
@@ -25,7 +25,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 import Alert from "./Alert";
 
 // App State Context
-import useStateContext from "../contexts/StateContextProvider";
+import useStateContext from "../../contexts/StateContextProvider";
 
 const Sidebar = ({ links }) => {
 	const [isAlertOpen, setAlert] = useState(false);

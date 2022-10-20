@@ -1,7 +1,7 @@
 // App State Context
-import useStateContext from "../contexts/StateContextProvider";
+import useStateContext from "../../contexts/StateContextProvider";
 
-import Login from "./Login";
+import Login from "../../pages/Login";
 
 const AuthProvider = ({ children }) => {
 	const { userData } = useStateContext();
