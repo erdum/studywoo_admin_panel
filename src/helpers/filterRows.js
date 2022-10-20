@@ -3,7 +3,7 @@ const filterRows = (rows, searchValue) => {
 		const values = Object.values(row);
 		return values.find((value) => {
 			const word = String(value).toLowerCase();
-			return word.includes(searchValue);
+			return word.includes(searchValue.toLowerCase());
 		});
 	}) ?? [];
 };
