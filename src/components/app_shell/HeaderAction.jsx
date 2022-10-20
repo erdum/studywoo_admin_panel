@@ -1,6 +1,6 @@
 import { Tooltip, Avatar } from "@chakra-ui/react";
 
-import useStateContext from "../contexts/StateContextProvider";
+import useStateContext from "../../contexts/StateContextProvider";
 
 const HeaderAction = ({ onClick }) => {
 	const {

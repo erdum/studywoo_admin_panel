@@ -8,14 +8,14 @@ import { Box, Flex } from "@chakra-ui/react";
 import request from "../helpers/request";
 
 // Custom Components
-import PageHeader from "../components/PageHeader";
-import { PageFieldSkeleton } from "../components/PageSkeleton";
+import PageHeader from "../components/page_comps/PageHeader";
+import { PageFieldSkeleton } from "../components/page_comps/PageSkeleton";
 import {
 	Editable,
 	EditableSelect,
 	EditableEditor,
-} from "../components/Editable";
-import EditableAvatar from "../components/EditableAvatar";
+} from "../components/page_comps/Editable";
+import EditableAvatar from "../components/page_comps/EditableAvatar";
 
 // App State Context
 import useStateContext from "../contexts/StateContextProvider";

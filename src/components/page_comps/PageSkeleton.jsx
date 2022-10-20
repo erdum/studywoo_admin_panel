@@ -1,4 +1,4 @@
-import getScreenDim from "../helpers/getScreenDim";
+import getScreenDim from "../../helpers/getScreenDim";
 
 import {
 	SkeletonText,
