@@ -71,9 +71,7 @@ const Sidebar = ({ links }) => {
 				borderBottom="1px"
 				borderColor="gray.200"
 			>
-				<Avatar
-					src={avatar}
-				/>
+				<Avatar src={avatar} />
 				<Text
 					noOfLines={2}
 					px="4"
@@ -98,12 +96,9 @@ const Sidebar = ({ links }) => {
 					<NavLink
 						key={item.path}
 						to={item.path}
-						style={({ isActive }) =>
-							isActive ? activeStyle : null
-						}
-						className={
-							"hover:bg-gray-100 transition-colors font-semibold"
-						}
+						style={({ isActive }) => (isActive ? activeStyle : undefined)}
+						className={"hover:bg-gray-100 transition-colors font-semibold"}
+						end
 					>
 						<Flex align="center" px="8" py="2">
 							<Icon boxSize="1.2rem" as={item.icon} />
