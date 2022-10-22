@@ -3,7 +3,7 @@ import { FaSearch } from "react-icons/fa";
 
 const SearchBar = ({ onChange }) => {
 	return (
-		<InputGroup w={{ base: "100%", lg: "20%" }}>
+		<InputGroup w="100%">
 			<InputLeftElement
 				pointerEvents="none"
 				children={<Icon color="gray.500" as={FaSearch} />}
