@@ -1,4 +1,4 @@
-import { Flex, Text, Button } from "@chakra-ui/react";
+import { Flex, Text, Button, Box } from "@chakra-ui/react";
 
 import SearchBar from "./SearchBar";
 import BulkActionMenu from "./BulkActionMenu";
@@ -69,11 +69,13 @@ const PageHeader = ({
 				</Button>
 			)}
 			{enableSearch && (
+				<Box w={{ base: "100%", lg: "20%" }}>
 				<SearchBar
 					onChange={(searchValue) =>
 						onSearch ? onSearch(searchValue) : () => {}
 					}
 				/>
+				</Box>
 			)}
 		</Flex>
 	);
