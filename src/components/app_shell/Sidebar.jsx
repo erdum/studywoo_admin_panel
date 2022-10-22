@@ -23,6 +23,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 
 // Custom UI Component
 import Alert from "./Alert";
+import SearchBar from "../page_comps/SearchBar";
 
 // App State Context
 import useStateContext from "../../contexts/StateContextProvider";
@@ -92,6 +93,9 @@ const Sidebar = ({ links }) => {
 				fontSize="lg"
 				className={"text-gray-500 font-semibold"}
 			>
+				<Box px="4">
+					<SearchBar onChange={() => undefined} />
+				</Box>
 				{links.map((item) => (
 					<NavLink
 						key={item.path}
