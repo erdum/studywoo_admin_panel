@@ -8,6 +8,7 @@ const appDefaultState = {
 	isDrawerOpen: false,
 	userData: storage.getItem("userData"),
 	appToast: false,
+	isAppSearchOpen: false,
 };
 
 const reducer = (state, action) => {
@@ -43,16 +44,21 @@ const reducer = (state, action) => {
 			};
 			break;
 
+		case "TOGGLE_APP_SEARCH":
+			return {
+				...state,
+				isAppSearchOpen: action.payload,
+			};
+			break;
+
 		default:
 			break;
 	}
 };
 
 export const StateContextProvider = ({ children }) => {
-	const [{ isDrawerOpen, userData, appToast }, dispatcher] = useReducer(
-		reducer,
-		appDefaultState
-	);
+	const [{ isDrawerOpen, userData, appToast, isAppSearchOpen }, dispatcher] =
+		useReducer(reducer, appDefaultState);
 
 	const changeUserAvatar = async (newAvatar) => {
 		if (newAvatar) {
@@ -97,6 +103,12 @@ export const StateContextProvider = ({ children }) => {
 	const showAppToast = (error) =>
 		error ? dispatcher({ type: "SET_ERROR", payload: error }) : null;
 
+	const openAppSearch = () =>
+		dispatcher({ type: "TOGGLE_APP_SEARCH", payload: true });
+
+	const closeAppSearch = () =>
+		dispatcher({ type: "TOGGLE_APP_SEARCH", payload: false });
+
 	const value = {
 		isDrawerOpen,
 		openDrawer,
@@ -107,6 +119,9 @@ export const StateContextProvider = ({ children }) => {
 		appToast,
 		showAppToast,
 		changeUserAvatar,
+		isAppSearchOpen,
+		openAppSearch,
+		closeAppSearch,
 	};
 
 	return (
