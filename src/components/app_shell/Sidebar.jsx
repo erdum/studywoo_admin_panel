@@ -35,7 +35,12 @@ const Sidebar = ({ links }) => {
 	const {
 		userData: { avatar, name },
 		logout,
+		openAppSearch,
+		closeAppSearch,
 	} = useStateContext();
+
+	const toggleSearch = (value) =>
+		value.length === 0 ? closeAppSearch() : openAppSearch();
 
 	const activeStyle = {
 		color: "white",
@@ -94,7 +99,7 @@ const Sidebar = ({ links }) => {
 				className={"text-gray-500 font-semibold"}
 			>
 				<Box px="4">
-					<SearchBar onChange={() => undefined} />
+					<SearchBar onChange={toggleSearch} />
 				</Box>
 				{links.map((item) => (
 					<NavLink
