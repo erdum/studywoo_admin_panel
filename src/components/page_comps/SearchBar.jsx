@@ -1,7 +1,7 @@
 import { InputGroup, InputLeftElement, Input, Icon } from "@chakra-ui/react";
 import { FaSearch } from "react-icons/fa";
 
-const SearchBar = ({ onChange }) => {
+const SearchBar = ({ onChange, ...otherProps }) => {
 	return (
 		<InputGroup w="100%">
 			<InputLeftElement
@@ -9,6 +9,7 @@ const SearchBar = ({ onChange }) => {
 				children={<Icon color="gray.500" as={FaSearch} />}
 			/>
 			<Input
+				{...otherProps}
 				focusBorderColor="custom.primary"
 				type="search"
 				placeholder="search"
