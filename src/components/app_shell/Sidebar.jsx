@@ -96,7 +96,7 @@ const Sidebar = ({ links }) => {
 				className={"text-gray-500 font-semibold"}
 			>
 				<Box px="4">
-					<SearchBar onClick={() => setAppSearch(true)}/>
+					<SearchBar onClick={() => setAppSearch(true)} _hover={{ cursor: "pointer" }}/>
 				</Box>
 				{links.map((item) => (
 					<NavLink
