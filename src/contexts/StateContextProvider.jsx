@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import storage from "../helpers/storage";
 import fetchImage from "../helpers/fetchImage";
 
@@ -18,7 +18,6 @@ const reducer = (state, action) => {
 				...state,
 				isDrawerOpen: action.payload,
 			};
-			break;
 
 		case "UPDATE_USER_AVATAR":
 			return {
@@ -28,28 +27,18 @@ const reducer = (state, action) => {
 					avatar: action.payload,
 				},
 			};
-			break;
 
 		case "SET_USER_DATA":
 			return {
 				...state,
 				userData: action.payload,
 			};
-			break;
 
 		case "SET_ERROR":
 			return {
 				...state,
 				appToast: action.payload,
 			};
-			break;
-
-		case "TOGGLE_APP_SEARCH":
-			return {
-				...state,
-				isAppSearchOpen: action.payload,
-			};
-			break;
 
 		default:
 			break;
@@ -57,8 +46,10 @@ const reducer = (state, action) => {
 };
 
 export const StateContextProvider = ({ children }) => {
-	const [{ isDrawerOpen, userData, appToast, isAppSearchOpen }, dispatcher] =
-		useReducer(reducer, appDefaultState);
+	const [{ isDrawerOpen, userData, appToast }, dispatcher] = useReducer(
+		reducer,
+		appDefaultState
+	);
 
 	const changeUserAvatar = async (newAvatar) => {
 		if (newAvatar) {
@@ -103,12 +94,6 @@ export const StateContextProvider = ({ children }) => {
 	const showAppToast = (error) =>
 		error ? dispatcher({ type: "SET_ERROR", payload: error }) : null;
 
-	const openAppSearch = () =>
-		dispatcher({ type: "TOGGLE_APP_SEARCH", payload: true });
-
-	const closeAppSearch = () =>
-		dispatcher({ type: "TOGGLE_APP_SEARCH", payload: false });
-
 	const value = {
 		isDrawerOpen,
 		openDrawer,
@@ -119,9 +104,6 @@ export const StateContextProvider = ({ children }) => {
 		appToast,
 		showAppToast,
 		changeUserAvatar,
-		isAppSearchOpen,
-		openAppSearch,
-		closeAppSearch,
 	};
 
 	return (
