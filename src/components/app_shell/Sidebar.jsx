@@ -24,18 +24,19 @@ import { FaSignOutAlt } from "react-icons/fa";
 // Custom UI Component
 import Alert from "./Alert";
 import SearchBar from "../page_comps/SearchBar";
+import SearchModal from "./SearchModal";
 
 // App State Context
 import useStateContext from "../../contexts/StateContextProvider";
 
 const Sidebar = ({ links }) => {
 	const [isAlertOpen, setAlert] = useState(false);
+	const [isAppSearchOpen, setAppSearch] = useState(false);
 	const { width } = getScreenDim();
 	const theme = useTheme();
 	const {
 		userData: { avatar, name },
 		logout,
-		openAppSearch,
 	} = useStateContext();
 
 	const activeStyle = {
@@ -95,7 +96,7 @@ const Sidebar = ({ links }) => {
 				className={"text-gray-500 font-semibold"}
 			>
 				<Box px="4">
-					<SearchBar onClick={() => openAppSearch()}/>
+					<SearchBar onClick={() => setAppSearch(true)}/>
 				</Box>
 				{links.map((item) => (
 					<NavLink
@@ -135,6 +136,7 @@ const Sidebar = ({ links }) => {
 				body="Are you sure you want to logout?"
 				size={{ base: "xs", md: "md" }}
 			/>
+			<SearchModal isOpen={isAppSearchOpen} onClose={() => setAppSearch(false)} />
 		</Box>
 	);
 };
