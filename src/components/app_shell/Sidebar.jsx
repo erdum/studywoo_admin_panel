@@ -98,6 +98,8 @@ const Sidebar = ({ links }) => {
 				<Box px="4">
 					<SearchBar
 						onClick={() => setAppSearch(true)}
+						boxShadow="base"
+						border="none"
 						_hover={{ cursor: "pointer", boxShadow: "sm" }}
 						onFocus={({ currentTarget }) => currentTarget.blur()}
 					/>
