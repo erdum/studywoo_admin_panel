@@ -96,7 +96,11 @@ const Sidebar = ({ links }) => {
 				className={"text-gray-500 font-semibold"}
 			>
 				<Box px="4">
-					<SearchBar onClick={() => setAppSearch(true)} _hover={{ cursor: "pointer" }}/>
+					<SearchBar
+						onClick={() => setAppSearch(true)}
+						_hover={{ cursor: "pointer", boxShadow: "sm" }}
+						onFocus={({ currentTarget }) => currentTarget.blur()}
+					/>
 				</Box>
 				{links.map((item) => (
 					<NavLink
@@ -136,7 +140,10 @@ const Sidebar = ({ links }) => {
 				body="Are you sure you want to logout?"
 				size={{ base: "xs", md: "md" }}
 			/>
-			<SearchModal isOpen={isAppSearchOpen} onClose={() => setAppSearch(false)} />
+			<SearchModal
+				isOpen={isAppSearchOpen}
+				onClose={() => setAppSearch(false)}
+			/>
 		</Box>
 	);
 };
