@@ -1,0 +1,3 @@
+const TableTempelate = () => {
+	return ();
+};
