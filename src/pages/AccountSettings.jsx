@@ -69,7 +69,7 @@ const AccountSettings = () => {
 		}
 	);
 
-	const uploadAvatar = useMutation((payload) => {
+	const { mutate: uploadAvatar } = useMutation((payload) => {
 		request("pilot_upload", showAppToast, {
 			method: "POST",
 			body: payload,
@@ -89,7 +89,7 @@ const AccountSettings = () => {
 			const avatar = new FormData();
 			const extension = fields.avatar.name.split(".").at(-1);
 			avatar.append("images", fields.avatar, `${fields.email}.${extension}`);
-			uploadAvatar.mutate(avatar);
+			uploadAvatar(avatar);
 		}
 		updateProfile({ ...fields, avatar: fields.email });
 	};
