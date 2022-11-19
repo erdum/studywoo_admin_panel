@@ -55,7 +55,7 @@ const AccountSettings = () => {
 		userData: { avatar },
 	} = useStateContext();
 
-	const updateProfile = useMutation(
+	const { mutate: updateProfile } = useMutation(
 		(payload) =>
 			request("managment/user-profile", showAppToast, {
 				method: "PUT",
@@ -91,7 +91,7 @@ const AccountSettings = () => {
 			avatar.append("images", fields.avatar, `${fields.email}.${extension}`);
 			uploadAvatar.mutate(avatar);
 		}
-		updateProfile.mutate({ ...fields, avatar: fields.email });
+		updateProfile({ ...fields, avatar: fields.email });
 	};
 
 	const handleRichText = (text) => {
