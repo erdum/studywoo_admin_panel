@@ -1,5 +1,5 @@
-import { useState, useDeferredValue, useMemo } from "react";
-import { useQuery } from "react-query";
+import { useState, useDeferredValue, useMemo, useCallback } from "react";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 
 // UI Components
 import { Box } from "@chakra-ui/react";
@@ -60,6 +60,7 @@ const columns = [
 const Home = () => {
 	const dataGridTheme = createTheme();
 	const { showAppToast } = useStateContext();
+	const queryClient = useQueryClient();
 	const { data, isFetching } = useQuery(
 		"managment/applications",
 		async ({ queryKey }) => request(queryKey, showAppToast),
@@ -67,6 +68,17 @@ const Home = () => {
 			retry: 0,
 			refetchOnWindowFocus: false,
 			initialData: [],
+		}
+	);
+
+	const { mutate: deleteRows } = useMutation(
+		async (rows) =>
+			request("managment/applications", showAppToast, {
+				body: { rows },
+				method: "DELETE",
+			}),
+		{
+			onSuccess: () => queryClient.invalidateQueries(),
 		}
 	);
 
@@ -79,6 +91,26 @@ const Home = () => {
 	const [selectedRows, setSelectedRows] = useState([]);
 	const shouldShowMenu = selectedRows?.length > 0;
 
+	const handleBulkActions = useCallback(
+		({ type }) => {
+			switch (type) {
+				case "edit":
+					break;
+
+				case "delete":
+					deleteRows(selectedRows);
+					break;
+
+				case "export":
+					break;
+
+				default:
+					break;
+			}
+		},
+		[selectedRows]
+	);
+
 	return (
 		<>
 			<PageHeader
@@ -89,6 +121,7 @@ const Home = () => {
 				disableBtn
 				enableMenu={shouldShowMenu}
 				onSearch={(value) => setSearchValue(value)}
+				onBulkAction={handleBulkActions}
 			/>
 			<Box p={{ lg: "1" }} h="calc(100% - 6rem)" overflowY="auto">
 				{isFetching && <PageTableSkeleton />}
@@ -97,7 +130,11 @@ const Home = () => {
 						<DataGrid
 							checkboxSelection
 							columns={columns}
-							rows={filteredData?.length === 0 ? (data ?? []) : filteredData}
+							rows={
+								filteredData?.length === 0
+									? data ?? []
+									: filteredData
+							}
 							selectionModel={selectedRows}
 							onSelectionModelChange={(newSelectedRows) =>
 								setSelectedRows(newSelectedRows)
