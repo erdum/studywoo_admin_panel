@@ -13,6 +13,7 @@ const PageHeader = ({
 	isBtnLoading,
 	onSearch,
 	enableMenu,
+	onBulkAction,
 }) => {
 	return (
 		<Flex
@@ -45,7 +46,7 @@ const PageHeader = ({
 				</Text>
 			</Flex>
 			{enableMenu ? (
-				<BulkActionMenu />
+				<BulkActionMenu onAction={(props) => onBulkAction(props)} />
 			) : (
 				<Button
 					size={{ base: "sm", md: "md" }}
@@ -70,11 +71,11 @@ const PageHeader = ({
 			)}
 			{enableSearch && (
 				<Box w={{ base: "100%", lg: "20%" }}>
-				<SearchBar
-					onChange={(searchValue) =>
-						onSearch ? onSearch(searchValue) : () => {}
-					}
-				/>
+					<SearchBar
+						onChange={(searchValue) =>
+							onSearch ? onSearch(searchValue) : () => {}
+						}
+					/>
 				</Box>
 			)}
 		</Flex>

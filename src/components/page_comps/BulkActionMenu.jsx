@@ -14,7 +14,7 @@ import {
 	DownloadIcon,
 } from "@chakra-ui/icons";
 
-const BulkActionMenu = () => {
+const BulkActionMenu = ({ onAction }) => {
 	return (
 		<Box zIndex="10" ml={{ lg: "auto" }}>
 			<Menu>
@@ -44,17 +44,24 @@ const BulkActionMenu = () => {
 					Bulk Actions
 				</MenuButton>
 				<MenuList>
-					<MenuItem icon={<EditIcon w="4" h="4" color="gray.500" />}>
+					<MenuItem
+						onClick={() => onAction({ type: "edit" })}
+						icon={<EditIcon w="4" h="4" color="gray.500" />}
+					>
 						Edit
 					</MenuItem>
 					<MenuItem
+						onClick={() => onAction({ type: "delete" })}
 						color="red.500"
 						icon={<DeleteIcon w="4" h="4" color="red.500" />}
 					>
 						Delete
 					</MenuItem>
 					<MenuDivider />
-					<MenuItem icon={<DownloadIcon w="4" h="4" color="gray.500" />}>
+					<MenuItem
+						onClick={() => onAction({ type: "export" })}
+						icon={<DownloadIcon w="4" h="4" color="gray.500" />}
+					>
 						Export
 					</MenuItem>
 				</MenuList>
