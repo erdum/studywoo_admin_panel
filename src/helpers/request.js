@@ -32,16 +32,17 @@ const request = async (url, showToast, options) => {
 	} catch (error) {
 		// detecting client side network errors
 		if (error instanceof TypeError) {
-			console.log(error);
 			showToast({
 				title: "No Network",
 				description: "Network error! check your Internet connection",
 			});
+			throw new Error("No network request failed");
 		} else {
 			showToast({
 				title: "Request Failed",
 				description: "Request failed from the server !",
 			});
+			throw new Error("Request failed from server", { cause: req.status });
 		}
 	}
 };
