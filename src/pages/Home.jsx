@@ -78,10 +78,20 @@ const Home = () => {
 				method: "DELETE",
 			}),
 		{
-			onSuccess: () =>
-				queryClient.setQueryData("managment/applications", (prevData) =>
-					prevData.filter(({ id }) => !selectedRows.includes(id))
-				),
+			onMutate: async (payload) => {
+				await queryClient.cancelQueries({ queryKey: "managment/applications" });
+
+				const prevPayload = queryClient.getQueryData("managment/applications");
+
+				queryClient.setQueryData("managment/applications", (prevPayload) =>
+					prevPayload.filter(({ id }) => !payload.includes(id))
+				);
+
+				return { prevPayload };
+			},
+			onError: (err, newPayload, { prevPayload }) => {
+				queryClient.setQueryData("managment/applications", prevPayload);
+			},
 		}
 	);
 
