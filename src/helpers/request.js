@@ -31,18 +31,17 @@ const request = async (url, showToast, options) => {
 		return data ?? null;
 	} catch (error) {
 		// detecting client side network errors
-		if (error.message === "Failed to fetch") {
+		if (error instanceof TypeError) {
+			console.log(error);
 			showToast({
 				title: "No Network",
 				description: "Network error! check your Internet connection",
 			});
-		} else if (error.message === "Request failed") {
+		} else {
 			showToast({
 				title: "Request Failed",
 				description: "Request failed from the server !",
 			});
-		} else {
-			console.log("Error after request sent", error);
 		}
 	}
 };
