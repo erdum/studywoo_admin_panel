@@ -78,7 +78,10 @@ const Home = () => {
 				method: "DELETE",
 			}),
 		{
-			onSuccess: () => queryClient.invalidateQueries(),
+			onSuccess: () =>
+				queryClient.setQueryData("managment/applications", (prevData) =>
+					prevData.filter(({ id }) => !selectedRows.includes(id))
+				),
 		}
 	);
 
@@ -130,11 +133,7 @@ const Home = () => {
 						<DataGrid
 							checkboxSelection
 							columns={columns}
-							rows={
-								filteredData?.length === 0
-									? data ?? []
-									: filteredData
-							}
+							rows={filteredData?.length === 0 ? data ?? [] : filteredData}
 							selectionModel={selectedRows}
 							onSelectionModelChange={(newSelectedRows) =>
 								setSelectedRows(newSelectedRows)
