@@ -45,7 +45,7 @@ const SearchModal = ({ isOpen, onClose }) => {
 		<Modal size={{ base: "xs", md: "xl" }} isOpen={isOpen} onClose={onClose}>
 			<ModalOverlay>
 				<ModalBody>
-					<ModalContent display="flex" alignItems="stretch">
+					<ModalContent display="flex" flexDirection="column" alignItems="stretch">
 						<SearchBar onChange={(value) => console.log(value)} />
 					</ModalContent>
 				</ModalBody>
