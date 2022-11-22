@@ -44,8 +44,6 @@ const TablePage = ({ resourcePath, columns, title, description, btnText }) => {
         [selectedRows]
     );
 
-    console.log(data, filteredRows);
-
     return (
         <>
             <PageHeader
