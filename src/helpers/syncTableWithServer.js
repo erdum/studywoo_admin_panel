@@ -7,7 +7,7 @@ import request from "./request";
 // App State Context
 import useStateContext from "../contexts/StateContextProvider";
 
-const syncWithApi = (resourcePath) => {
+const syncTableWithServer = (resourcePath) => {
     const queryClient = useQueryClient();
     const { showAppToast } = useStateContext();
 
@@ -54,4 +54,4 @@ const syncWithApi = (resourcePath) => {
     };
 };
 
-export default syncWithApi;
+export default syncTableWithServer;

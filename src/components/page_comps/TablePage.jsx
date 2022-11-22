@@ -10,11 +10,11 @@ import { PageTableSkeleton } from "./PageSkeleton";
 import PageHeader from "./PageHeader";
 
 // Custom Hooks
-import syncWithApi from "../../helpers/syncWithApi";
+import syncTableWithServer from "../../helpers/syncTableWithServer";
 import filterTableRows from "../../helpers/filterTableRows";
 
 const TablePage = ({ resourcePath, columns, title, description, btnText }) => {
-    const { isFetching, data, deleteRows } = syncWithApi(resourcePath);
+    const { isFetching, data, deleteRows } = syncTableWithServer(resourcePath);
 
     const { filteredRows, setSearchValue } = filterTableRows(data);
 
