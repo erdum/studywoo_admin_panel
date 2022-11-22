@@ -1,5 +1,4 @@
-import { useState, useDeferredValue, useMemo, useCallback } from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useState, useCallback } from "react";
 
 // UI Components
 import { Box } from "@chakra-ui/react";
@@ -10,117 +9,77 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { PageTableSkeleton } from "./PageSkeleton";
 import PageHeader from "./PageHeader";
 
-// Helper functions
-import request from "../../helpers/request";
-import filterRows from "../../helpers/filterRows";
-
-// App State Context
-import useStateContext from "../../contexts/StateContextProvider";
+// Custom Hooks
+import syncWithApi from "../../helpers/syncWithApi";
+import filterTableRows from "../../helpers/filterTableRows";
 
 const TablePage = ({ resourcePath, columns, title, description, btnText }) => {
-	const dataGridTheme = createTheme();
-	const queryClient = useQueryClient();
-	const { showAppToast } = useStateContext();
-    
-	const { data, isFetching } = useQuery(
-		resourcePath,
-		async ({ queryKey }) => request(queryKey, showAppToast),
-		{
-			retry: 0,
-			refetchOnWindowFocus: false,
-			initialData: [],
-		}
-	);
+    const { isFetching, data, deleteRows } = syncWithApi(resourcePath);
 
-	const { mutate: deleteRows } = useMutation(
-		async (rows) =>
-			request(resourcePath, showAppToast, {
-				body: { rows },
-				method: "DELETE",
-			}),
-		{
-			onMutate: async (payload) => {
-				await queryClient.cancelQueries({
-					queryKey: resourcePath,
-				});
+    const { filteredRows, setSearchValue } = filterTableRows(data);
 
-				const prevPayload = queryClient.getQueryData(resourcePath);
+    const [selectedRows, setSelectedRows] = useState([]);
 
-				queryClient.setQueryData(resourcePath, (prevPayload) =>
-					prevPayload.filter(({ id }) => !payload.includes(id))
-				);
+    const shouldShowMenu = selectedRows?.length > 0;
 
-				return { prevPayload };
-			},
-			onError: (err, newPayload, { prevPayload }) => {
-				queryClient.setQueryData(resourcePath, prevPayload);
-			},
-		}
-	);
+    const dataGridTheme = createTheme();
 
-	const [selectedRows, setSelectedRows] = useState([]);
-	const shouldShowMenu = selectedRows?.length > 0;
-	const [searchValue, setSearchValue] = useState("");
-	const searchedText = useDeferredValue(searchValue);
-	const filteredData = useMemo(
-		() => filterRows(data, searchedText),
-		[searchedText]
-	);
+    const handleBulkActions = useCallback(
+        ({ type }) => {
+            switch (type) {
+                case "edit":
+                    break;
 
-	const handleBulkActions = useCallback(
-		({ type }) => {
-			switch (type) {
-				case "edit":
-					break;
+                case "delete":
+                    deleteRows(selectedRows);
+                    break;
 
-				case "delete":
-					deleteRows(selectedRows);
-					break;
+                case "export":
+                    break;
 
-				case "export":
-					break;
+                default:
+                    break;
+            }
+        },
+        [selectedRows]
+    );
 
-				default:
-					break;
-			}
-		},
-		[selectedRows]
-	);
+    console.log(data, filteredRows);
 
-	return (
-		<>
-			<PageHeader
-				title={title}
-				description={description}
-				btnText={btnText}
-				enableSearch
-				disableBtn
-				enableMenu={shouldShowMenu}
-				onSearch={(value) => setSearchValue(value)}
-				onBulkAction={handleBulkActions}
-			/>
-			<Box p={{ lg: "1" }} h="calc(100% - 6rem)" overflowY="auto">
-				{isFetching && <PageTableSkeleton />}
-				{!isFetching && (
-					<ThemeProvider theme={dataGridTheme}>
-						<DataGrid
-							checkboxSelection
-							columns={columns}
-							rows={
-								filteredData?.length === 0
-									? data ?? []
-									: filteredData
-							}
-							selectionModel={selectedRows}
-							onSelectionModelChange={(newSelectedRows) =>
-								setSelectedRows(newSelectedRows)
-							}
-						/>
-					</ThemeProvider>
-				)}
-			</Box>
-		</>
-	);
+    return (
+        <>
+            <PageHeader
+                title={title}
+                description={description}
+                btnText={btnText}
+                enableSearch
+                disableBtn
+                enableMenu={shouldShowMenu}
+                onSearch={(value) => setSearchValue(value)}
+                onBulkAction={handleBulkActions}
+            />
+            <Box p={{ lg: "1" }} h="calc(100% - 6rem)" overflowY="auto">
+                {isFetching && <PageTableSkeleton />}
+                {!isFetching && (
+                    <ThemeProvider theme={dataGridTheme}>
+                        <DataGrid
+                            checkboxSelection
+                            columns={columns}
+                            rows={
+                                filteredRows?.length === 0
+                                    ? data ?? []
+                                    : filteredRows
+                            }
+                            selectionModel={selectedRows}
+                            onSelectionModelChange={(newSelectedRows) =>
+                                setSelectedRows(newSelectedRows)
+                            }
+                        />
+                    </ThemeProvider>
+                )}
+            </Box>
+        </>
+    );
 };
 
 export default TablePage;
