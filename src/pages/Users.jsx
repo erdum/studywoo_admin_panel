@@ -6,7 +6,7 @@ const columns = [
     {
         field: "id",
         headerName: "ID",
-        width: 160,
+        width: 140,
     },
     {
         field: "name",
@@ -21,17 +21,18 @@ const columns = [
     {
         field: "password",
         headerName: "Password",
-        width: 500,
+        width: 400,
     },
     {
         field: "roles",
         headerName: "User Roles",
-        width: 250,
+        width: 200,
     },
     {
         field: "status",
         headerName: "User Status",
-        width: 250,
+        width: 110,
+        type: "boolean",
     },
 ];
 
