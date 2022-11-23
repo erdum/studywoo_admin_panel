@@ -8,11 +8,7 @@ import request from "./request";
 import useStateContext from "../contexts/StateContextProvider";
 
 const syncFieldsWithServer = (resourcePath, initialData) => {
-    const {
-        showAppToast,
-        changeUserAvatar,
-        userData: { avatar },
-    } = useStateContext();
+    const { showAppToast } = useStateContext();
 
     const { data, isFetching } = useQuery(
         resourcePath,
@@ -24,13 +20,14 @@ const syncFieldsWithServer = (resourcePath, initialData) => {
         }
     );
 
-    const { mutate: updateFields } = useMutation(
-        (payload) =>
+    const { isLoading: isFieldsUploading, mutate: updateFields } = useMutation(
+        async (payload) =>
             request(resourcePath, showAppToast, {
                 method: "PUT",
                 body: payload,
             }),
         {
+            onMutate: (payload) => {},
             onSuccess: () => {
                 changeUserAvatar(fields.avatar);
                 setFields((prevState) => ({ ...prevState, changed: false }));
@@ -38,18 +35,11 @@ const syncFieldsWithServer = (resourcePath, initialData) => {
         }
     );
 
-    const { mutate: updateImage } = useMutation((payload) => {
-        request(payload.url, showAppToast, {
-            method: "POST",
-            body: payload.image,
-        });
-    });
-
     return {
+        isFieldsUploading,
         isFetching,
         data,
         updateFields,
-        updateImage,
     };
 };
 
