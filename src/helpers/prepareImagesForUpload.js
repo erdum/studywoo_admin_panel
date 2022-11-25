@@ -1,17 +1,19 @@
 const prepareImagesForUpload = (fields) => {
-    const payload = new FormData();
+    const payloadArray = [];
     const names = [];
     Object.entries(fields).filter(([fieldName, file]) => {
         if (file?.constructor != File) return false;
 
+        const payload = new FormData();
         const fileName = btoa(Math.random() * 100).slice(0, 10);
         const extension = file.name.split(".").at(-1);
 
-        payload.append("images[]", file, `${fileName}.${extension}`);
+        payload.append("images", file, `${fileName}.${extension}`);
         names.push([fieldName, fileName]);
+        payloadArray.push(payload);
     });
 
-    return [payload, names];
+    return [payloadArray, names];
 };
 
 export default prepareImagesForUpload;
