@@ -11,6 +11,8 @@ import EditableAvatar from "./EditableAvatar";
 
 // Custom hooks
 import syncFieldsWithServer from "../../helpers/syncFieldsWithServer";
+import prepareImagesForUpload from "../../helpers/prepareImagesForUpload";
+import useUploadImages from "../../helpers/useUploadImages";
 
 const FieldsPage = ({ structure }) => {
     const initialData = useMemo(() => {
@@ -27,20 +29,25 @@ const FieldsPage = ({ structure }) => {
         syncFields,
     } = syncFieldsWithServer("managment/user-profile", initialData);
 
+    const uploadImage = useUploadImages("pilot_upload");
+
     const handleChange = ({ target: { name, value } }) => {
         updateField(name, value);
     };
 
-    const handleSave = () => {
-        syncFields(localFields);
-    };
+    const handleSave = async () => {
+        const [payloadArray, filesNames] = prepareImagesForUpload(localFields);
+        const filesUploaded = await Promise.all(
+            payloadArray.map((formData) => uploadImage(formData))
+        );
 
-    const imageHandler = (file) => {
-        const image = new FormData();
-        const extension = file.name.split(".").at(-1);
-        image.append("images", file, `${fields.email}.${extension}`);
-        // upload image
-        // if success remove file from localFields and put new url
+        if (filesUploaded) {
+            filesNames.forEach(([fieldName, fileName]) =>
+                updateField(fieldName, fileName)
+            );
+            console.log(localFields);
+            // syncFields(localFields);
+        }
     };
 
     const getAvatar = (src) => {
@@ -79,7 +86,14 @@ const FieldsPage = ({ structure }) => {
                                             name={name}
                                             label={label}
                                             src={getAvatar(localFields[name])}
-                                            onChange={imageHandler}
+                                            onChange={(file) =>
+                                                handleChange({
+                                                    target: {
+                                                        name,
+                                                        value: file,
+                                                    },
+                                                })
+                                            }
                                         />
                                     );
                                     break;
