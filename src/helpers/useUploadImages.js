@@ -5,7 +5,7 @@ import useStateContext from "../contexts/StateContextProvider";
 
 const useUploadImages = (path) => {
     const { showAppToast } = useStateContext();
-    return (payload) =>
+    return async (payload) =>
         request(path, showAppToast, {
             body: payload,
             method: "POST",
