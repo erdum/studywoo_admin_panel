@@ -1,39 +1,53 @@
+import { useMemo } from "react";
+
 // UI Components
 import { Box, Flex } from "@chakra-ui/react";
 
 // Custom Components
-import PageHeader from "../components/page_comps/PageHeader";
-import { PageFieldSkeleton } from "../components/page_comps/PageSkeleton";
-import {
-    Editable,
-    EditableSelect,
-    EditableEditor,
-} from "../components/page_comps/Editable";
-import EditableAvatar from "../components/page_comps/EditableAvatar";
+import PageHeader from "./PageHeader";
+import { PageFieldSkeleton } from "./PageSkeleton";
+import { Editable, EditableSelect, EditableEditor } from "./Editable";
+import EditableAvatar from "./EditableAvatar";
 
 // Custom hooks
-import syncFieldsWithServer from "../helpers/syncFieldsWithServer";
+import syncFieldsWithServer from "../../helpers/syncFieldsWithServer";
 
-// App State Context
-import useStateContext from "../contexts/StateContextProvider";
+const FieldsPage = ({ structure }) => {
+    const initialData = useMemo(() => {
+        const object = {};
+        structure.map(({ name }) => (object[name] = ""));
+        return object;
+    }, []);
 
-const FieldsPage = ({ fields }) => {
+    const {
+        isFieldsUploading,
+        isFetching,
+        localFields,
+        updateField,
+        syncFields,
+    } = syncFieldsWithServer("managment/user-profile", initialData);
+
     const handleChange = ({ target: { name, value } }) => {
-        setFields((prevState) => ({
-            ...prevState,
-            changed: true,
-            [name]: value,
-        }));
+        updateField(name, value);
     };
 
-    const handleRichText = (text) => {
-        if (text !== fields.about) {
-            setFields((prevState) => ({
-                ...prevState,
-                changed: true,
-                about: text,
-            }));
+    const handleSave = () => {
+        syncFields(localFields);
+    };
+
+    const imageHandler = (file) => {
+        const image = new FormData();
+        const extension = file.name.split(".").at(-1);
+        image.append("images", file, `${fields.email}.${extension}`);
+        // upload image
+        // if success remove file from localFields and put new url
+    };
+
+    const getAvatar = (src) => {
+        if (typeof src == "string") {
+            return `${import.meta.env.VITE_APP_IMG_URL}${src}.webp`;
         }
+        return src;
     };
 
     return (
@@ -43,41 +57,29 @@ const FieldsPage = ({ fields }) => {
                 description="Edit personal and public information"
                 btnText="Save"
                 enableSearch={false}
-                disableBtn={!fields.changed}
-                isBtnLoading={isImageUploading || isFieldsUploading}
+                disableBtn={!localFields.modified}
+                isBtnLoading={isFetching || isFieldsUploading}
                 onBtnClick={handleSave}
             />
             <Box p="1" h="calc(100% - 6rem)" overflowY="auto">
                 {isFetching && <PageFieldSkeleton />}
-                {!isFetching && fields?.length > 0 && (
+                {!isFetching && structure?.length > 0 && (
                     <Flex
                         p="1"
                         wrap="wrap"
                         overflowY="auto"
                         gap={{ base: "8", md: "12", lg: "16" }}
                     >
-                        {fields.map((field) => {
-                            switch (field?.type) {
+                        {structure.map(({ name, label, type }) => {
+                            switch (type) {
                                 case "image":
                                     return (
                                         <EditableAvatar
-                                            name={field.name}
-                                            label={field.label}
-                                            src={
-                                                typeof data[field.name] ===
-                                                "string"
-                                                    ? userAvatar
-                                                    : URL.createObjectURL(
-                                                          data[field.name]
-                                                      )
-                                            }
-                                            onChange={(file) => {
-                                                setFields((prevFields) => ({
-                                                    ...prevFields,
-                                                    avatar: file,
-                                                    changed: true,
-                                                }));
-                                            }}
+                                            key={name}
+                                            name={name}
+                                            label={label}
+                                            src={getAvatar(localFields[name])}
+                                            onChange={imageHandler}
                                         />
                                     );
                                     break;
@@ -88,9 +90,10 @@ const FieldsPage = ({ fields }) => {
                                 case "single_select":
                                     return (
                                         <EditableSelect
-                                            name={field.name}
-                                            label={field.label}
-                                            value={data[field.name]}
+                                            key={name}
+                                            name={name}
+                                            label={label}
+                                            value={localFields[name]}
                                             onChange={handleChange}
                                             options={[
                                                 { value: "male", text: "Male" },
@@ -110,10 +113,24 @@ const FieldsPage = ({ fields }) => {
                                 case "rich_text":
                                     return (
                                         <EditableEditor
-                                            name={field.name}
-                                            label={field.label}
-                                            initialText={data[field.name]}
-                                            getTextOnClose={handleRichText}
+                                            key={name}
+                                            name={name}
+                                            label={label}
+                                            initialText={localFields[name]}
+                                            getTextOnClose={handleChange}
+                                        />
+                                    );
+                                    break;
+
+                                case "date":
+                                    return (
+                                        <Editable
+                                            key={name}
+                                            name={name}
+                                            label={label}
+                                            value={localFields[name]}
+                                            type="date"
+                                            onChange={handleChange}
                                         />
                                     );
                                     break;
@@ -121,83 +138,16 @@ const FieldsPage = ({ fields }) => {
                                 default:
                                     return (
                                         <Editable
-                                            name={field.name}
-                                            label={field.label}
-                                            value={data[field.name]}
+                                            key={name}
+                                            name={name}
+                                            label={label}
+                                            value={localFields[name]}
                                             onChange={handleChange}
                                         />
                                     );
                                     break;
                             }
                         })}
-
-                        <EditableAvatar
-                            label="Profile picture"
-                            name="avatar"
-                            src={
-                                typeof fields.avatar === "string"
-                                    ? avatar
-                                    : URL.createObjectURL(fields.avatar)
-                            }
-                            onChange={(file) => {
-                                setFields((prevFields) => ({
-                                    ...prevFields,
-                                    avatar: file,
-                                    changed: true,
-                                }));
-                            }}
-                        />
-                        <EditableSelect
-                            name="gender"
-                            label="Gender"
-                            value={fields.gender}
-                            onChange={handleChange}
-                            options={[
-                                { value: "male", text: "Male" },
-                                { value: "female", text: "Female" },
-                                {
-                                    value: "none-binary",
-                                    text: "None binary",
-                                },
-                            ]}
-                        />
-                        <Editable
-                            name="date_of_birth"
-                            label="Date of birth"
-                            type="date"
-                            value={fields.date_of_birth}
-                            onChange={handleChange}
-                        />
-                        <EditableEditor
-                            name="about"
-                            label="About"
-                            initialText={fields.about}
-                            getTextOnClose={handleRichText}
-                        />
-                        <Editable
-                            name="facebook"
-                            label="Facebook"
-                            value={fields.facebook}
-                            onChange={handleChange}
-                        />
-                        <Editable
-                            name="instagram"
-                            label="Instagram"
-                            value={fields.instagram}
-                            onChange={handleChange}
-                        />
-                        <Editable
-                            name="twitter"
-                            label="Twitter"
-                            value={fields.twitter}
-                            onChange={handleChange}
-                        />
-                        <Editable
-                            name="linkedin"
-                            label="Linkedin"
-                            value={fields.linkedin}
-                            onChange={handleChange}
-                        />
                     </Flex>
                 )}
             </Box>
