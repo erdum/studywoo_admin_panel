@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 
 import {
 	FormControl,
@@ -19,8 +19,18 @@ const EditableAvatar = ({ label, name, onChange, src }) => {
 		avatarRef.current.click();
 	};
 
+	const getImage = (src) => {
+		if (typeof src != "string") {
+			return URL.createObjectURL(src);
+		}
+		return src;
+	};
+
 	return (
-		<FormControl w={{ base: "100%", md: "45%", lg: "64" }} pb={{ base: "12" }}>
+		<FormControl
+			w={{ base: "100%", md: "45%", lg: "64" }}
+			pb={{ base: "12" }}
+		>
 			<FormLabel
 				fontSize={{ base: "sm", md: "md" }}
 				color="gray.500"
@@ -32,7 +42,7 @@ const EditableAvatar = ({ label, name, onChange, src }) => {
 			<InputGroup cursor="pointer">
 				<InputLeftElement>
 					<Avatar
-						src={src}
+						src={getImage(src)}
 						size={{ base: "md", lg: "lg" }}
 						ml={{ base: "2", lg: "6" }}
 						mt={{ base: "4", lg: "8" }}
@@ -49,7 +59,11 @@ const EditableAvatar = ({ label, name, onChange, src }) => {
 					}}
 				/>
 				<InputRightElement onClick={handleFileSelect}>
-					<Icon color="gray.500" as={FaPen} mt={{ base: "4", lg: "8" }} />
+					<Icon
+						color="gray.500"
+						as={FaPen}
+						mt={{ base: "4", lg: "8" }}
+					/>
 				</InputRightElement>
 			</InputGroup>
 		</FormControl>
