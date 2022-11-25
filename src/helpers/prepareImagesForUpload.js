@@ -8,7 +8,7 @@ const prepareImagesForUpload = (fields) => {
         const extension = file.name.split(".").at(-1);
 
         payload.append("images[]", file, `${fileName}.${extension}`);
-        names.push(fileName);
+        names.push({ [fieldName]: fileName });
     });
 
     return [payload, names];
