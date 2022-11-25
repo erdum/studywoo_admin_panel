@@ -1,4 +1,5 @@
 // Third party hooks
+import { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation } from "react-query";
 
 // Helper functions
@@ -20,7 +21,19 @@ const syncFieldsWithServer = (resourcePath, initialData) => {
         }
     );
 
-    const { isLoading: isFieldsUploading, mutate: updateFields } = useMutation(
+    const [localFields, setLocalFields] = useState(data);
+
+    useEffect(() => setLocalFields(data), [data]);
+
+    const updateField = (fieldName, value) => {
+        setLocalFields((prevState) => ({
+            ...prevState,
+            modified: true,
+            [fieldName]: value,
+        }));
+    };
+
+    const { isLoading: isFieldsUploading, mutate: syncFields } = useMutation(
         async (payload) =>
             request(resourcePath, showAppToast, {
                 method: "PUT",
@@ -29,17 +42,27 @@ const syncFieldsWithServer = (resourcePath, initialData) => {
         {
             onMutate: (payload) => {},
             onSuccess: () => {
-                changeUserAvatar(fields.avatar);
-                setFields((prevState) => ({ ...prevState, changed: false }));
+                setLocalFields((prevState) => ({
+                    ...prevState,
+                    modified: false,
+                }));
             },
         }
     );
 
+    // if (fields.avatar && typeof fields.avatar === "object") {
+    //     const avatar = new FormData();
+    //     const extension = fields.avatar.name.split(".").at(-1);
+    //     avatar.append("images", fields.avatar, `${fields.email}.${extension}`);
+    //     updateImage({ url: "pilot_upload", image: avatar });
+    // }
+
     return {
         isFieldsUploading,
         isFetching,
-        data,
-        updateFields,
+        localFields,
+        updateField,
+        syncFields,
     };
 };
 
