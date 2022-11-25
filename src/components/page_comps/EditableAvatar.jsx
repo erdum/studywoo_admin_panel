@@ -49,6 +49,7 @@ const EditableAvatar = ({ label, name, onChange, src }) => {
 					/>
 				</InputLeftElement>
 				<Input
+                    accept="image/png, image/jpeg, image/webp"
 					ref={avatarRef}
 					display="none"
 					id={name}
