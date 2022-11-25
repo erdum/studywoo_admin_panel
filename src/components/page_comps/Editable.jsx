@@ -174,7 +174,7 @@ const EditableEditor = ({ name, label, initialText, getTextOnClose }) => {
 								onInit={(evt, editor) => {
 									setEditorLoading(false);
 									editorRef.current = editor;
-									editor.on("Remove", () => getTextOnClose(editor.getContent()));
+									editor.on("Remove", () => getTextOnClose({ target: { name, value: editor.getContent() } }));
 								}}
 								init={{
 									height: "100%",
