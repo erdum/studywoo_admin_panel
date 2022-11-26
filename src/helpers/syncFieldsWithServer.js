@@ -25,11 +25,11 @@ const syncFieldsWithServer = (resourcePath, initialData) => {
 
     useEffect(() => setLocalFields(data), [data]);
 
-    const updateField = (fieldName, value) => {
+    const updateField = (newStateObject) => {
         setLocalFields((prevState) => ({
             ...prevState,
+            ...newStateObject,
             modified: true,
-            [fieldName]: value,
         }));
     };
 
