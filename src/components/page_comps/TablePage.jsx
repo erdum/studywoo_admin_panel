@@ -2,14 +2,13 @@ import { useState, useCallback } from "react";
 
 // UI Components
 import { Box } from "@chakra-ui/react";
-import { DataGridPro, useGridApiRef, GridActionsCellItem } from "@mui/x-data-grid-pro";
+import { DataGrid } from "@mui/x-data-grid";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 // Custom Components
 import { PageTableSkeleton } from "./PageSkeleton";
 import PageHeader from "./PageHeader";
 import Alert from "../app_shell/Alert";
-import EditToolbar from "./EditToolbar";
 
 // Icons
 import { EditIcon, CloseIcon, DeleteIcon, UnlockIcon } from "@chakra-ui/icons";
@@ -36,7 +35,6 @@ const TablePage = ({
     const shouldShowMenu = selectedRows?.length > 0;
 
     const dataGridTheme = createTheme();
-    const apiRef = useGridApiRef();
 
     const handleBulkActions = useCallback(
         ({ type }) => {
@@ -69,87 +67,6 @@ const TablePage = ({
         [selectedRows]
     );
 
-    const preventDefault = (params, event) => {
-        event.defaultMuiPrevented = true;
-    };
-
-    const handleEditClick = (id) => (event) => {
-        event.stopPropagation();
-        apiRef.current.setRowMode(id, "edit");
-    };
-
-    const handleSaveClick = (id) => async (event) => {
-        event.stopPropagation();
-        // Wait for the validation to run
-        const isValid = await apiRef.current.commitRowChange(id);
-        if (isValid) {
-            apiRef.current.setRowMode(id, "view");
-            const row = apiRef.current.getRow(id);
-            apiRef.current.updateRows([{ ...row, isNew: false }]);
-        }
-    };
-
-    const handleDeleteClick = (id) => (event) => {
-        event.stopPropagation();
-        apiRef.current.updateRows([{ id, _action: "delete" }]);
-    };
-
-    const handleCancelClick = (id) => (event) => {
-        event.stopPropagation();
-        apiRef.current.setRowMode(id, "view");
-
-        const row = apiRef.current.getRow(id);
-        if (row.isNew) {
-            apiRef.current.updateRows([{ id, _action: "delete" }]);
-        }
-    };
-
-    const newColumns = [
-        {
-            field: "actions",
-            type: "actions",
-            headerName: "Actions",
-            width: 100,
-            getActions: ({ id }) => {
-                const isInEditMode = apiRef.current.getRowMode(id) === "edit";
-
-                if (isInEditMode) {
-                    return [
-                        <GridActionsCellItem
-                            icon={<UnlockIcon />}
-                            label="Save"
-                            onClick={handleSaveClick(id)}
-                        />,
-                        <GridActionsCellItem
-                            icon={<CloseIcon />}
-                            label="Cancel"
-                            className="textPrimary"
-                            onClick={handleCancelClick(id)}
-                            color="inherit"
-                        />,
-                    ];
-                }
-
-                return [
-                    <GridActionsCellItem
-                        icon={<EditIcon />}
-                        label="Edit"
-                        className="textPrimary"
-                        onClick={handleEditClick(id)}
-                        color="inherit"
-                    />,
-                    <GridActionsCellItem
-                        icon={<DeleteIcon />}
-                        label="Delete"
-                        onClick={handleDeleteClick(id)}
-                        color="inherit"
-                    />,
-                ];
-            },
-        },
-        ...columns,
-    ];
-
     return (
         <>
             <PageHeader
@@ -166,14 +83,10 @@ const TablePage = ({
                 {isFetching && <PageTableSkeleton />}
                 {!isFetching && (
                     <ThemeProvider theme={dataGridTheme}>
-                        <DataGridPro
+                        <DataGrid
                             editMode="row"
-                            onRowEditStart={preventDefault}
-                            onRowEditStop={preventDefault}
-                            onCellFocusOut={preventDefault}
                             checkboxSelection
-                            apiRef={apiRef}
-                            columns={newColumns}
+                            columns={columns}
                             rows={
                                 filteredRows?.length === 0
                                     ? data ?? []
@@ -183,12 +96,6 @@ const TablePage = ({
                             onSelectionModelChange={(newSelectedRows) =>
                                 setSelectedRows(newSelectedRows)
                             }
-                            components={{
-                                Toolbar: EditToolbar,
-                            }}
-                            componentsProps={{
-                                toolbar: { apiRef },
-                            }}
                         />
                     </ThemeProvider>
                 )}
