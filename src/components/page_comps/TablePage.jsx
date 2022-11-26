@@ -2,19 +2,28 @@ import { useState, useCallback } from "react";
 
 // UI Components
 import { Box } from "@chakra-ui/react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, useGridApiRef } from "@mui/x-data-grid";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 // Custom Components
 import { PageTableSkeleton } from "./PageSkeleton";
 import PageHeader from "./PageHeader";
 import Alert from "../app_shell/Alert";
+import EditToolbar from "./EditToolbar";
+
 
 // Custom Hooks
 import syncTableWithServer from "../../helpers/syncTableWithServer";
 import filterTableRows from "../../helpers/filterTableRows";
 
-const TablePage = ({ resourcePath, columns, title, description, btnText }) => {
+const TablePage = ({
+    resourcePath,
+    columns,
+    title,
+    description,
+    btnText,
+    addRows = false,
+}) => {
     const { isFetching, data, deleteRows } = syncTableWithServer(resourcePath);
 
     const { filteredRows, setSearchValue } = filterTableRows(data);
@@ -25,6 +34,7 @@ const TablePage = ({ resourcePath, columns, title, description, btnText }) => {
     const shouldShowMenu = selectedRows?.length > 0;
 
     const dataGridTheme = createTheme();
+    const apiRef = useGridApiRef();
 
     const handleBulkActions = useCallback(
         ({ type }) => {
@@ -75,6 +85,7 @@ const TablePage = ({ resourcePath, columns, title, description, btnText }) => {
                     <ThemeProvider theme={dataGridTheme}>
                         <DataGrid
                             checkboxSelection
+                            apiRef={apiRef}
                             columns={columns}
                             rows={
                                 filteredRows?.length === 0
@@ -85,6 +96,12 @@ const TablePage = ({ resourcePath, columns, title, description, btnText }) => {
                             onSelectionModelChange={(newSelectedRows) =>
                                 setSelectedRows(newSelectedRows)
                             }
+                            components={{
+                                Toolbar: EditToolbar,
+                            }}
+                            componentsProps={{
+                                toolbar: { apiRef },
+                            }}
                         />
                     </ThemeProvider>
                 )}
