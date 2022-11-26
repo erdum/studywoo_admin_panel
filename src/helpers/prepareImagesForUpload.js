@@ -1,6 +1,6 @@
 const prepareImagesForUpload = (fields) => {
     const payloadArray = [];
-    const names = [];
+    const names = {};
     Object.entries(fields).filter(([fieldName, file]) => {
         if (file?.constructor != File) return false;
 
@@ -9,7 +9,7 @@ const prepareImagesForUpload = (fields) => {
         const extension = file.name.split(".").at(-1);
 
         payload.append("images", file, `${fileName}.${extension}`);
-        names.push({ [fieldName]: fileName });
+        names[fieldName] = fileName;
         payloadArray.push(payload);
     });
 
