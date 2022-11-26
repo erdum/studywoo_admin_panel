@@ -8,6 +8,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 // Custom Components
 import { PageTableSkeleton } from "./PageSkeleton";
 import PageHeader from "./PageHeader";
+import Alert from "../app_shell/Alert";
 
 // Custom Hooks
 import syncTableWithServer from "../../helpers/syncTableWithServer";
@@ -19,6 +20,7 @@ const TablePage = ({ resourcePath, columns, title, description, btnText }) => {
     const { filteredRows, setSearchValue } = filterTableRows(data);
 
     const [selectedRows, setSelectedRows] = useState([]);
+    const [alertData, setAlert] = useState(false);
 
     const shouldShowMenu = selectedRows?.length > 0;
 
@@ -28,10 +30,21 @@ const TablePage = ({ resourcePath, columns, title, description, btnText }) => {
         ({ type }) => {
             switch (type) {
                 case "edit":
+                    setAlert({
+                        open: true,
+                        yes: () => null,
+                        heading: "Edit Rows",
+                        body: "Are you sure you want to save the changes on the selected rows?",
+                    });
                     break;
 
                 case "delete":
-                    deleteRows(selectedRows);
+                    setAlert({
+                        open: true,
+                        yes: () => deleteRows(selectedRows),
+                        heading: "Delete Rows",
+                        body: "Are you sure you want to delete the selected rows?",
+                    });
                     break;
 
                 case "export":
@@ -76,6 +89,14 @@ const TablePage = ({ resourcePath, columns, title, description, btnText }) => {
                     </ThemeProvider>
                 )}
             </Box>
+            <Alert
+                isOpen={alertData.open}
+                onClose={() => setAlert(false)}
+                onYes={() => alertData.yes()}
+                heading={alertData.heading}
+                body={alertData.body}
+                size={{ base: "xs", md: "md" }}
+            />
         </>
     );
 };
