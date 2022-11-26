@@ -39,9 +39,11 @@ const FieldsPage = ({ structure }) => {
 
     const [filesUploadedSuccessfuly, setFilesUploadedSuccessfuly] =
         useState(false);
+    const [filesUploading, setFilesUploading] = useState(false);
 
     const handleSave = async () => {
         const [payloadArray, filesNames] = prepareImagesForUpload(localFields);
+        setFilesUploading(true);
         const filesUploaded = await Promise.all(
             payloadArray.map((formData) => uploadImage(formData))
         );
@@ -58,6 +60,7 @@ const FieldsPage = ({ structure }) => {
         if (!filesUploadedSuccessfuly) return;
 
         syncFields(localFields);
+        setFilesUploading(false);
         setFilesUploadedSuccessfuly(false);
     }, [filesUploadedSuccessfuly]);
 
@@ -76,7 +79,7 @@ const FieldsPage = ({ structure }) => {
                 btnText="Save"
                 enableSearch={false}
                 disableBtn={!localFields.modified}
-                isBtnLoading={isFetching || isFieldsUploading}
+                isBtnLoading={isFetching || isFieldsUploading || filesUploading}
                 onBtnClick={handleSave}
             />
             <Box p="1" h="calc(100% - 6rem)" overflowY="auto">
