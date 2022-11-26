@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 
 // UI Components
 import { Box, Flex } from "@chakra-ui/react";
@@ -32,8 +32,13 @@ const FieldsPage = ({ structure }) => {
     const uploadImage = useUploadImages("pilot_upload");
 
     const handleChange = ({ target: { name, value } }) => {
-        updateField(name, value);
+        updateField({
+            [name]: value,
+        });
     };
+
+    const [filesUploadedSuccessfuly, setFilesUploadedSuccessfuly] =
+        useState(false);
 
     const handleSave = async () => {
         const [payloadArray, filesNames] = prepareImagesForUpload(localFields);
@@ -42,13 +47,19 @@ const FieldsPage = ({ structure }) => {
         );
 
         if (filesUploaded) {
-            filesNames.forEach(([fieldName, fileName]) =>
-                updateField(fieldName, fileName)
-            );
-            console.log(localFields);
-            // syncFields(localFields);
+            updateField({
+                ...filesNames,
+            });
+            setFilesUploadedSuccessfuly(true);
         }
     };
+
+    useEffect(() => {
+        if (!filesUploadedSuccessfuly) return;
+
+        syncFields(localFields);
+        setFilesUploadedSuccessfuly(false);
+    }, [filesUploadedSuccessfuly]);
 
     const getAvatar = (src) => {
         if (typeof src == "string") {
