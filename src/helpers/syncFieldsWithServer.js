@@ -1,6 +1,6 @@
 // Third party hooks
 import { useState, useMemo, useEffect } from "react";
-import { useQuery, useMutation } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 
 // Helper functions
 import request from "./request";
@@ -10,6 +10,7 @@ import useStateContext from "../contexts/StateContextProvider";
 
 const syncFieldsWithServer = (resourcePath, initialData) => {
     const { showAppToast } = useStateContext();
+    const queryClient = useQueryClient();
 
     const { data, isFetching } = useQuery(
         resourcePath,
@@ -23,13 +24,17 @@ const syncFieldsWithServer = (resourcePath, initialData) => {
 
     const [localFields, setLocalFields] = useState(data);
 
-    useEffect(() => setLocalFields(data), [data]);
+    useEffect(() => setLocalFields((prevState) => ({
+        ...prevState,
+        ...data,
+        modified: false,
+    })), [data]);
 
     const updateField = (newStateObject) => {
         setLocalFields((prevState) => ({
-            modified: true,
             ...prevState,
             ...newStateObject,
+            modified: true,
         }));
     };
 
@@ -40,12 +45,27 @@ const syncFieldsWithServer = (resourcePath, initialData) => {
                 body: payload,
             }),
         {
-            onMutate: (payload) => {},
+            onMutate: async (payload) => {
+                await queryClient.cancelQueries({
+                    queryKey: resourcePath,
+                });
+
+                const prevPayload = queryClient.getQueryData(resourcePath);
+                queryClient.setQueryData(resourcePath, (prevData) => ({
+                    ...prevData,
+                    ...payload,
+                }));
+
+                return { prevPayload };
+            },
             onSuccess: () => {
                 setLocalFields((prevState) => ({
                     ...prevState,
                     modified: false,
                 }));
+            },
+            onError: (err, newPayload, { prevPayload }) => {
+                queryClient.setQueryData(resourcePath, prevPayload);
             },
         }
     );

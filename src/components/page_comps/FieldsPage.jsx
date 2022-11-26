@@ -43,16 +43,21 @@ const FieldsPage = ({ structure }) => {
 
     const handleSave = async () => {
         const [payloadArray, filesNames] = prepareImagesForUpload(localFields);
-        setFilesUploading(true);
-        const filesUploaded = await Promise.all(
-            payloadArray.map((formData) => uploadImage(formData))
-        );
 
-        if (filesUploaded) {
-            updateField({
-                ...filesNames,
-            });
-            setFilesUploadedSuccessfuly(true);
+        if (filesNames.length > 0) {
+            setFilesUploading(true);
+            const filesUploaded = await Promise.all(
+                payloadArray.map((formData) => uploadImage(formData))
+            );
+
+            if (filesUploaded) {
+                updateField({
+                    ...filesNames,
+                });
+                setFilesUploadedSuccessfuly(true);
+            }
+        } else {
+            syncFields(localFields);
         }
     };
 
