@@ -9,7 +9,7 @@ import {
     useGridApiRef,
     GridToolbarContainer,
     GridActionsCellItem,
-} from "@mui/x-data-grid";
+} from "@mui/x-data-grid-pro";
 
 function EditToolbar(props) {
     const { apiRef } = props;
@@ -31,7 +31,11 @@ function EditToolbar(props) {
 
     return (
         <GridToolbarContainer>
-            <Button style={{ mx: "4"}} leftIcon={<AddIcon />} onClick={handleClick}>
+            <Button
+                style={{ margin: "0.2rem 0.4rem", padding: "0.2rem 0.4rem" }}
+                leftIcon={<AddIcon />}
+                onClick={handleClick}
+            >
                 Add record
             </Button>
         </GridToolbarContainer>
