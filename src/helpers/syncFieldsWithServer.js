@@ -27,9 +27,9 @@ const syncFieldsWithServer = (resourcePath, initialData) => {
 
     const updateField = (newStateObject) => {
         setLocalFields((prevState) => ({
+            modified: true,
             ...prevState,
             ...newStateObject,
-            modified: true,
         }));
     };
 
