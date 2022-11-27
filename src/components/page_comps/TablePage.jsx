@@ -99,6 +99,7 @@ const TablePage = ({
         delete newRow.id;
         newRow["rows"] = [row.id];
         await updateRow(newRow);
+        return row;
     };
 
     return (
