@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 
 // UI Components
 import { Box } from "@chakra-ui/react";
@@ -9,6 +9,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { PageTableSkeleton } from "./PageSkeleton";
 import PageHeader from "./PageHeader";
 import Alert from "../app_shell/Alert";
+import TableToolbar from "./TableToolbar";
 
 // Icons
 import { EditIcon, CloseIcon, DeleteIcon, UnlockIcon } from "@chakra-ui/icons";
@@ -30,6 +31,10 @@ const TablePage = ({
     const { filteredRows, setSearchValue } = filterTableRows(data);
 
     const [selectedRows, setSelectedRows] = useState([]);
+
+    const [selectedCellParams, setSelectedCellParams] = useState(null);
+    const [cellModesModel, setCellModesModel] = useState({});
+
     const [alertData, setAlert] = useState(false);
 
     const shouldShowMenu = selectedRows?.length > 0;
@@ -67,6 +72,27 @@ const TablePage = ({
         [selectedRows]
     );
 
+    const handleCellFocus = useCallback((event) => {
+        const row = event.currentTarget.parentElement;
+        const id = row.dataset.id;
+        const field = event.currentTarget.dataset.field;
+        setSelectedCellParams({ id, field });
+    }, []);
+
+    const cellMode = useMemo(() => {
+        if (!selectedCellParams) return "view";
+
+        const { id, field } = selectedCellParams;
+        return cellModesModel[id]?.[field]?.mode || "view";
+    }, [cellModesModel, selectedCellParams]);
+
+    const handleCellKeyDown = useCallback(
+        (params, event) => {
+            if (cellMode === "edit") event.defaultMuiPrevented = true;
+        },
+        [cellMode]
+    );
+
     return (
         <>
             <PageHeader
@@ -85,17 +111,33 @@ const TablePage = ({
                     <ThemeProvider theme={dataGridTheme}>
                         <DataGrid
                             editMode="row"
-                            checkboxSelection
+                            experimentalFeatures={{ newEditingApi: true }}
                             columns={columns}
                             rows={
                                 filteredRows?.length === 0
                                     ? data ?? []
                                     : filteredRows
                             }
-                            selectionModel={selectedRows}
-                            onSelectionModelChange={(newSelectedRows) =>
-                                setSelectedRows(newSelectedRows)
+                            onCellKeyDown={handleCellKeyDown}
+                            cellModesModel={cellModesModel}
+                            onCellModesModelChange={(model) =>
+                                setCellModesModel(model)
                             }
+                            components={{
+                                Toolbar: TableToolbar,
+                            }}
+                            componentsProps={{
+                                toolbar: {
+                                    cellMode,
+                                    selectedCellParams,
+                                    setSelectedCellParams,
+                                    cellModesModel,
+                                    setCellModesModel,
+                                },
+                                cell: {
+                                    onFocus: handleCellFocus,
+                                },
+                            }}
                         />
                     </ThemeProvider>
                 )}
