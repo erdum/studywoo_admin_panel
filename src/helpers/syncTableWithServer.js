@@ -64,9 +64,10 @@ const syncTableWithServer = (resourcePath) => {
                     prevData.map((row) => {
                         const rowNeedsToUpdate = payload.rows[0];
                         if (rowNeedsToUpdate === row.id) {
-                            const newRow = payload;
+                            const newRow = { ...payload };
                             delete newRow.rows;
                             return {
+                                ...row,
                                 ...newRow,
                             };
                         }

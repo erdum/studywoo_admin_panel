@@ -95,10 +95,10 @@ const TablePage = ({
     );
 
     const handleUpdateRow = async (row) => {
-        const payload = row;
-        payload.rows = [payload.id];
-        delete payload.id;
-        updateRow(payload);
+        const newRow = { ...row };
+        delete newRow.id;
+        newRow["rows"] = [row.id];
+        await updateRow(newRow);
     };
 
     return (
