@@ -26,7 +26,8 @@ const TablePage = ({
     btnText,
     addRows = false,
 }) => {
-    const { isFetching, data, deleteRows } = syncTableWithServer(resourcePath);
+    const { isFetching, data, deleteRows, updateRow } =
+        syncTableWithServer(resourcePath);
 
     const { filteredRows, setSearchValue } = filterTableRows(data);
 
@@ -93,6 +94,13 @@ const TablePage = ({
         [cellMode]
     );
 
+    const handleUpdateRow = async (row) => {
+        const payload = row;
+        payload.rows = [payload.id];
+        delete payload.id;
+        updateRow(payload);
+    };
+
     return (
         <>
             <PageHeader
@@ -118,6 +126,8 @@ const TablePage = ({
                                     ? data ?? []
                                     : filteredRows
                             }
+                            processRowUpdate={handleUpdateRow}
+                            onProcessRowUpdateError={() => null}
                             onCellKeyDown={handleCellKeyDown}
                             cellModesModel={cellModesModel}
                             onCellModesModelChange={(model) =>

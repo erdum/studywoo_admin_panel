@@ -47,10 +47,49 @@ const syncTableWithServer = (resourcePath) => {
         }
     );
 
+    const { mutate: updateRow } = useMutation(
+        async (payload) =>
+            request(resourcePath, showAppToast, {
+                body: payload,
+                method: "PUT",
+            }),
+        {
+            onMutate: async (payload) => {
+                await queryClient.cancelQueries({
+                    queryKey: resourcePath,
+                });
+
+                const prevPayload = queryClient.getQueryData(resourcePath);
+                queryClient.setQueryData(resourcePath, (prevData) =>
+                    prevData.map((row) => {
+                        const rowNeedsToUpdate = payload.rows[0];
+                        if (rowNeedsToUpdate === row.id) {
+                            const newRow = payload;
+                            delete newRow.rows;
+                            return {
+                                ...newRow,
+                            };
+                        }
+
+                        return {
+                            ...row,
+                        };
+                    })
+                );
+
+                return { prevPayload };
+            },
+            onError: (err, newPayload, { prevPayload }) => {
+                queryClient.setQueryData(resourcePath, prevPayload);
+            },
+        }
+    );
+
     return {
         isFetching,
         data,
         deleteRows,
+        updateRow,
     };
 };
 
