@@ -152,6 +152,12 @@ const TablePage = ({
                                     onFocus: handleCellFocus,
                                 },
                             }}
+                            sx={{
+                                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within":
+                                    {
+                                        outline: "none !important",
+                                    },
+                            }}
                         />
                     </ThemeProvider>
                 )}
