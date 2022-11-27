@@ -65,8 +65,23 @@ const TableToolbar = ({
                 borderBottom: 1,
                 borderColor: "divider",
                 p: 1,
+                width: "100%",
+                display: "flex",
+                justifyContent: "flex-end"
             }}
         >
+            <Button
+                sx={{
+                    mr: "auto"
+                }}
+                onClick={handleSaveOrEdit}
+                onMouseDown={handleMouseDown}
+                variant="outlined"
+                color="warning"
+                size="small"
+            >
+                Add
+            </Button>
             <Button
                 onClick={handleSaveOrEdit}
                 onMouseDown={handleMouseDown}
