@@ -102,7 +102,9 @@ const TablePage = ({
         return row;
     };
 
-    const handleDeleteRow = async (rowId) => console.log(rowId);
+    const handleDeleteRow = async (rowId) => {
+        await deleteRows([Number(rowId)]);
+    };
 
     return (
         <>
