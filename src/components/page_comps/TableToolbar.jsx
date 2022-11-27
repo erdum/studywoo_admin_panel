@@ -72,6 +72,8 @@ const TableToolbar = ({
                 onMouseDown={handleMouseDown}
                 disabled={!selectedCellParams}
                 variant="outlined"
+                color={cellMode === "edit" ? "success" : "warning"}
+                size="small"
             >
                 {cellMode === "edit" ? "Save" : "Edit"}
             </Button>
@@ -80,7 +82,9 @@ const TableToolbar = ({
                 onMouseDown={handleMouseDown}
                 disabled={cellMode === "view"}
                 variant="outlined"
+                color="warning"
                 sx={{ ml: 1 }}
+                size="small"
             >
                 Cancel
             </Button>
@@ -89,7 +93,9 @@ const TableToolbar = ({
                 onMouseDown={handleMouseDown}
                 disabled={!selectedCellParams}
                 variant="outlined"
+                color="error"
                 sx={{ ml: 1 }}
+                size="small"
             >
                 Delete
             </Button>
