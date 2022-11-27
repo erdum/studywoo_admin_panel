@@ -6,6 +6,7 @@ const TableToolbar = ({
     cellMode,
     cellModesModel,
     setCellModesModel,
+    handleDeleteRow,
 }) => {
     const handleSaveOrEdit = () => {
         if (!selectedCellParams) {
@@ -53,6 +54,11 @@ const TableToolbar = ({
         event.preventDefault();
     };
 
+    const handleDelete = () => {
+        const { id } = selectedCellParams;
+        handleDeleteRow(id);
+    }
+
     return (
         <Box
             sx={{
@@ -77,6 +83,15 @@ const TableToolbar = ({
                 sx={{ ml: 1 }}
             >
                 Cancel
+            </Button>
+            <Button
+                onClick={handleDelete}
+                onMouseDown={handleMouseDown}
+                disabled={!selectedCellParams}
+                variant="outlined"
+                sx={{ ml: 1 }}
+            >
+                Delete
             </Button>
         </Box>
     );
