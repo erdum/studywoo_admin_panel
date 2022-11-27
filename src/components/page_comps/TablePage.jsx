@@ -102,6 +102,8 @@ const TablePage = ({
         return row;
     };
 
+    const handleDeleteRow = async (rowId) => console.log(rowId);
+
     return (
         <>
             <PageHeader
@@ -144,6 +146,7 @@ const TablePage = ({
                                     setSelectedCellParams,
                                     cellModesModel,
                                     setCellModesModel,
+                                    handleDeleteRow,
                                 },
                                 cell: {
                                     onFocus: handleCellFocus,
