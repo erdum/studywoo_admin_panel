@@ -67,7 +67,7 @@ const TableToolbar = ({
                 p: 1,
                 width: "100%",
                 display: "flex",
-                justifyContent: "flex-end",
+                justifyContent: "flex-start",
             }}
         >
             {addRows && (
