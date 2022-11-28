@@ -1,6 +1,7 @@
 import AccountSettings from "../pages/AccountSettings";
 import Home from "../pages/Home";
 import Users from "../pages/Users";
+import Roles from "../pages/Roles";
 
 const routes = [
 	{
@@ -14,6 +15,10 @@ const routes = [
     {
         path: "/users",
         element: <Users />,
+    },
+    {
+    	path: "/roles",
+    	element: <Roles />,
     },
 ];
 
