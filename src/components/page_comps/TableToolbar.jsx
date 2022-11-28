@@ -7,6 +7,7 @@ const TableToolbar = ({
     rowModesModel,
     setRowModesModel,
     handleDeleteRow,
+    handleAddRow,
     addRows,
 }) => {
     const handleSaveOrEdit = () => {
@@ -74,7 +75,7 @@ const TableToolbar = ({
                     sx={{
                         mr: "auto",
                     }}
-                    onClick={handleSaveOrEdit}
+                    onClick={handleAddRow}
                     onMouseDown={handleMouseDown}
                     variant="outlined"
                     color="warning"

@@ -106,6 +106,8 @@ const TablePage = ({
         await deleteRows([Number(rowId)]);
     };
 
+    const handleAddRow = async () => {};
+
     return (
         <>
             <PageHeader
@@ -149,6 +151,7 @@ const TablePage = ({
                                     rowModesModel,
                                     setRowModesModel,
                                     handleDeleteRow,
+                                    handleAddRow,
                                     addRows,
                                 },
                                 cell: {
