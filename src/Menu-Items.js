@@ -6,6 +6,10 @@ import {
 	FaCommentAlt,
 	FaQuestionCircle,
 	FaClipboardList,
+    FaPollH,
+    FaUniversity,
+    FaRegCopy,
+    FaCog,
 } from "react-icons/fa";
 
 const MenuLinks = [
@@ -44,6 +48,26 @@ const MenuLinks = [
 		label: "Profile Settings",
 		icon: FaUserCog,
 	},
+    {
+        path: "/blogs",
+        label: "Blogs",
+        icon: FaPollH,
+    },
+    {
+        path: "/colleges",
+        label: "Colleges",
+        icon: FaUniversity,
+    },
+    {
+        path: "/subpages",
+        label: "Subpages",
+        icon: FaRegCopy,
+    },
+    {
+        path: "/site-settings",
+        label: "Site Settings",
+        icon: FaCog,
+    },
 ];
 
 export default MenuLinks;
