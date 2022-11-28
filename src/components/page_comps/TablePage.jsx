@@ -149,6 +149,7 @@ const TablePage = ({
                                     cellModesModel,
                                     setCellModesModel,
                                     handleDeleteRow,
+                                    addRows,
                                 },
                                 cell: {
                                     onFocus: handleCellFocus,

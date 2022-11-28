@@ -7,6 +7,7 @@ const TableToolbar = ({
     cellModesModel,
     setCellModesModel,
     handleDeleteRow,
+    addRows,
 }) => {
     const handleSaveOrEdit = () => {
         if (!selectedCellParams) {
@@ -57,7 +58,7 @@ const TableToolbar = ({
     const handleDelete = () => {
         const { id } = selectedCellParams;
         handleDeleteRow(id);
-    }
+    };
 
     return (
         <Box
@@ -67,21 +68,23 @@ const TableToolbar = ({
                 p: 1,
                 width: "100%",
                 display: "flex",
-                justifyContent: "flex-end"
+                justifyContent: "flex-end",
             }}
         >
-            <Button
-                sx={{
-                    mr: "auto"
-                }}
-                onClick={handleSaveOrEdit}
-                onMouseDown={handleMouseDown}
-                variant="outlined"
-                color="warning"
-                size="small"
-            >
-                Add
-            </Button>
+            {addRows && (
+                <Button
+                    sx={{
+                        mr: "auto",
+                    }}
+                    onClick={handleSaveOrEdit}
+                    onMouseDown={handleMouseDown}
+                    variant="outlined"
+                    color="warning"
+                    size="small"
+                >
+                    Add
+                </Button>
+            )}
             <Button
                 onClick={handleSaveOrEdit}
                 onMouseDown={handleMouseDown}
