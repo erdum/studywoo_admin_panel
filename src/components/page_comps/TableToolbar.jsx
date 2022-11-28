@@ -1,51 +1,49 @@
 import { Box, Button } from "@mui/material";
-import { GridCellModes } from "@mui/x-data-grid";
+import { GridRowModes } from "@mui/x-data-grid";
 
 const TableToolbar = ({
-    selectedCellParams,
-    cellMode,
-    cellModesModel,
-    setCellModesModel,
+    selectedRowParams,
+    rowMode,
+    rowModesModel,
+    setRowModesModel,
     handleDeleteRow,
     addRows,
 }) => {
     const handleSaveOrEdit = () => {
-        if (!selectedCellParams) {
+        if (!selectedRowParams) {
             return;
         }
-        const { id, field } = selectedCellParams;
-        if (cellMode === "edit") {
-            setCellModesModel({
-                ...cellModesModel,
+        const { id } = selectedRowParams;
+        if (rowMode === "edit") {
+            setRowModesModel({
+                ...rowModesModel,
                 [id]: {
-                    ...cellModesModel[id],
-                    [field]: { mode: GridCellModes.View },
+                    ...rowModesModel[id],
+                    mode: GridRowModes.View,
                 },
             });
         } else {
-            setCellModesModel({
-                ...cellModesModel,
+            setRowModesModel({
+                ...rowModesModel,
                 [id]: {
-                    ...cellModesModel[id],
-                    [field]: { mode: GridCellModes.Edit },
+                    ...rowModesModel[id],
+                    mode: GridRowModes.Edit,
                 },
             });
         }
     };
 
     const handleCancel = () => {
-        if (!selectedCellParams) {
+        if (!selectedRowParams) {
             return;
         }
-        const { id, field } = selectedCellParams;
-        setCellModesModel({
-            ...cellModesModel,
+        const { id } = selectedRowParams;
+        setRowModesModel({
+            ...rowModesModel,
             [id]: {
-                ...cellModesModel[id],
-                [field]: {
-                    mode: GridCellModes.View,
-                    ignoreModifications: true,
-                },
+                ...rowModesModel[id],
+                mode: GridRowModes.View,
+                ignoreModifications: true,
             },
         });
     };
@@ -56,7 +54,7 @@ const TableToolbar = ({
     };
 
     const handleDelete = () => {
-        const { id } = selectedCellParams;
+        const { id } = selectedRowParams;
         handleDeleteRow(id);
     };
 
@@ -88,17 +86,17 @@ const TableToolbar = ({
             <Button
                 onClick={handleSaveOrEdit}
                 onMouseDown={handleMouseDown}
-                disabled={!selectedCellParams}
+                disabled={!selectedRowParams}
                 variant="outlined"
-                color={cellMode === "edit" ? "success" : "warning"}
+                color={rowMode === "edit" ? "success" : "warning"}
                 size="small"
             >
-                {cellMode === "edit" ? "Save" : "Edit"}
+                {rowMode === "edit" ? "Save" : "Edit"}
             </Button>
             <Button
                 onClick={handleCancel}
                 onMouseDown={handleMouseDown}
-                disabled={cellMode === "view"}
+                disabled={rowMode === "view"}
                 variant="outlined"
                 color="warning"
                 sx={{ ml: 1 }}
@@ -109,7 +107,7 @@ const TableToolbar = ({
             <Button
                 onClick={handleDelete}
                 onMouseDown={handleMouseDown}
-                disabled={!selectedCellParams}
+                disabled={!selectedRowParams}
                 variant="outlined"
                 color="error"
                 sx={{ ml: 1 }}

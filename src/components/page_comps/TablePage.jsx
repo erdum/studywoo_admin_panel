@@ -33,8 +33,8 @@ const TablePage = ({
 
     const [selectedRows, setSelectedRows] = useState([]);
 
-    const [selectedCellParams, setSelectedCellParams] = useState(null);
-    const [cellModesModel, setCellModesModel] = useState({});
+    const [selectedRowParams, setSelectedRowParams] = useState(null);
+    const [rowModesModel, setRowModesModel] = useState({});
 
     const [alertData, setAlert] = useState(false);
 
@@ -77,21 +77,21 @@ const TablePage = ({
         const row = event.currentTarget.parentElement;
         const id = row.dataset.id;
         const field = event.currentTarget.dataset.field;
-        setSelectedCellParams({ id, field });
+        setSelectedRowParams({ id });
     }, []);
 
-    const cellMode = useMemo(() => {
-        if (!selectedCellParams) return "view";
+    const rowMode = useMemo(() => {
+        if (!selectedRowParams) return "view";
 
-        const { id, field } = selectedCellParams;
-        return cellModesModel[id]?.[field]?.mode || "view";
-    }, [cellModesModel, selectedCellParams]);
+        const { id } = selectedRowParams;
+        return rowModesModel[id]?.mode || "view";
+    }, [rowModesModel, selectedRowParams]);
 
     const handleCellKeyDown = useCallback(
         (params, event) => {
-            if (cellMode === "edit") event.defaultMuiPrevented = true;
+            if (rowMode === "edit") event.defaultMuiPrevented = true;
         },
-        [cellMode]
+        [rowMode]
     );
 
     const handleUpdateRow = async (row) => {
@@ -134,20 +134,20 @@ const TablePage = ({
                             processRowUpdate={handleUpdateRow}
                             onProcessRowUpdateError={() => null}
                             onCellKeyDown={handleCellKeyDown}
-                            cellModesModel={cellModesModel}
-                            onCellModesModelChange={(model) =>
-                                setCellModesModel(model)
+                            rowModesModel={rowModesModel}
+                            onRowModesModelChange={(model) =>
+                                setRowModesModel(model)
                             }
                             components={{
                                 Toolbar: TableToolbar,
                             }}
                             componentsProps={{
                                 toolbar: {
-                                    cellMode,
-                                    selectedCellParams,
-                                    setSelectedCellParams,
-                                    cellModesModel,
-                                    setCellModesModel,
+                                    rowMode,
+                                    selectedRowParams,
+                                    setSelectedRowParams,
+                                    rowModesModel,
+                                    setRowModesModel,
                                     handleDeleteRow,
                                     addRows,
                                 },
