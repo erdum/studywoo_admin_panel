@@ -2,12 +2,13 @@ import { Box, Button } from "@mui/material";
 import { GridRowModes } from "@mui/x-data-grid";
 
 const TableToolbar = ({
+    setSelectedRowParams,
     selectedRowParams,
     rowMode,
     rowModesModel,
     setRowModesModel,
     handleDeleteRow,
-    addRow,
+    handleAddNewRow,
     addingRowsEnable,
 }) => {
     const handleSaveOrEdit = () => {
@@ -59,7 +60,15 @@ const TableToolbar = ({
         handleDeleteRow(id);
     };
 
-    const handleAdd = () => {
+    const addNewRowHandler = () => {
+        const id = handleAddNewRow();
+        setRowModesModel({
+            ...rowModesModel,
+            [id]: {
+                mode: GridRowModes.Edit,
+            },
+        });
+        setSelectedRowParams({ id, isNew: true });
     };
 
     return (
@@ -78,7 +87,7 @@ const TableToolbar = ({
                     sx={{
                         mr: "auto",
                     }}
-                    onClick={handleAdd}
+                    onClick={addNewRowHandler}
                     onMouseDown={handleMouseDown}
                     variant="outlined"
                     color="warning"

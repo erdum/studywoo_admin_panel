@@ -106,7 +106,13 @@ const TablePage = ({
         await deleteRows([Number(rowId)]);
     };
 
-    const addRow = () => {};
+    const handleAddNewRow = () => {
+        addRowInCacheOnly({
+            id: 9999,
+            isNew: true
+        });
+        return 9999;
+    };
 
     return (
         <>
@@ -151,7 +157,7 @@ const TablePage = ({
                                     rowModesModel,
                                     setRowModesModel,
                                     handleDeleteRow,
-                                    addRow,
+                                    handleAddNewRow,
                                     addingRowsEnable,
                                 },
                                 cell: {
