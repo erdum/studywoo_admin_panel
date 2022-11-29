@@ -24,9 +24,9 @@ const TablePage = ({
     title,
     description,
     btnText,
-    addRows = false,
+    addingRowsEnable = false,
 }) => {
-    const { isFetching, data, deleteRows, updateRow } =
+    const { isFetching, data, deleteRows, updateRow, addRowInCacheOnly } =
         syncTableWithServer(resourcePath);
 
     const { filteredRows, setSearchValue } = filterTableRows(data);
@@ -106,7 +106,7 @@ const TablePage = ({
         await deleteRows([Number(rowId)]);
     };
 
-    const handleAddRow = async () => {};
+    const addRow = () => {};
 
     return (
         <>
@@ -151,8 +151,8 @@ const TablePage = ({
                                     rowModesModel,
                                     setRowModesModel,
                                     handleDeleteRow,
-                                    handleAddRow,
-                                    addRows,
+                                    addRow,
+                                    addingRowsEnable,
                                 },
                                 cell: {
                                     onFocus: handleCellFocus,

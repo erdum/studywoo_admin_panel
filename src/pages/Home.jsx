@@ -48,6 +48,7 @@ const Home = () => (
 		title="Applications"
 		description="All the applications for college admissions"
 		btnText="Save"
+        addingRowsEnable
 	/>
 );
 

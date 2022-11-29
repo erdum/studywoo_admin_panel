@@ -7,8 +7,8 @@ const TableToolbar = ({
     rowModesModel,
     setRowModesModel,
     handleDeleteRow,
-    handleAddRow,
-    addRows,
+    addRow,
+    addingRowsEnable,
 }) => {
     const handleSaveOrEdit = () => {
         if (!selectedRowParams) {
@@ -59,6 +59,9 @@ const TableToolbar = ({
         handleDeleteRow(id);
     };
 
+    const handleAdd = () => {
+    };
+
     return (
         <Box
             sx={{
@@ -70,12 +73,12 @@ const TableToolbar = ({
                 justifyContent: "flex-start",
             }}
         >
-            {addRows && (
+            {addingRowsEnable && (
                 <Button
                     sx={{
                         mr: "auto",
                     }}
-                    onClick={handleAddRow}
+                    onClick={handleAdd}
                     onMouseDown={handleMouseDown}
                     variant="outlined"
                     color="warning"
