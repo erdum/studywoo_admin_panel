@@ -12,26 +12,31 @@ const columns = [
 		field: "full_name",
 		headerName: "Applicant Name",
 		width: 400,
+        editable: true
 	},
 	{
 		field: "mobile_number",
 		headerName: "Applicant Phone",
 		width: 300,
+        editable: true
 	},
 	{
 		field: "email",
 		headerName: "Applicant Email",
 		width: 400,
+        editable: true
 	},
 	{
 		field: "college_name",
 		headerName: "Applied College",
 		width: 500,
+        editable: true
 	},
 	{
 		field: "course_name",
 		headerName: "Applied Course",
 		width: 250,
+        editable: true
 	},
 	{
 		field: "created_at",
