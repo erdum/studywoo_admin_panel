@@ -2,7 +2,7 @@ import { useState, useCallback, useMemo } from "react";
 
 // UI Components
 import { Box } from "@chakra-ui/react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridRowModes } from "@mui/x-data-grid";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 // Custom Components
@@ -26,8 +26,15 @@ const TablePage = ({
     btnText,
     addingRowsEnable = false,
 }) => {
-    const { isFetching, data, deleteRows, updateRow, addRowInCacheOnly } =
-        syncTableWithServer(resourcePath);
+    const {
+        isFetching,
+        data,
+        deleteRows,
+        updateRow,
+        addRow,
+        addRowInCache,
+        removeRowFromCache,
+    } = syncTableWithServer(resourcePath);
 
     const { filteredRows, setSearchValue } = filterTableRows(data);
 
@@ -76,8 +83,9 @@ const TablePage = ({
     const handleCellFocus = useCallback((event) => {
         const row = event.currentTarget.parentElement;
         const id = row.dataset.id;
-        const field = event.currentTarget.dataset.field;
-        setSelectedRowParams({ id });
+        setSelectedRowParams((prevData) =>
+            prevData?.id == id ? prevData : { id }
+        );
     }, []);
 
     const rowMode = useMemo(() => {
@@ -94,24 +102,76 @@ const TablePage = ({
         [rowMode]
     );
 
+    const handleNewRow = () => {
+        const id = 9999;
+        addRowInCache({ id });
+        setRowModesModel({
+            ...rowModesModel,
+            [id]: {
+                mode: GridRowModes.Edit,
+            },
+        });
+        setSelectedRowParams({ id, isNew: true });
+    };
+
+    const handleSaveOrEdit = () => {
+        if (!selectedRowParams) {
+            return;
+        }
+        const { id } = selectedRowParams;
+        if (rowMode === "edit") {
+            setRowModesModel({
+                ...rowModesModel,
+                [id]: {
+                    ...rowModesModel[id],
+                    mode: GridRowModes.View,
+                },
+            });
+        } else {
+            setRowModesModel({
+                ...rowModesModel,
+                [id]: {
+                    ...rowModesModel[id],
+                    mode: GridRowModes.Edit,
+                },
+            });
+        }
+    };
+
+    const handleCancel = () => {
+        if (!selectedRowParams) {
+            return;
+        }
+        const { id, isNew } = selectedRowParams;
+
+        setRowModesModel({
+            ...rowModesModel,
+            [id]: {
+                ...rowModesModel[id],
+                mode: GridRowModes.View,
+                ignoreModifications: true,
+            },
+        });
+
+        if (isNew) removeRowFromCache(id);
+    };
+
+    const handleDelete = async () => {
+        const { id } = selectedRowParams;
+        await deleteRows([Number(rowId)]);
+    };
+
     const handleUpdateRow = async (row) => {
+        if (selectedRowParams?.isNew) {
+            await addRow(row);
+            return row;
+        }
+
         const newRow = { ...row };
         delete newRow.id;
         newRow["rows"] = [row.id];
         await updateRow(newRow);
         return row;
-    };
-
-    const handleDeleteRow = async (rowId) => {
-        await deleteRows([Number(rowId)]);
-    };
-
-    const handleAddNewRow = () => {
-        addRowInCacheOnly({
-            id: 9999,
-            isNew: true
-        });
-        return 9999;
     };
 
     return (
@@ -151,14 +211,13 @@ const TablePage = ({
                             }}
                             componentsProps={{
                                 toolbar: {
-                                    rowMode,
                                     selectedRowParams,
-                                    setSelectedRowParams,
-                                    rowModesModel,
-                                    setRowModesModel,
-                                    handleDeleteRow,
-                                    handleAddNewRow,
                                     addingRowsEnable,
+                                    rowMode,
+                                    handleNewRow,
+                                    handleSaveOrEdit,
+                                    handleCancel,
+                                    handleDelete,
                                 },
                                 cell: {
                                     onFocus: handleCellFocus,
