@@ -102,7 +102,7 @@ const TablePage = ({
         [rowMode]
     );
 
-    const handleNewRow = () => {
+    const handleNewRow = useCallback(() => {
         const id = 9999;
         addRowInCache({ id });
         setRowModesModel({
@@ -112,9 +112,9 @@ const TablePage = ({
             },
         });
         setSelectedRowParams({ id, isNew: true });
-    };
+    }, []);
 
-    const handleSaveOrEdit = () => {
+    const handleSaveOrEdit = useCallback(() => {
         if (!selectedRowParams) {
             return;
         }
@@ -136,9 +136,9 @@ const TablePage = ({
                 },
             });
         }
-    };
+    }, [selectedRowParams, rowMode]);
 
-    const handleCancel = () => {
+    const handleCancel = useCallback(() => {
         if (!selectedRowParams) {
             return;
         }
@@ -154,25 +154,28 @@ const TablePage = ({
         });
 
         if (isNew) removeRowFromCache(id);
-    };
+    }, [selectedRowParams]);
 
-    const handleDelete = async () => {
+    const handleDelete = useCallback(async () => {
         const { id } = selectedRowParams;
         await deleteRows([Number(rowId)]);
-    };
+    }, [selectedRowParams]);
 
-    const handleUpdateRow = async (row) => {
-        if (selectedRowParams?.isNew) {
-            await addRow(row);
+    const handleUpdateRow = useCallback(
+        async (row) => {
+            if (selectedRowParams?.isNew) {
+                await addRow(row);
+                return row;
+            }
+
+            const newRow = { ...row };
+            delete newRow.id;
+            newRow["rows"] = [row.id];
+            await updateRow(newRow);
             return row;
-        }
-
-        const newRow = { ...row };
-        delete newRow.id;
-        newRow["rows"] = [row.id];
-        await updateRow(newRow);
-        return row;
-    };
+        },
+        [selectedRowParams]
+    );
 
     return (
         <>
