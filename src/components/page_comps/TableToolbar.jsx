@@ -1,74 +1,18 @@
 import { Box, Button } from "@mui/material";
-import { GridRowModes } from "@mui/x-data-grid";
 
 const TableToolbar = ({
-    setSelectedRowParams,
     selectedRowParams,
-    rowMode,
-    rowModesModel,
-    setRowModesModel,
-    handleDeleteRow,
-    handleAddNewRow,
     addingRowsEnable,
+    rowMode,
+    handleNewRow,
+    handleSaveOrEdit,
+    handleCancel,
+    handleDelete,
 }) => {
-    const handleSaveOrEdit = () => {
-        if (!selectedRowParams) {
-            return;
-        }
-        const { id } = selectedRowParams;
-        if (rowMode === "edit") {
-            setRowModesModel({
-                ...rowModesModel,
-                [id]: {
-                    ...rowModesModel[id],
-                    mode: GridRowModes.View,
-                },
-            });
-        } else {
-            setRowModesModel({
-                ...rowModesModel,
-                [id]: {
-                    ...rowModesModel[id],
-                    mode: GridRowModes.Edit,
-                },
-            });
-        }
-    };
-
-    const handleCancel = () => {
-        if (!selectedRowParams) {
-            return;
-        }
-        const { id } = selectedRowParams;
-        setRowModesModel({
-            ...rowModesModel,
-            [id]: {
-                ...rowModesModel[id],
-                mode: GridRowModes.View,
-                ignoreModifications: true,
-            },
-        });
-    };
 
     const handleMouseDown = (event) => {
         // Keep the focus in the cell
         event.preventDefault();
-    };
-
-    const handleDelete = () => {
-        const { id } = selectedRowParams;
-        handleDeleteRow(id);
-    };
-
-    const addNewRowHandler = () => {
-        const id = handleAddNewRow();
-        setRowModesModel({
-            ...rowModesModel,
-            [id]: {
-                mode: GridRowModes.Edit,
-            },
-        });
-        setSelectedRowParams({ id, isNew: true });
     };
 
     return (
@@ -87,7 +31,7 @@ const TableToolbar = ({
                     sx={{
                         mr: "auto",
                     }}
-                    onClick={addNewRowHandler}
+                    onClick={handleNewRow}
                     onMouseDown={handleMouseDown}
                     variant="outlined"
                     color="warning"
