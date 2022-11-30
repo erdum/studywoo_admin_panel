@@ -218,7 +218,7 @@ const TablePage = ({
                                 },
                             }}
                             sx={{
-                                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within":
+                                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within, &.MuiDataGrid-root .MuiDataGrid-columnHeader:focus":
                                     {
                                         outline: "none !important",
                                     },
