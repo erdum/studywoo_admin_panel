@@ -147,7 +147,10 @@ const TablePage = ({
             },
         });
 
-        if (isNew) removeRowFromCache(id);
+        if (isNew) {
+            setSelectedRowParams(null);
+            removeRowFromCache(id);
+        }
     };
 
     const handleDelete = async () => {
