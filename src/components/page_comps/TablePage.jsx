@@ -49,36 +49,33 @@ const TablePage = ({
 
     const dataGridTheme = createTheme();
 
-    const handleBulkActions = useCallback(
-        ({ type }) => {
-            switch (type) {
-                case "edit":
-                    setAlert({
-                        open: true,
-                        yes: () => null,
-                        heading: "Edit Rows",
-                        body: "Are you sure you want to save the changes on the selected rows?",
-                    });
-                    break;
+    const handleBulkActions = ({ type }) => {
+        switch (type) {
+            case "edit":
+                setAlert({
+                    open: true,
+                    yes: () => null,
+                    heading: "Edit Rows",
+                    body: "Are you sure you want to save the changes on the selected rows?",
+                });
+                break;
 
-                case "delete":
-                    setAlert({
-                        open: true,
-                        yes: () => deleteRows(selectedRows),
-                        heading: "Delete Rows",
-                        body: "Are you sure you want to delete the selected rows?",
-                    });
-                    break;
+            case "delete":
+                setAlert({
+                    open: true,
+                    yes: () => deleteRows(selectedRows),
+                    heading: "Delete Rows",
+                    body: "Are you sure you want to delete the selected rows?",
+                });
+                break;
 
-                case "export":
-                    break;
+            case "export":
+                break;
 
-                default:
-                    break;
-            }
-        },
-        [selectedRows]
-    );
+            default:
+                break;
+        }
+    };
 
     const handleCellFocus = (event) => {
         const row = event.currentTarget.parentElement;
