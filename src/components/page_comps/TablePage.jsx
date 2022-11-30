@@ -80,13 +80,13 @@ const TablePage = ({
         [selectedRows]
     );
 
-    const handleCellFocus = useCallback((event) => {
+    const handleCellFocus = (event) => {
         const row = event.currentTarget.parentElement;
         const id = row.dataset.id;
         setSelectedRowParams((prevData) =>
             prevData?.id == id ? prevData : { id }
         );
-    }, []);
+    };
 
     const rowMode = useMemo(() => {
         if (!selectedRowParams) return "view";
@@ -95,14 +95,11 @@ const TablePage = ({
         return rowModesModel[id]?.mode || "view";
     }, [rowModesModel, selectedRowParams]);
 
-    const handleCellKeyDown = useCallback(
-        (params, event) => {
-            if (rowMode === "edit") event.defaultMuiPrevented = true;
-        },
-        [rowMode]
-    );
+    const handleCellKeyDown = (params, event) => {
+        if (rowMode === "edit") event.defaultMuiPrevented = true;
+    };
 
-    const handleNewRow = useCallback(() => {
+    const handleNewRow = () => {
         const id = 9999;
         addRowInCache({ id });
         setRowModesModel({
@@ -112,9 +109,9 @@ const TablePage = ({
             },
         });
         setSelectedRowParams({ id, isNew: true });
-    }, []);
+    };
 
-    const handleSaveOrEdit = useCallback(() => {
+    const handleSaveOrEdit = () => {
         if (!selectedRowParams) {
             return;
         }
@@ -136,9 +133,9 @@ const TablePage = ({
                 },
             });
         }
-    }, [selectedRowParams, rowMode]);
+    };
 
-    const handleCancel = useCallback(() => {
+    const handleCancel = () => {
         if (!selectedRowParams) {
             return;
         }
@@ -154,28 +151,25 @@ const TablePage = ({
         });
 
         if (isNew) removeRowFromCache(id);
-    }, [selectedRowParams]);
+    };
 
-    const handleDelete = useCallback(async () => {
+    const handleDelete = async () => {
         const { id } = selectedRowParams;
         await deleteRows([Number(rowId)]);
-    }, [selectedRowParams]);
+    };
 
-    const handleUpdateRow = useCallback(
-        async (row) => {
-            if (selectedRowParams?.isNew) {
-                await addRow(row);
-                return row;
-            }
-
-            const newRow = { ...row };
-            delete newRow.id;
-            newRow["rows"] = [row.id];
-            await updateRow(newRow);
+    const handleUpdateRow = async (row) => {
+        if (selectedRowParams?.isNew) {
+            await addRow(row);
             return row;
-        },
-        [selectedRowParams]
-    );
+        }
+
+        const newRow = { ...row };
+        delete newRow.id;
+        newRow["rows"] = [row.id];
+        await updateRow(newRow);
+        return row;
+    };
 
     return (
         <>
