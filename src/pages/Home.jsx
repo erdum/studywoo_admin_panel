@@ -6,7 +6,7 @@ const columns = [
     {
         field: "id",
         headerName: "Application ID",
-        width: 160,
+        width: 100,
     },
     {
         field: "full_name",
@@ -17,7 +17,7 @@ const columns = [
     {
         field: "mobile_number",
         headerName: "Applicant Phone",
-        width: 300,
+        width: 200,
         editable: true,
     },
     {
@@ -29,20 +29,21 @@ const columns = [
     {
         field: "college_name",
         headerName: "Applied College",
-        width: 500,
+        width: 400,
         editable: true,
     },
     {
         field: "course_name",
         headerName: "Applied Course",
-        width: 250,
+        width: 450,
         editable: true,
     },
     {
         field: "created_at",
         headerName: "Applied Date",
-        width: 250,
+        width: 100,
         type: "date",
+        editable: true,
     },
 ];
 
