@@ -1,4 +1,7 @@
-const singleSelect = {};
+const singleSelect = {
+    type: "singleSelect",
+    valuGetter: ({ field, row }) => (row[field] ?? ''),
+};
 
 const multiSelect = {};
 
