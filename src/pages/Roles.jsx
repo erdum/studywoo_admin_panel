@@ -1,3 +1,5 @@
+import { date } from "../helpers/customColumns";
+
 // Custom Components
 import TablePage from "../components/page_comps/TablePage";
 
@@ -13,8 +15,6 @@ const columns = [
         field: "roles",
         headerName: "Role",
         width: 400,
-        type: "singleSelect",
-        valueOptons: ["test", "fasd"],
         editable: true,
     },
     {
@@ -23,16 +23,24 @@ const columns = [
         width: 400,
         editable: true,
     },
+    {
+        field: "updated_at",
+        headerName: "Updated At",
+        width: 200,
+        ...date,
+    }
 ];
 
-const Roles = () => (
-    <TablePage
-        columns={columns}
-        resourcePath="managment/roles"
-        title="Roles and Permissions"
-        description="Manage admins and users roles and permissions"
-        btnText="Save"
-    />
-);
+const Roles = () => {
+    return (
+        <TablePage
+            columns={columns}
+            resourcePath="managment/roles"
+            title="Roles and Permissions"
+            description="Manage admins and users roles and permissions"
+            btnText="Save"
+        />
+    );
+};
 
 export default Roles;

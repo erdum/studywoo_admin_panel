@@ -57,6 +57,7 @@ const Users = () => {
             title="Users"
             description="Manage system admins and users"
             btnText="Save"
+            addingRowsEnable
         />
     );
 };
