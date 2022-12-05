@@ -43,7 +43,6 @@ const columns = [
         headerName: "Applied Date",
         width: 100,
         type: "date",
-        editable: true,
     },
 ];
 
