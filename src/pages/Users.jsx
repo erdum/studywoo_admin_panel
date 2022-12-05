@@ -50,8 +50,6 @@ const Users = () => {
         },
     ];
 
-    console.log(rolesOptions);
-
     return (
         <TablePage
             columns={columns}
