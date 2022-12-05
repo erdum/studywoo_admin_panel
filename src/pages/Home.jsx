@@ -6,7 +6,7 @@ const columns = [
     {
         field: "id",
         headerName: "Application ID",
-        width: 100,
+        width: 140,
     },
     {
         field: "full_name",
