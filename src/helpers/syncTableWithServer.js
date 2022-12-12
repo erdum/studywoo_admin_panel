@@ -7,12 +7,12 @@ import request from "./request";
 // App State Context
 import useStateContext from "../contexts/StateContextProvider";
 
-const syncTableWithServer = (resourcePath) => {
+const syncTableWithServer = (resourceLink) => {
     const queryClient = useQueryClient();
     const { showAppToast } = useStateContext();
 
     const { data, isFetching } = useQuery(
-        resourcePath,
+        resourceLink,
         async ({ queryKey }) => request(queryKey, showAppToast),
         {
             retry: 0,
@@ -23,45 +23,45 @@ const syncTableWithServer = (resourcePath) => {
 
     const { mutate: deleteRows } = useMutation(
         async (rows) =>
-            request(resourcePath, showAppToast, {
+            request(resourceLink, showAppToast, {
                 body: { rows },
                 method: "DELETE",
             }),
         {
             onMutate: async (payload) => {
                 await queryClient.cancelQueries({
-                    queryKey: resourcePath,
+                    queryKey: resourceLink,
                 });
 
-                const prevPayload = queryClient.getQueryData(resourcePath);
+                const prevPayload = queryClient.getQueryData(resourceLink);
 
-                queryClient.setQueryData(resourcePath, (prevPayload) =>
+                queryClient.setQueryData(resourceLink, (prevPayload) =>
                     prevPayload.filter(({ id }) => !payload.includes(id))
                 );
 
                 return { prevPayload };
             },
             onError: (err, newPayload, { prevPayload }) => {
-                queryClient.setQueryData(resourcePath, prevPayload);
+                queryClient.setQueryData(resourceLink, prevPayload);
             },
         }
     );
 
     const { mutate: updateRow } = useMutation(
         async (payload) =>
-            request(resourcePath, showAppToast, {
+            request(resourceLink, showAppToast, {
                 body: payload,
                 method: "PUT",
             }),
         {
             onMutate: async (payload) => {
                 await queryClient.cancelQueries({
-                    queryKey: resourcePath,
+                    queryKey: resourceLink,
                 });
 
-                const prevPayload = queryClient.getQueryData(resourcePath);
+                const prevPayload = queryClient.getQueryData(resourceLink);
 
-                queryClient.setQueryData(resourcePath, (prevData) =>
+                queryClient.setQueryData(resourceLink, (prevData) =>
                     prevData.map((row) => {
                         const rowNeedsToUpdate = payload.rows[0];
                         if (rowNeedsToUpdate === row.id) {
@@ -82,44 +82,44 @@ const syncTableWithServer = (resourcePath) => {
                 return { prevPayload };
             },
             onError: (err, newPayload, { prevPayload }) => {
-                queryClient.setQueryData(resourcePath, prevPayload);
+                queryClient.setQueryData(resourceLink, prevPayload);
             },
         }
     );
 
     const { mutate: addRow } = useMutation(
         async (payload) =>
-            request(resourcePath, showAppToast, {
+            request(resourceLink, showAppToast, {
                 body: payload,
                 method: "POST",
             }),
         {
             onMutate: async (payload) => {
                 await queryClient.cancelQueries({
-                    queryKey: resourcePath,
+                    queryKey: resourceLink,
                 });
 
                 const prevPayload = queryClient
-                    .getQueryData(resourcePath)
+                    .getQueryData(resourceLink)
                     .filter(({ id }) => id != payload?.id);
 
                 return { prevPayload };
             },
-            onSuccess: () => queryClient.invalidateQueries(resourcePath),
+            onSuccess: () => queryClient.invalidateQueries(resourceLink),
             onError: (err, newPayload, { prevPayload }) => {
-                queryClient.setQueryData(resourcePath, prevPayload);
+                queryClient.setQueryData(resourceLink, prevPayload);
             },
         }
     );
 
     const addRowInCache = (row) =>
-        queryClient.setQueryData(resourcePath, (prevData) => [
+        queryClient.setQueryData(resourceLink, (prevData) => [
             ...prevData,
             row,
         ]);
 
     const removeRowFromCache = (id) =>
-        queryClient.setQueryData(resourcePath, (prevData) =>
+        queryClient.setQueryData(resourceLink, (prevData) =>
             prevData.filter(({ id: rowId }) => rowId != id)
         );
 

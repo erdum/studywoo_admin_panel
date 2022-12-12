@@ -19,7 +19,7 @@ import syncTableWithServer from "../../helpers/syncTableWithServer";
 import filterTableRows from "../../helpers/filterTableRows";
 
 const TablePage = ({
-    resourcePath,
+    resourceLink,
     columns,
     title,
     description,
@@ -34,7 +34,7 @@ const TablePage = ({
         addRow,
         addRowInCache,
         removeRowFromCache,
-    } = syncTableWithServer(resourcePath);
+    } = syncTableWithServer(resourceLink);
 
     const { filteredRows, setSearchValue } = filterTableRows(data);
 

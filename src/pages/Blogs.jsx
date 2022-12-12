@@ -44,7 +44,7 @@ const columns = [
 const Blogs = () => (
     <TablePage
         columns={columns}
-        resourcePath="managment/blogs"
+        resourceLink="managment/blogs"
         title="Blogs"
         description="Manage the Blogs available on the website"
         btnText="Save"

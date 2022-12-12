@@ -28,7 +28,7 @@ const columns = [
 const Subpages = () => (
     <TablePage
         columns={columns}
-        resourcePath="managment/subpages"
+        resourceLink="managment/subpages"
         title="Colleges Sub Pages"
         description="Manage sub pages for all the colleges"
         btnText="Save"

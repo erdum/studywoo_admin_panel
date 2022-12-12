@@ -39,7 +39,7 @@ const columns = [
 const Ratings = () => (
     <TablePage
         columns={columns}
-        resourcePath="managment/ratings"
+        resourceLink="managment/ratings"
         title="Ratings"
         description="Public ratings on colleges"
         btnText="Save"

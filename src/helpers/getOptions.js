@@ -6,11 +6,11 @@ import request from "./request";
 // App State Context
 import useStateContext from "../contexts/StateContextProvider";
 
-const getOptions = (resourcePath, columnName) => {
+const getOptions = (resourceLink, columnName) => {
     const { showAppToast } = useStateContext();
 
     const { data, isFetching } = useQuery(
-        resourcePath,
+        resourceLink,
         async ({ queryKey }) => request(queryKey, showAppToast),
         {
             retry: 0,

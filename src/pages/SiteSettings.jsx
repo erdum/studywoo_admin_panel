@@ -45,7 +45,7 @@ const columns = [
 const SiteSettings = () => (
     <TablePage
         columns={columns}
-        resourcePath="managment/site-settings"
+        resourceLink="managment/site-settings"
         title="Site Settings"
         description="Manage all the website settings"
         btnText="Save"

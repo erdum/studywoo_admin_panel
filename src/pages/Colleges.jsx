@@ -39,7 +39,7 @@ const columns = [
 const Colleges = () => (
     <TablePage
         columns={columns}
-        resourcePath="managment/colleges"
+        resourceLink="managment/colleges"
         title="Colleges"
         description="Manage all the colleges on the website"
         btnText="Save"

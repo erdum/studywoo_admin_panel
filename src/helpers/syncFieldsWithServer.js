@@ -8,12 +8,12 @@ import request from "./request";
 // App State Context
 import useStateContext from "../contexts/StateContextProvider";
 
-const syncFieldsWithServer = (resourcePath, initialData) => {
+const syncFieldsWithServer = (resourceLink, initialData) => {
     const { showAppToast } = useStateContext();
     const queryClient = useQueryClient();
 
     const { data, isFetching } = useQuery(
-        resourcePath,
+        resourceLink,
         async ({ queryKey }) => request(queryKey, showAppToast),
         {
             retry: 0,
@@ -40,18 +40,18 @@ const syncFieldsWithServer = (resourcePath, initialData) => {
 
     const { isLoading: isFieldsUploading, mutate: syncFields } = useMutation(
         async (payload) =>
-            request(resourcePath, showAppToast, {
+            request(resourceLink, showAppToast, {
                 method: "PUT",
                 body: payload,
             }),
         {
             onMutate: async (payload) => {
                 await queryClient.cancelQueries({
-                    queryKey: resourcePath,
+                    queryKey: resourceLink,
                 });
 
-                const prevPayload = queryClient.getQueryData(resourcePath);
-                queryClient.setQueryData(resourcePath, (prevData) => ({
+                const prevPayload = queryClient.getQueryData(resourceLink);
+                queryClient.setQueryData(resourceLink, (prevData) => ({
                     ...prevData,
                     ...payload,
                 }));
@@ -65,7 +65,7 @@ const syncFieldsWithServer = (resourcePath, initialData) => {
                 }));
             },
             onError: (err, newPayload, { prevPayload }) => {
-                queryClient.setQueryData(resourcePath, prevPayload);
+                queryClient.setQueryData(resourceLink, prevPayload);
             },
         }
     );

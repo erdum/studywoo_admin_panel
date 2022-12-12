@@ -53,7 +53,7 @@ const Users = () => {
     return (
         <TablePage
             columns={columns}
-            resourcePath="managment/users"
+            resourceLink="managment/users"
             title="Users"
             description="Manage system admins and users"
             btnText="Save"

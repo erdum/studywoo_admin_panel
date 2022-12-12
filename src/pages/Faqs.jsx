@@ -28,7 +28,7 @@ const columns = [
 const Faqs = () => (
     <TablePage
         columns={columns}
-        resourcePath="managment/faqs"
+        resourceLink="managment/faqs"
         title="Comments"
         description="Public comments on blog posts and sub-pages"
         btnText="Save"

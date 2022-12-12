@@ -35,7 +35,7 @@ const Roles = () => {
     return (
         <TablePage
             columns={columns}
-            resourcePath="managment/roles"
+            resourceLink="managment/roles"
             title="Roles and Permissions"
             description="Manage admins and users roles and permissions"
             btnText="Save"

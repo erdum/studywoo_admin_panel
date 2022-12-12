@@ -33,7 +33,7 @@ const columns = [
 const Comments = () => (
     <TablePage
         columns={columns}
-        resourcePath="managment/comments"
+        resourceLink="managment/comments"
         title="Comments"
         description="Public comments on blog posts and sub-pages"
         btnText="Save"
