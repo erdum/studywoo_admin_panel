@@ -52,7 +52,14 @@ const fieldsStructure = [
 ];
 
 const AccountSettings = () => {
-    return <FieldsPage structure={fieldsStructure} />;
+    return (
+        <FieldsPage
+            structure={fieldsStructure}
+            title="Profile Settings"
+            description="Edit personal and public information"
+            resourceLink="managment/user-profile"
+        />
+    );
 };
 
 export default AccountSettings;

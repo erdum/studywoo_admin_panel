@@ -14,7 +14,7 @@ import syncFieldsWithServer from "../../helpers/syncFieldsWithServer";
 import prepareImagesForUpload from "../../helpers/prepareImagesForUpload";
 import useUploadImages from "../../helpers/useUploadImages";
 
-const FieldsPage = ({ structure }) => {
+const FieldsPage = ({ structure, title, description, resourceLink }) => {
     const initialData = useMemo(() => {
         const object = {};
         structure.map(({ name }) => (object[name] = ""));
@@ -27,7 +27,7 @@ const FieldsPage = ({ structure }) => {
         localFields,
         updateField,
         syncFields,
-    } = syncFieldsWithServer("managment/user-profile", initialData);
+    } = syncFieldsWithServer(resourceLink, initialData);
 
     const uploadImage = useUploadImages("pilot_upload");
 
@@ -79,8 +79,8 @@ const FieldsPage = ({ structure }) => {
     return (
         <>
             <PageHeader
-                title="Profile Settings"
-                description="Edit personal and public information"
+                title={title}
+                description={description}
                 btnText="Save"
                 enableSearch={false}
                 disableBtn={!localFields.modified}
