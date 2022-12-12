@@ -44,7 +44,7 @@ const FieldsPage = ({ structure, title, description, resourceLink }) => {
     const handleSave = async () => {
         const [payloadArray, filesNames] = prepareImagesForUpload(localFields);
 
-        if (filesNames.length > 0) {
+        if (payloadArray.length > 0) {
             setFilesUploading(true);
             const filesUploaded = await Promise.all(
                 payloadArray.map((formData) => uploadImage(formData))
